@@ -375,7 +375,7 @@ Classify each variable as either numerical or categorical?[^data-hello-5]
 :::
 
 [^data-hello-5]: The `group` variable can take just one of two group names, making it categorical.
-    The `num_migraines` variable describes a count of the number of migraines, which is an outcome where basic arithmetic is sensible, which means this is numerical outcome; more specifically, since it represents a count, `num_migraines` is a discrete numerical variable.
+    The `num_migraines` variable describes a count of the number of migraines, which is an outcome where basic arithmetic is sensible, which means this is a numerical outcome; more specifically, since it represents a count, `num_migraines` is a discrete numerical variable.
 
 ### Relationships between variables {#variable-relations}
 
@@ -448,7 +448,7 @@ While it isn't true that every county with a higher median household income has 
 Since there is some relationship between the variables, they are associated.
 :::
 
-```{r county-pop-change-med-hh-income, fig.cap = "A scatterplot showing population chance against median household income. Owsley County of Kentucky, is highlighted, which lost 3.63\\% of its population from 2010 to 2017 and had median household income of \\$22,736."}
+```{r county-pop-change-med-hh-income, fig.cap = "A scatterplot showing population change against median household income. Owsley County of Kentucky, is highlighted, which lost 3.63\\% of its population from 2010 to 2017 and had median household income of \\$22,736."}
 ggplot(county, aes(x = median_hh_income, y = pop_change)) +
   geom_point(alpha = 0.3, fill = IMSCOL["black", "full"], shape = 21) +
   labs(
