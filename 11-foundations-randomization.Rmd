@@ -82,7 +82,7 @@ We should note that the identities being considered are not gender identities an
 The participants in this study were 48 bank supervisors who identified as male, attending a management institute at the University of North Carolina in 1972.
 They were asked to assume the role of the personnel director of a bank and were given a personnel file to judge whether the person should be promoted to a branch manager position.
 The files given to the participants were identical, except that half of them indicated the candidate identified as male and the other half indicated the candidate identified as female.
-These files were randomly assigned to the subjects.
+These files were randomly assigned to the bank managers.
 
 ::: {.guidedpractice data-latex=""}
 Is this an observational study or an experiment?
@@ -210,8 +210,8 @@ Now, suppose the bankers' decisions were independent of the sex of the candidate
 Then, if we conducted the experiment again with a different random assignment of sex to the files, differences in promotion rates would be based only on random fluctuation in promotion decisions.
 We can actually perform this **randomization**, which simulates what would have happened if the bankers' decisions had been independent of `sex` but we had distributed the file sexes differently.[^foundations-randomization-3]
 
-[^foundations-randomization-3]: The test procedure we employ in this section is sometimes referred to as a **permutation test**.
-    The difference between the two is how the explanatory variable was assigned.
+[^foundations-randomization-3]: The test procedure we employ in this section is sometimes referred to as a **randomization test**. 
+    If the explanatory variable had not been randomly assigned, as in an observational study, the procedure would be referred to as a **permutation test**.
     Permutation tests are used for observational studies, where the explanatory variable was not randomly assigned.\index{permutation test}.
 
 ```{r include = FALSE}
@@ -290,12 +290,13 @@ And so on until we repeat the simulation enough times that we have a good idea o
 Figure \@ref(fig:sex-rand-dot-plot) shows a plot of the differences found from 100 simulations, where each dot represents a simulated difference between the proportions of male and female files recommended for promotion.
 
 ```{r sex-rand-dot-plot, fig.cap="(ref:sex-rand-dot-plot-cap)", out.width = "100%"}
-set.seed(35)
+set.seed(37)
 sex_discrimination %>%
   specify(decision ~ sex, success = "promoted") %>%
   hypothesize(null = "independence") %>%
   generate(reps = 100, type = "permute") %>%
   calculate(stat = "diff in props", order = c("male", "female")) %>%
+  mutate(stat = round(stat, 3)) %>%
   ggplot(aes(x = stat)) +
   geom_dotplot(binwidth = 0.01) +
   gghighlight(stat >= 0.292) +
