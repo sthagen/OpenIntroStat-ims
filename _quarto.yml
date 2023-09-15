@@ -10,8 +10,8 @@ book:
       This is IMS2e!
     right: |
       This book was built with <a href="https://quarto.org/">Quarto</a>.
-  cover-image: cover.jpg
-  favicon: cover.jpg
+  cover-image: images/IMS2_front_cover_WIP.png
+  favicon: images/openintro.png
   site-url: https://openintro-ims2.netlify.app/
   repo-url: https://github.com/OpenIntroStat/ims/
   repo-branch: main
@@ -66,14 +66,14 @@ book:
         - 25-inf-model-mlr.qmd
         - 26-inf-model-logistic.qmd
         - 27-inf-model-applications.qmd
-    
-    - part: appendix.qmd
-      chapter:
-        - 28-exercise-solutions.qmd
-        - 29-references.qmd
+
+  appendices:
+    - exercise-solutions.qmd
+    - references.qmd
 
 bibliography: 
   - book.bib
+  - eoce.bib
   - packages.bib
 
 format:
@@ -84,14 +84,22 @@ format:
     code-link: true
     mainfont: Atkinson Hyperlegible
     monofont: Source Code Pro
-    include-in-header: js/mathjax-popover.html
+    #include-in-header: js/mathjax-popover.html
     author-meta: "Mine Çetinkaya-Rundel and Johanna Hardin"
 
 editor: visual
 
 execute:
   freeze: auto
+  fig-width: 6
+  fig-show: hold
+  fig-dpi: 300
+  fig-align: center
+  echo: false
+  cache: false
+  warning: false 
 
 knitr:
   opts_chunk: 
     dev: "ragg_png"
+    fig-asp: 0.618  # 1 / phi

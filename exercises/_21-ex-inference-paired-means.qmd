@@ -297,7 +297,7 @@ The mean and standard deviation of the reported differences are 2.9 days and 17.
 
     c. Check the conditions required to complete this test. A histogram of the differences is given to the right.
     
-    ::: {.content-visible when-format="pdf"}
+    ::: {.content-hidden unless-format="pdf"}
     *See next page for parts d to g.*
     :::
     
@@ -353,7 +353,7 @@ Also provided are some sample statistics, where the difference is the number of 
 
     ```{r}
     #| out.width: 100%
-    #| fig.asp: 0.3
+    #| fig-asp: 0.3
     #| fig.width: 8.0
     library(tidyverse)
     library(openintro)
@@ -413,7 +413,7 @@ Also provided are some sample statistics, where the difference is the ER admissi
 
     ```{r}
     #| out.width: 100%
-    #| fig.asp: 0.3
+    #| fig-asp: 0.3
     #| fig.width: 8.0
     library(tidyverse)
     library(openintro)
