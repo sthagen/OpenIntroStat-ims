@@ -82,6 +82,8 @@
 
     ```{r}
     #| fig-asp: 0.5
+    #| fig-width: 10
+
     library(tidyverse)
     library(openintro)
     library(scales)
@@ -182,6 +184,9 @@
     [@Turnbull+Brown+Hu:1974]
 
     ```{r}
+    #| fig-asp: 0.5
+    #| fig-width: 10
+
     library(openintro)
     library(tidyverse)
     library(patchwork)
@@ -222,6 +227,9 @@
     The table below shows the distribution of responses by age group as well as the expected counts for each cell (shown in italics).
 
     ```{r}
+    #| fig-asp: 0.5
+    #| fig-width: 10
+    
     library(tidyverse)
     library(openintro)
     library(patchwork)
