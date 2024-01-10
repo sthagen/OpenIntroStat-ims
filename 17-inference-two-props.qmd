@@ -163,7 +163,7 @@ In the CPR setting, the `treatment` sample estimates the population of all indiv
 @fig-boot2proppops extends @fig-boot1 to show the bootstrapping process from two samples simultaneously.
 
 ```{r}
-#| label: tbl-boot2proppops
+#| label: fig-boot2proppops
 #| fig-cap: Creating two populations from which to take each of the bootstrap samples.
 #| out-width: 100%
 #| fig-alt: Sample 1 is taken from Population 1 (3 colored marbles out of 7); Sample
@@ -606,7 +606,7 @@ fish_oil_18[[3]] |>
 The [`fish_oil_18`](http://openintrostat.github.io/openintro/reference/fish_oil.html) data can be found in the [**openintro**](http://openintrostat.github.io/openintro) R package.
 :::
 
-### Hypothesis test for the difference between two proportions
+### Hypothesis test for the difference between two proportions {#sec-test-prop-pool}
 
 The details for calculating a SE and for checking technical conditions are very similar to that of confidence intervals.
 However, when the null hypothesis is that $p_1 - p_2 = 0,$ we use a special proportion called the **pooled proportion**\index{pooled proportion} to estimate the SE and to check the success-failure condition.
