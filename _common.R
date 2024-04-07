@@ -29,6 +29,7 @@ suppressMessages(library(palmerpenguins))
 suppressMessages(library(survival))
 suppressMessages(library(waffle))
 suppressMessages(library(ggrepel))
+suppressMessages(library(ggimage))
 suppressMessages(library(ggpubr))
 suppressMessages(library(tools))
 suppressMessages(library(unvotes))
@@ -138,11 +139,11 @@ inference_method_summary_table <- tribble(
   "What other random processes can be approximated?", 
     "Can also be used to describe random sampling in an observational model", 
     "Can also be used to describe random allocation in an experiment", 
-    "Randomized experiment or random sampling",
+    "Can also be used to describe random sampling in an observational model or random allocation in an experiment",
   "What is it best for?", 
-    "Hypothesis testing (can also be used for confidence intervals, but not covered in this text).", 
-    "Confidence intervals (can also be used for bootstrap hypothesis testing for one proportion as well).", 
-    "Quick analyses through, for example, calculating a Z score.",
+    "Hypothesis testing (can also be used for confidence intervals, but not covered in this text)", 
+    "Confidence intervals (can also be used for bootstrap hypothesis testing for one proportion as well)", 
+    "Quick analyses through, for example, calculating a Z score",
   "What physical object represents the simulation process?", 
     "Shuffling cards", 
     "Pulling marbles from a bag with replacement", 
