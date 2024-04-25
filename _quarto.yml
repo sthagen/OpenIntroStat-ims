@@ -88,7 +88,7 @@ format:
     author-meta: "Mine Çetinkaya-Rundel and Johanna Hardin"
     lightbox: 
       match: auto
-      loop: false 
+      loop: false
 
 editor: source
 
