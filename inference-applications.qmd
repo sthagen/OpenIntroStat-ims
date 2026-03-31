@@ -72,31 +72,33 @@ We provide @tbl-zcompare partly as a mechanism for understanding $z$-procedures 
 #| label: tbl-zcompare
 #| tbl-cap: |
 #|   Similarities of z-methods across one sample and two independent samples
-#|   analysis of a binary response variable. $p$ represents the population 
-#|   proportion, $\hat{p}$ represents the sample proportion, $p_0$ represents 
-#|   the null hypothesized proportion, $\hat{p}_{pool}$ represents the pooled 
-#|   proportion, and $n$ represents the sample size. The subscripts of 1 and 2 
+#|   analysis of a binary response variable. $p$ represents the population
+#|   proportion, $\hat{p}$ represents the sample proportion, $p_0$ represents
+#|   the null hypothesized proportion, $\hat{p}_{pool}$ represents the pooled
+#|   proportion, and $n$ represents the sample size. The subscripts of 1 and 2
 #|   indicate that the values are measured separately for samples 1 and 2.
 #| tbl-pos: H
 zsim_table <- tribble(
-  ~variable, ~col1, ~col2,
-  "Response variable", "Binary", "Binary",
-  "Parameter of interest", "Proportion: $p$", "Difference in proportions: $p_1 - p_2$",
-  "Statistic of interest", "Proportion: $\\widehat{p}$", "Difference in proportions: $\\widehat{p}_1 - \\widehat{p}_2$",
-  "Standard error: HT", "$\\sqrt{\\frac{p_0(1-p_0)}{n}}$", "$\\sqrt{\\widehat{p}_{pool}\\bigg(1-\\widehat{p}_{pool}\\bigg)\\bigg(\\frac{1}{n_1} + \\frac{1}{n_2}}\\bigg)$",
-  "Standard error: CI", "$\\sqrt{\\frac{\\widehat{p}(1-\\widehat{p})}{n}}$", "$\\sqrt{\\frac{\\widehat{p}_{1}(1-\\widehat{p}_{1})}{n_1} + \\frac{\\widehat{p}_{2}(1-\\widehat{p}_{2})}{n_2}}$",
-  "Conditions", "1. Independence, 2. Success-failure", "1. Independence, 2. Success-failure"
+  ~variable               , ~col1                                               , ~col2                                                                                                             ,
+  "Response variable"     , "Binary"                                            , "Binary"                                                                                                          ,
+  "Parameter of interest" , "Proportion: $p$"                                   , "Difference in proportions: $p_1 - p_2$"                                                                          ,
+  "Statistic of interest" , "Proportion: $\\widehat{p}$"                        , "Difference in proportions: $\\widehat{p}_1 - \\widehat{p}_2$"                                                    ,
+  "Standard error: HT"    , "$\\sqrt{\\frac{p_0(1-p_0)}{n}}$"                   , "$\\sqrt{\\widehat{p}_{pool}\\bigg(1-\\widehat{p}_{pool}\\bigg)\\bigg(\\frac{1}{n_1} + \\frac{1}{n_2}}\\bigg)$"   ,
+  "Standard error: CI"    , "$\\sqrt{\\frac{\\widehat{p}(1-\\widehat{p})}{n}}$" , "$\\sqrt{\\frac{\\widehat{p}_{1}(1-\\widehat{p}_{1})}{n_1} + \\frac{\\widehat{p}_{2}(1-\\widehat{p}_{2})}{n_2}}$" ,
+  "Conditions"            , "1. Independence, 2. Success-failure"               , "1. Independence, 2. Success-failure"
 )
 
 zsim_table |>
   kbl(
-    booktabs = TRUE, linesep = "\\addlinespace", 
-    format = "latex", escape = FALSE,
+    booktabs = TRUE,
+    linesep = "\\addlinespace",
+    escape = FALSE,
     col.names = c("", "One sample ", "Two independent samples")
   ) |>
   kable_styling(
     bootstrap_options = c("striped", "condensed"),
-    latex_options = c("striped"), full_width = TRUE
+    latex_options = c("striped"),
+    full_width = TRUE
   ) |>
   column_spec(1, width = "10em")
 ```
@@ -142,24 +144,31 @@ We provide @tbl-tcompare partly as a mechanism for understanding $t$-procedures 
 #|   values are measured separately on sample $1$ and sample $2$.
 #| tbl-pos: H
 tsim_table <- tribble(
-  ~variable, ~col1, ~col2, ~col3,
-  "Response variable", "Numeric", "Numeric", "Numeric",
-  "Parameter of interest", "Mean: $\\mu$", "Paired mean: $\\mu_{diff}$", "Difference in means: $\\mu_1 - \\mu_2$",
-  "Statistic of interest", "Mean: $\\bar{x}$", "Paired mean: $\\bar{x}_{diff}$", "Difference in means: $\\bar{x}_1 - \\bar{x}_2$",
-  "Standard error", "$\\frac{s}{\\sqrt{n}}$", "$\\frac{s_{diff}}{\\sqrt{n_{diff}}}$", "$\\sqrt{\\frac{s_1^2}{n_1} + \\frac{s_2^2}{n_2}}$",
-  "Degrees of freedom", "$n-1$", "$n_{diff} -1$", "$\\min(n_1 -1, n_2 - 1)$",
-  "Conditions", "1. Independence, 2. Normality or large samples", "1. Independence, 2. Normality or large samples", "1. Independence, 2. Normality or large samples"
+  ~variable               , ~col1                                            , ~col2                                            , ~col3                                               ,
+  "Response variable"     , "Numeric"                                        , "Numeric"                                        , "Numeric"                                           ,
+  "Parameter of interest" , "Mean: $\\mu$"                                   , "Paired mean: $\\mu_{diff}$"                     , "Difference in means: $\\mu_1 - \\mu_2$"            ,
+  "Statistic of interest" , "Mean: $\\bar{x}$"                               , "Paired mean: $\\bar{x}_{diff}$"                 , "Difference in means: $\\bar{x}_1 - \\bar{x}_2$"    ,
+  "Standard error"        , "$\\frac{s}{\\sqrt{n}}$"                         , "$\\frac{s_{diff}}{\\sqrt{n_{diff}}}$"           , "$\\sqrt{\\frac{s_1^2}{n_1} + \\frac{s_2^2}{n_2}}$" ,
+  "Degrees of freedom"    , "$n-1$"                                          , "$n_{diff} -1$"                                  , "$\\min(n_1 -1, n_2 - 1)$"                          ,
+  "Conditions"            , "1. Independence, 2. Normality or large samples" , "1. Independence, 2. Normality or large samples" , "1. Independence, 2. Normality or large samples"
 )
 
 tsim_table |>
   kbl(
-    linesep = "\\addlinespace", booktabs = TRUE,
-    col.names = c("", "One sample ", "Paired sample", "Two independent samples"),
-    escape = FALSE, format = "latex"
+    linesep = "\\addlinespace",
+    booktabs = TRUE,
+    col.names = c(
+      "",
+      "One sample ",
+      "Paired sample",
+      "Two independent samples"
+    ),
+    escape = FALSE
   ) |>
   kable_styling(
     bootstrap_options = c("striped", "condensed"),
-    latex_options = c("striped"), full_width = TRUE
+    latex_options = c("striped"),
+    full_width = TRUE
   ) |>
   column_spec(1, width = "10em")
 ```
@@ -206,10 +215,10 @@ Does your answer change?
 #|   - The circled triangle is the only triangle.
 #|   - The circled triangle is the only blue triangle.
 #| fig-alt: |
-#|   Four shapes are presented twice. In the first set the shapes and colors are 
-#|   all different -- pink circle, yellow square, red diamond, blue triangle. 
+#|   Four shapes are presented twice. In the first set the shapes and colors are
+#|   all different -- pink circle, yellow square, red diamond, blue triangle.
 #|   In the second set the colors are all different but the triangle shape is
-#|   repeated -- pink circle, yellow square, red triangle, blue triangle. 
+#|   repeated -- pink circle, yellow square, red triangle, blue triangle.
 #|   In each set, the blue triangle is circled.
 #| fig-asp: 0.15
 shape_names <- c(
@@ -228,10 +237,15 @@ shapes <- data.frame(
   figure = c(rep(1, 4), rep(2, 4)),
   x = rep(1:4, 2),
   y = 1,
-  color = rep(c(
-    IMSCOL["pink", "full"], IMSCOL["yellow", "full"],
-    IMSCOL["red", "full"], IMSCOL["blue", "full"]
-  ), 2)
+  color = rep(
+    c(
+      IMSCOL["pink", "full"],
+      IMSCOL["yellow", "full"],
+      IMSCOL["red", "full"],
+      IMSCOL["blue", "full"]
+    ),
+    2
+  )
 )
 
 ggplot(shapes |> filter(figure == 1), aes(x, y)) +
@@ -241,7 +255,14 @@ ggplot(shapes |> filter(figure == 1), aes(x, y)) +
   scale_fill_identity() +
   theme_void() +
   expand_limits(x = c(0.5, 4.5)) +
-  annotate("point", x = 4, y = 1, shape = "circle open", color = "black", size = 40)
+  annotate(
+    "point",
+    x = 4,
+    y = 1,
+    shape = "circle open",
+    color = "black",
+    size = 40
+  )
 
 ggplot(shapes |> filter(figure == 2), aes(x, y)) +
   geom_point(aes(shape = shape_names, color = color, fill = color), size = 20) +
@@ -250,7 +271,14 @@ ggplot(shapes |> filter(figure == 2), aes(x, y)) +
   scale_fill_identity() +
   theme_void() +
   expand_limits(x = c(0.5, 4.5)) +
-  annotate("point", x = 4, y = 1, shape = "circle open", color = "black", size = 40)
+  annotate(
+    "point",
+    x = 4,
+    y = 1,
+    shape = "circle open",
+    color = "black",
+    size = 40
+  )
 ```
 
 In @fig-blue-triangle-shapes-1 the circled item is the only triangle, but in the bottom image the circled item is one of two triangles.
@@ -318,7 +346,8 @@ If the variable had been "success or failure" (e.g., "used redundant or didn't")
 redundant |>
   slice_head(n = 6) |>
   kbl(
-    linesep = "", booktabs = TRUE,
+    linesep = "",
+    booktabs = TRUE,
     align = "lrrrr"
   ) |>
   kable_styling(
@@ -361,7 +390,7 @@ redundant_summary |>
   geom_col(position = "dodge") +
   geom_text(
     aes(
-      y = c(0.75, 1.75, 1.25, 2.25), 
+      y = c(0.75, 1.75, 1.25, 2.25),
       x = mean_redundant_perc - c(5, 5, -5, 5),
       label = paste(round(mean_redundant_perc, 2), "%")
     ),
@@ -426,20 +455,28 @@ Note that this interval for the true population parameter is only valid if we ca
 boot_eng_4 |>
   ggplot(aes(x = stat)) +
   geom_histogram(binwidth = 5, fill = IMSCOL["green", "full"]) +
-  annotate("line",
+  annotate(
+    "line",
     x = c(ci_eng_4_lower, ci_eng_4_lower),
     y = c(0, 250),
-    color = IMSCOL["green", "f2"], size = 1
+    color = IMSCOL["green", "f2"],
+    size = 1
   ) +
-  annotate("line",
+  annotate(
+    "line",
     x = c(ci_eng_4_upper, ci_eng_4_upper),
     y = c(0, 250),
-    color = IMSCOL["green", "f2"], size = 1
+    color = IMSCOL["green", "f2"],
+    size = 1
   ) +
-  annotate("rect",
-    xmin = ci_eng_4_lower, xmax = ci_eng_4_upper,
-    ymin = 0, ymax = 250,
-    alpha = 0.3, fill = IMSCOL["green", "full"]
+  annotate(
+    "rect",
+    xmin = ci_eng_4_lower,
+    xmax = ci_eng_4_upper,
+    ymin = 0,
+    ymax = 250,
+    alpha = 0.3,
+    fill = IMSCOL["green", "full"]
   ) +
   labs(
     x = "Mean redundant adjective usage percentage",
@@ -460,7 +497,9 @@ redundant_paired <- redundant |>
   filter(language == "English") |>
   select(-language, -n_questions) |>
   pivot_wider(
-    id_cols = subject, names_from = items, names_prefix = "redundant_perc_",
+    id_cols = subject,
+    names_from = items,
+    names_prefix = "redundant_perc_",
     values_from = redundant_perc
   ) |>
   mutate(diff_redundant_perc = redundant_perc_16 - redundant_perc_4)
@@ -485,7 +524,8 @@ Although the redundancy percentages seem higher in the 16 item task, a hypothesi
 redundant_paired |>
   slice_head(n = 6) |>
   kbl(
-    linesep = "", booktabs = TRUE,
+    linesep = "",
+    booktabs = TRUE,
     align = "lrrrr"
   ) |>
   kable_styling(
@@ -541,13 +581,15 @@ null_eng |>
     "line",
     x = c(obs_stat_eng, obs_stat_eng),
     y = c(0, 200),
-    color = IMSCOL["red", "full"], size = 1
+    color = IMSCOL["red", "full"],
+    size = 1
   ) +
   annotate(
     "line",
     x = c(-obs_stat_eng, -obs_stat_eng),
     y = c(0, 200),
-    color = IMSCOL["red", "full"], size = 1,
+    color = IMSCOL["red", "full"],
+    size = 1,
     linetype = "dashed"
   ) +
   labs(
@@ -621,15 +663,15 @@ The p-value for the 4 item display comparison is very small (`r pval_4`) while t
 #|   usage percentage between English and Spanish speakers. In each
 #|   plot, the observed differences in the sample (solid line) and the
 #|   differences in the other direction (dashed line) are overlaid.
-#| fig-subcap: 
+#| fig-subcap:
 #|   - The differences in 4 item displays.
 #|   - The differences in 16 item displays.
 #| fig-alt: |
 #|   Distributions of 1,000 differences in randomized means of redundant adjective
-#|   usage percentage between English and Spanish speakers. Plot A shows the 
+#|   usage percentage between English and Spanish speakers. Plot A shows the
 #|   differences in 4 item displays and Plot B shows the differences in 16 item
-#|   displays. In each plot, the observed differences in the sample (solid line) 
-#|   and the differences in the other direction (dashed line) are overlaid. In 
+#|   displays. In each plot, the observed differences in the sample (solid line)
+#|   and the differences in the other direction (dashed line) are overlaid. In
 #|   the 4 item display the observed value is not seen as a potential observation
 #|   from the randomized mean distribution. In the 16 item display, the observed
 #|   value is a possible value on the randomized mean distribution, but it still
@@ -642,13 +684,15 @@ null_4 |>
     "line",
     x = c(obs_stat_4, obs_stat_4),
     y = c(0, 300),
-    color = IMSCOL["red", "full"], size = 1
+    color = IMSCOL["red", "full"],
+    size = 1
   ) +
   annotate(
     "line",
     x = -1 * c(obs_stat_4, obs_stat_4),
     y = c(0, 300),
-    color = IMSCOL["red", "full"], size = 1,
+    color = IMSCOL["red", "full"],
+    size = 1,
     linetype = "dashed"
   ) +
   labs(
@@ -666,13 +710,15 @@ null_16 |>
     "line",
     x = c(obs_stat_16, obs_stat_16),
     y = c(0, 200),
-    color = IMSCOL["red", "full"], size = 1
+    color = IMSCOL["red", "full"],
+    size = 1
   ) +
   annotate(
     "line",
     x = -1 * c(obs_stat_16, obs_stat_16),
     y = c(0, 200),
-    color = IMSCOL["red", "full"], size = 1,
+    color = IMSCOL["red", "full"],
+    size = 1,
     linetype = "dashed"
   ) +
   labs(
