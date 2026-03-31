@@ -189,8 +189,8 @@ The maximum race time, therefore, should be taken into context in terms of the y
 #| fig-cap: |
 #|   Distributions of categorical variables in the `paralympic_1500` dataset.
 #| fig-subcap:
+#|   - Country in which the Games took place
 #|   - Country of origin of the athlete
-#|   - Country in which the Games gook place
 #| fig-alt: |
 #|   Two separate bar plots. The left panel shows a bar plot counting the number
 #|   of gold medal athletes from each country. Great Britain has had 8 top
