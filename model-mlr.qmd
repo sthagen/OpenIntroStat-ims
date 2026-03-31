@@ -25,7 +25,16 @@ loans <- loans_full_schema |>
     verified_income = droplevels(verified_income)
   ) |>
   rename(credit_checks = inquiries_last_12m) |>
-  select(interest_rate, verified_income, debt_to_income, credit_util, bankruptcy, term, credit_checks, issue_month)
+  select(
+    interest_rate,
+    verified_income,
+    debt_to_income,
+    credit_util,
+    bankruptcy,
+    term,
+    credit_checks,
+    issue_month
+  )
 ```
 
 We will consider data about loans from the peer-to-peer lender, Lending Club, which is a dataset we first encountered in [Chapter -@sec-data-hello].
@@ -61,7 +70,8 @@ We will refer to this modified dataset as `loans`.
 loans |>
   slice_head(n = n_rows_to_show) |>
   kbl(
-    linesep = "", booktabs = TRUE,
+    linesep = "",
+    booktabs = TRUE,
     align = "rlrrrr"
   ) |>
   kable_styling(
@@ -76,26 +86,28 @@ loans |>
 #| tbl-cap: Variables and their descriptions for the `loans` dataset.
 #| tbl-pos: H
 loans_var_def <- tribble(
-  ~variable,         ~description,
-  "interest_rate",   "Interest rate on the loan, in an annual percentage.",
-  "verified_income", "Categorical variable describing whether the borrower's income source and amount have been verified, with levels Verified (source and amount verified), Source Verified (source only verified), and Not Verified.",
-  "debt_to_income",  "Debt-to-income ratio, which is the percentage of total debt of the borrower divided by their total income.",
-  "credit_util",     "Of all the credit available to the borrower, what fraction are they utilizing. For example, the credit utilization on a credit card would be the card's balance divided by the card's credit limit.",
-  "bankruptcy",      "An indicator variable for whether the borrower has a past bankruptcy in their record. This variable takes a value of `1` if the answer is *yes* and `0` if the answer is *no*.",
-  "term",            "The length of the loan, in months.",
-  "issue_month",     "The month and year the loan was issued, which for these loans is always during the first quarter of 2018.",
-  "credit_checks",   "Number of credit checks in the last 12 months. For example, when filing an application for a credit card, it is common for the company receiving the application to run a credit check.",
+  ~variable         , ~description                                                                                                                                                                                                       ,
+  "interest_rate"   , "Interest rate on the loan, in an annual percentage."                                                                                                                                                              ,
+  "verified_income" , "Categorical variable describing whether the borrower's income source and amount have been verified, with levels Verified (source and amount verified), Source Verified (source only verified), and Not Verified." ,
+  "debt_to_income"  , "Debt-to-income ratio, which is the percentage of total debt of the borrower divided by their total income."                                                                                                       ,
+  "credit_util"     , "Of all the credit available to the borrower, what fraction are they utilizing. For example, the credit utilization on a credit card would be the card's balance divided by the card's credit limit."              ,
+  "bankruptcy"      , "An indicator variable for whether the borrower has a past bankruptcy in their record. This variable takes a value of `1` if the answer is *yes* and `0` if the answer is *no*."                                   ,
+  "term"            , "The length of the loan, in months."                                                                                                                                                                               ,
+  "issue_month"     , "The month and year the loan was issued, which for these loans is always during the first quarter of 2018."                                                                                                        ,
+  "credit_checks"   , "Number of credit checks in the last 12 months. For example, when filing an application for a credit card, it is common for the company receiving the application to run a credit check."                          ,
 )
 
 loans_var_def |>
   kbl(
-    linesep = "", booktabs = TRUE,
+    linesep = "",
+    booktabs = TRUE,
     col.names = c("Variable", "Description"),
     format = "markdown"
   ) |>
   kable_styling(
     bootstrap_options = c("striped", "condensed"),
-    latex_options = c("striped"), full_width = TRUE
+    latex_options = c("striped"),
+    full_width = TRUE
   ) |>
   column_spec(1, monospace = TRUE) |>
   column_spec(2, width = "30em")
@@ -124,8 +136,10 @@ m_bankruptcy |>
   tidy() |>
   mutate(p.value = ifelse(p.value < 0.0001, "<0.0001", round(p.value, 4))) |>
   kbl(
-    linesep = "", booktabs = TRUE,
-    digits = 2, align = "lrrrr"
+    linesep = "",
+    booktabs = TRUE,
+    digits = 2,
+    align = "lrrrr"
   ) |>
   kable_styling(
     bootstrap_options = c("striped", "condensed"),
@@ -161,7 +175,7 @@ terms_chp_08 <- c("reference level")
 #| label: tbl-int-rate-ver-income
 #| tbl-cap: |
 #|   Summary of a linear model for predicting `interest_rate` from
-#|   the borrower’s income source and amount verification. 
+#|   the borrower’s income source and amount verification.
 #|   This predictor has three levels, which results in 2
 #|   rows in the regression output.
 #| tbl-pos: H
@@ -171,8 +185,10 @@ m_verified_income |>
   tidy() |>
   mutate(p.value = ifelse(p.value < 0.0001, "<0.0001", round(p.value, 4))) |>
   kbl(
-    linesep = "", booktabs = TRUE,
-    digits = 2, align = "lrrrr"
+    linesep = "",
+    booktabs = TRUE,
+    digits = 2,
+    align = "lrrrr"
   ) |>
   kable_styling(
     bootstrap_options = c("striped", "condensed"),
@@ -567,15 +583,20 @@ m_full_w_rsq <- m_full |>
 
 m_full_w_rsq |>
   kbl(
-    linesep = "", booktabs = TRUE,
-    digits = 2, align = "lrrrr"
+    linesep = "",
+    booktabs = TRUE,
+    digits = 2,
+    align = "lrrrr"
   ) |>
   kable_styling(
     bootstrap_options = c("striped", "condensed"),
     latex_options = c("striped")
   ) |>
   column_spec(1, width = "17em") |>
-  column_spec(1, monospace = ifelse(as.numeric(rownames(m_full_w_rsq)) < 11, TRUE, FALSE)) |>
+  column_spec(
+    1,
+    monospace = ifelse(as.numeric(rownames(m_full_w_rsq)) < 11, TRUE, FALSE)
+  ) |>
   column_spec(2:5, width = "5em") |>
   pack_rows("", 11, 12) |>
   add_indent(11:12) |>
@@ -591,9 +612,14 @@ m_full_w_rsq |>
 m_full_minus_issue_month <- lm(interest_rate ~ . - issue_month, data = loans)
 
 options(digits = 6) # to get more digits
-m_full_minus_issue_month_r_sq_adj <- glance(m_full_minus_issue_month)$adj.r.squared |> round(4)
+m_full_minus_issue_month_r_sq_adj <- glance(
+  m_full_minus_issue_month
+)$adj.r.squared |>
+  round(4)
 options(digits = 3) # to get back to default set in _common.R
-m_full_minus_issue_month_df_residual <- glance(m_full_minus_issue_month)$df.residual
+m_full_minus_issue_month_df_residual <- glance(
+  m_full_minus_issue_month
+)$df.residual
 
 m_full_minus_issue_month_w_rsq <- m_full_minus_issue_month |>
   tidy() |>
@@ -603,15 +629,24 @@ m_full_minus_issue_month_w_rsq <- m_full_minus_issue_month |>
 
 m_full_minus_issue_month_w_rsq |>
   kbl(
-    linesep = "", booktabs = TRUE,
-    digits = 2, align = "lrrrr"
+    linesep = "",
+    booktabs = TRUE,
+    digits = 2,
+    align = "lrrrr"
   ) |>
   kable_styling(
     bootstrap_options = c("striped", "condensed"),
     latex_options = c("striped")
   ) |>
   column_spec(1, width = "17em") |>
-  column_spec(1, monospace = ifelse(as.numeric(rownames(m_full_minus_issue_month_w_rsq)) < 9, TRUE, FALSE)) |>
+  column_spec(
+    1,
+    monospace = ifelse(
+      as.numeric(rownames(m_full_minus_issue_month_w_rsq)) < 9,
+      TRUE,
+      FALSE
+    )
+  ) |>
   column_spec(2:5, width = "5em") |>
   pack_rows("", 9, 10) |>
   add_indent(9:10) |>

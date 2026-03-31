@@ -21,8 +21,14 @@ We hope that you refer back to the table often as you dive more deeply into infe
 inference_method_summary_table |>
   filter(question != "What are the technical conditions?") |>
   kbl(
-    linesep = "\\addlinespace\\addlinespace", booktabs = TRUE,
-    col.names = c("Question", "Randomization", "Bootstrapping", "Mathematical models")
+    linesep = "\\addlinespace\\addlinespace",
+    booktabs = TRUE,
+    col.names = c(
+      "Question",
+      "Randomization",
+      "Bootstrapping",
+      "Mathematical models"
+    )
   ) |>
   kable_styling(
     bootstrap_options = c("striped", "condensed"),
@@ -182,8 +188,10 @@ malaria_rand <- tibble(
     rep("no infection", 9)
   ),
   outcome = c(
-    rep("vaccine", 7), rep("placebo", 4),
-    rep("vaccine", 7), rep("placebo", 2)
+    rep("vaccine", 7),
+    rep("placebo", 4),
+    rep("vaccine", 7),
+    rep("placebo", 2)
   )
 )
 

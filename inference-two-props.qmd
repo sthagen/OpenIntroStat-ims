@@ -46,13 +46,14 @@ The results are summarized in @tbl-cpr-summary-again (which is a replica of @tbl
 cpr |>
   mutate(
     outcome = str_to_title(outcome),
-    group   = str_to_title(group)
+    group = str_to_title(group)
   ) |>
   count(group, outcome) |>
   pivot_wider(names_from = outcome, values_from = n) |>
   janitor::adorn_totals(where = c("row", "col")) |>
   kbl(
-    linesep = "", booktabs = TRUE,
+    linesep = "",
+    booktabs = TRUE,
     col.names = c("Group", "Died", "Survived", "Total"),
     align = "lccc"
   ) |>
@@ -328,11 +329,23 @@ ggplot(cpr_boot_dist, aes(x = stat)) +
   gghighlight(stat <= cpr_boot_90_lower_perc | stat >= cpr_boot_90_upper_perc) +
   annotate(
     "segment",
-    x = c(cpr_boot_90_lower_perc, cpr_boot_90_upper_perc), xend = c(cpr_boot_90_lower_perc, cpr_boot_90_upper_perc),
-    y = 0, yend = 175
+    x = c(cpr_boot_90_lower_perc, cpr_boot_90_upper_perc),
+    xend = c(cpr_boot_90_lower_perc, cpr_boot_90_upper_perc),
+    y = 0,
+    yend = 175
   ) +
-  annotate("text", x = cpr_boot_90_lower_perc, y = 190, label = "5th percentile") +
-  annotate("text", x = cpr_boot_90_upper_perc, y = 190, label = "95th percentile")
+  annotate(
+    "text",
+    x = cpr_boot_90_lower_perc,
+    y = 190,
+    label = "5th percentile"
+  ) +
+  annotate(
+    "text",
+    x = cpr_boot_90_upper_perc,
+    y = 190,
+    label = "95th percentile"
+  )
 ```
 
 ```{r}
@@ -425,12 +438,7 @@ for (i in 1:k) {
 }
 xR <- m + 4 * c(-1, 1) * s / sqrt(n)
 yR <- c(0.7, 25.3)
-plot(xR, yR,
-  type = "n",
-  xlab = "",
-  ylab = "",
-  axes = FALSE
-)
+plot(xR, yR, type = "n", xlab = "", ylab = "", axes = FALSE)
 abline(v = m, lty = 2, col = IMSCOL["black", "f1"])
 axis(1, at = m, expression("p"[1] * " - p"[2] * " = 0.47"))
 for (i in 1:k) {
@@ -588,13 +596,15 @@ fish_oil_18[[3]] |>
   mutate(total = myocardioal_infarction + no_event) |>
   column_to_rownames(var = "group") |>
   kbl(
-    linesep = "", booktabs = TRUE,
+    linesep = "",
+    booktabs = TRUE,
     col.names = c("heart attack", "no event", "Total"),
     row.names = TRUE
   ) |>
   kable_styling(
     bootstrap_options = c("striped", "condensed"),
-    latex_options = c("striped"), full_width = FALSE
+    latex_options = c("striped"),
+    full_width = FALSE
   ) |>
   column_spec(1:4, width = "7em")
 ```
@@ -666,14 +676,16 @@ mammogram |>
   count(treatment, breast_cancer_death) |>
   pivot_wider(names_from = breast_cancer_death, values_from = n) |>
   kbl(
-    linesep = "", booktabs = TRUE,
+    linesep = "",
+    booktabs = TRUE,
     col.names = c("Treatment", "Yes", "No"),
     format.args = list(big.mark = ",")
   ) |>
   add_header_above(c("", "Death from breast cancer?" = 2)) |>
   kable_styling(
     bootstrap_options = c("striped", "condensed"),
-    latex_options = c("striped"), full_width = FALSE
+    latex_options = c("striped"),
+    full_width = FALSE
   )
 ```
 

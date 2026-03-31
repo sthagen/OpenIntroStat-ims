@@ -134,7 +134,8 @@ sex_discrimination |>
   kbl(linesep = "", booktabs = TRUE) |>
   kable_styling(
     bootstrap_options = c("striped", "condensed"),
-    latex_options = c("striped"), full_width = FALSE
+    latex_options = c("striped"),
+    full_width = FALSE
   ) |>
   add_header_above(c(" " = 1, "decision" = 2, " " = 1)) |>
   column_spec(1:4, width = "7em")
@@ -276,8 +277,10 @@ Since the randomization of files in this simulation is independent of the promot
 sex_discrimination_rand_1 <- tibble(
   sex = c(rep("male", 24), rep("female", 24)),
   decision = c(
-    rep("promoted", 18), rep("not promoted", 6),
-    rep("promoted", 17), rep("not promoted", 7)
+    rep("promoted", 18),
+    rep("not promoted", 6),
+    rep("promoted", 17),
+    rep("not promoted", 7)
   )
 ) |>
   mutate(
@@ -292,7 +295,8 @@ sex_discrimination_rand_1 |>
   kbl(linesep = "", booktabs = TRUE) |>
   kable_styling(
     bootstrap_options = c("striped", "condensed"),
-    latex_options = c("striped"), full_width = FALSE
+    latex_options = c("striped"),
+    full_width = FALSE
   ) |>
   add_header_above(c(" " = 1, "decision" = 2, " " = 1)) |>
   column_spec(1:4, width = "7em")
@@ -325,12 +329,12 @@ terms_chp_11 <- c(terms_chp_11, "statistic", "test statistic")
 #|   in proportions given no sex discrimination. Note that the sort step is only used
 #|   to make it easier to visually calculate the simulated sample proportions.
 #| fig-alt: |
-#|   The 48 red and white cards are show in three panels. The first panel 
-#|   represents the original data and original allocation of the male and 
-#|   female files (in the original data there are 3 white cards in the male 
-#|   group and 10 white cards in the female group). The second panel represents 
-#|   the shuffled red and white cards that are randomly assigned as male and 
-#|   female files. The third panel has the cards sorted according to the 
+#|   The 48 red and white cards are show in three panels. The first panel
+#|   represents the original data and original allocation of the male and
+#|   female files (in the original data there are 3 white cards in the male
+#|   group and 10 white cards in the female group). The second panel represents
+#|   the shuffled red and white cards that are randomly assigned as male and
+#|   female files. The third panel has the cards sorted according to the
 #|   random assignment of female or male. In the third panel there are 6 white
 #|   cards in the male group and 7 white cards in the female group.
 #| out-width: 100%
@@ -486,7 +490,8 @@ opportunity_cost |>
   kbl(linesep = "", booktabs = TRUE) |>
   kable_styling(
     bootstrap_options = c("striped", "condensed"),
-    latex_options = c("striped"), full_width = FALSE
+    latex_options = c("striped"),
+    full_width = FALSE
   ) |>
   add_header_above(c(" " = 1, "decision" = 2, " " = 1)) |>
   column_spec(1:4, width = "7em")
@@ -534,7 +539,8 @@ opportunity_cost |>
   kbl(linesep = "", booktabs = TRUE) |>
   kable_styling(
     bootstrap_options = c("striped", "condensed"),
-    latex_options = c("striped"), full_width = FALSE
+    latex_options = c("striped"),
+    full_width = FALSE
   ) |>
   add_header_above(c(" " = 1, "decision" = 2, " " = 1)) |>
   column_spec(1:4, width = "7em")
@@ -601,8 +607,10 @@ The results of a single randomization is shown in @tbl-opportunity-cost-obs-simu
 opportunity_cost_rand_1 <- tibble(
   group = c(rep("control", 75), rep("treatment", 75)),
   decision = c(
-    rep("buy video", 46), rep("not buy video", 29),
-    rep("buy video", 51), rep("not buy video", 24)
+    rep("buy video", 46),
+    rep("not buy video", 29),
+    rep("buy video", 51),
+    rep("not buy video", 24)
   )
 ) |>
   mutate(
@@ -617,7 +625,8 @@ opportunity_cost_rand_1 |>
   kbl(linesep = "", booktabs = TRUE) |>
   kable_styling(
     bootstrap_options = c("striped", "condensed"),
-    latex_options = c("striped"), full_width = FALSE
+    latex_options = c("striped"),
+    full_width = FALSE
   ) |>
   add_header_above(c(" " = 1, "decision" = 2, " " = 1)) |>
   column_spec(1:4, width = "7em")
@@ -721,7 +730,12 @@ The alternative hypothesis is usually the reason the scientists set out to do th
 
 ```{r}
 #| include: false
-terms_chp_11 <- c(terms_chp_11, "hypothesis test", "null hypothesis", "alternative hypothesis")
+terms_chp_11 <- c(
+  terms_chp_11,
+  "hypothesis test",
+  "null hypothesis",
+  "alternative hypothesis"
+)
 ```
 
 ::: {.important data-latex=""}
@@ -816,7 +830,13 @@ The value of $\alpha$ can vary depending on the the field or the application.
 
 ```{r}
 #| include: false
-terms_chp_11 <- c(terms_chp_11, "significance level", "discernibility level", "statistically significant", "statistically discernible")
+terms_chp_11 <- c(
+  terms_chp_11,
+  "significance level",
+  "discernibility level",
+  "statistically significant",
+  "statistically discernible"
+)
 ```
 
 Note that you may have heard the phrase "statistically significant" as a way to describe "statistically discernible." Although in everyday language "significant" would indicate that a difference is large or meaningful, that is not necessarily the case here.
@@ -881,16 +901,16 @@ terms_chp_11 <- c(terms_chp_11, "randomization test")
 #| label: fig-fullrand
 #| fig-cap: |
 #|   An example of one simulation of the full randomization procedure from a
-#|   hypothetical dataset as visualized in the first panel. We repeat the 
+#|   hypothetical dataset as visualized in the first panel. We repeat the
 #|   steps hundreds or thousands of times.
 #| fig-alt: |
-#|   48 red and white cards are show in three panels. The first panel represents 
+#|   48 red and white cards are show in three panels. The first panel represents
 #|   original data and original allocation of Group 1 and Group 2 (in the
-#|   original data there are 7 white cards in Group 1 and 10 white cards in 
-#|   Group 2). The second panel represents the shuffled red and white cards 
-#|   that are randomly assigned as Group 1 and Group 2. The third panel has 
-#|   the cards sorted according to the random assignment of Group 1 and Group 2. 
-#|   In the third panel there are 8 white cards in the Group 1 and 9 white 
+#|   original data there are 7 white cards in Group 1 and 10 white cards in
+#|   Group 2). The second panel represents the shuffled red and white cards
+#|   that are randomly assigned as Group 1 and Group 2. The third panel has
+#|   the cards sorted according to the random assignment of Group 1 and Group 2.
+#|   In the third panel there are 8 white cards in the Group 1 and 9 white
 #|   cards in Group 2.
 #| out-width: 100%
 knitr::include_graphics("images/fullrand.png")
@@ -913,10 +933,15 @@ We can summarize the randomization test procedure as follows:
 inference_method_summary_table |>
   filter(question != "What are the technical conditions?") |>
   select(question, randomization) |>
-  kbl(linesep = "\\addlinespace", booktabs = TRUE, col.names = c("Question", "Answer")) |>
+  kbl(
+    linesep = "\\addlinespace",
+    booktabs = TRUE,
+    col.names = c("Question", "Answer")
+  ) |>
   kable_styling(
     bootstrap_options = c("striped", "condensed"),
-    latex_options = c("striped"), full_width = TRUE
+    latex_options = c("striped"),
+    full_width = TRUE
   ) |>
   column_spec(1, width = "15em")
 ```

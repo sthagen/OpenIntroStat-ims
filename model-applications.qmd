@@ -28,8 +28,10 @@ duke_forest |>
   select(price, bed, bath, area, year_built, cooling, lot) |>
   slice_head(n = 4) |>
   kbl(
-    linesep = "", booktabs = TRUE,
-    row.names = FALSE, format.args = list(big.mark = ",")
+    linesep = "",
+    booktabs = TRUE,
+    row.names = FALSE,
+    format.args = list(big.mark = ",")
   ) |>
   kable_styling(
     bootstrap_options = c("striped", "condensed"),
@@ -42,19 +44,22 @@ duke_forest |>
 #| tbl-cap: Variables and their descriptions for the `duke_forest` dataset.
 #| tbl-pos: H
 duke_forest_var_def <- tribble(
-  ~variable, ~description,
-  "price", "Sale price, in USD",
-  "bed", "Number of bedrooms",
-  "bath", "Number of bathrooms",
-  "area", "Area of home, in square feet",
-  "year_built", "Year the home was built",
-  "cooling", "Cooling system: central or other (other is baseline)",
-  "lot", "Area of the entire property, in acres"
+  ~variable    , ~description                                           ,
+  "price"      , "Sale price, in USD"                                   ,
+  "bed"        , "Number of bedrooms"                                   ,
+  "bath"       , "Number of bathrooms"                                  ,
+  "area"       , "Area of home, in square feet"                         ,
+  "year_built" , "Year the home was built"                              ,
+  "cooling"    , "Cooling system: central or other (other is baseline)" ,
+  "lot"        , "Area of the entire property, in acres"
 )
 
 duke_forest_var_def |>
-  kbl(linesep = "", booktabs = TRUE,
-      col.names = c("Variable", "Description")) |>
+  kbl(
+    linesep = "",
+    booktabs = TRUE,
+    col.names = c("Variable", "Description")
+  ) |>
   kable_styling(
     bootstrap_options = c("striped", "condensed"),
     latex_options = c("striped"),
@@ -80,66 +85,65 @@ All of the variables seem to be positively associated with price (higher values 
 #|   relationship with the price of a home.
 #| fig-alt: |
 #|   Six scatterplots where the observations are different homes.
-#|   All plots have sale price on the y axis.  The x axes are number of 
+#|   All plots have sale price on the y axis.  The x axes are number of
 #|   bedrooms, number of bathrooms, square feet, year built, colling type
 #|   and area of property. All variables are positively correlated with
 #|   price of the house.  Square foot of the home is the most highly correlated.
 pr_bed <- ggplot(duke_forest, aes(x = bed, y = price)) +
   geom_point(alpha = 0.8) +
-    labs(
+  labs(
     x = "Number of bedrooms",
     y = "Sale price (USD)"
-  ) +  
+  ) +
   stat_cor(aes(label = paste("r", ..r.., sep = "~`=`~"))) +
-  scale_y_continuous(labels = label_dollar(scale = 1/1000, suffix = "K"))
+  scale_y_continuous(labels = label_dollar(scale = 1 / 1000, suffix = "K"))
 
 pr_bath <- ggplot(duke_forest, aes(x = bath, y = price)) +
   geom_point(alpha = 0.8) +
-    labs(
+  labs(
     x = "Number of bathrooms",
     y = "Sale price (USD)"
   ) +
   stat_cor(aes(label = paste("r", ..r.., sep = "~`=`~"))) +
-  scale_y_continuous(labels = label_dollar(scale = 1/1000, suffix = "K"))
+  scale_y_continuous(labels = label_dollar(scale = 1 / 1000, suffix = "K"))
 
 pr_area <- ggplot(duke_forest, aes(x = area, y = price)) +
   geom_point(alpha = 0.8) +
-    labs(
+  labs(
     x = "Area of home (in square feet)",
     y = "Sale price (USD)"
-  ) + 
+  ) +
   stat_cor(aes(label = paste("r", ..r.., sep = "~`=`~"))) +
-  scale_y_continuous(labels = label_dollar(scale = 1/1000, suffix = "K"))
+  scale_y_continuous(labels = label_dollar(scale = 1 / 1000, suffix = "K"))
 
 pr_year <- ggplot(duke_forest, aes(x = year_built, y = price)) +
   geom_point(alpha = 0.8) +
-    labs(
+  labs(
     x = "Year built",
     y = "Sale price (USD)"
   ) +
   stat_cor(aes(label = paste("r", ..r.., sep = "~`=`~"))) +
-  scale_y_continuous(labels = label_dollar(scale = 1/1000, suffix = "K"))
+  scale_y_continuous(labels = label_dollar(scale = 1 / 1000, suffix = "K"))
 
 pr_cool <- ggplot(duke_forest, aes(x = cooling, y = price)) +
   geom_point(alpha = 0.8) +
-    labs(
+  labs(
     x = "Cooling type",
     y = "Sale price (USD)"
   ) +
   stat_cor(aes(label = paste("r", ..r.., sep = "~`=`~"))) +
-  scale_y_continuous(labels = label_dollar(scale = 1/1000, suffix = "K"))
+  scale_y_continuous(labels = label_dollar(scale = 1 / 1000, suffix = "K"))
 
 pr_lot <- ggplot(duke_forest, aes(x = lot, y = price)) +
   geom_point(alpha = 0.8) +
-    labs(
+  labs(
     x = "Area of property (in acres)",
     y = "Sale price (USD)"
-  ) + 
+  ) +
   stat_cor(aes(label = paste("r", ..r.., sep = "~`=`~"))) +
-  scale_y_continuous(labels = label_dollar(scale = 1/1000, suffix = "K"))
+  scale_y_continuous(labels = label_dollar(scale = 1 / 1000, suffix = "K"))
 
-pr_bed + pr_bath + pr_area + pr_year + pr_cool + pr_lot +
-  plot_layout(ncol = 2) 
+pr_bed + pr_bath + pr_area + pr_year + pr_cool + pr_lot + plot_layout(ncol = 2)
 ```
 
 ::: {.guidedpractice data-latex=""}
@@ -176,10 +180,10 @@ The resulting model information is given in @tbl-price-slr.
 #| tbl-cap: Summary of least squares fit for price on area.
 #| tbl-pos: H
 m_small <- duke_forest |>
-  lm(price ~ area, data = _) 
+  lm(price ~ area, data = _)
 
-m_small_r_sq_adj <-  glance(m_small)$adj.r.squared |> round(4)
-m_small_df_residual <-  glance(m_small)$df.residual |> round(4)
+m_small_r_sq_adj <- glance(m_small)$adj.r.squared |> round(4)
+m_small_df_residual <- glance(m_small)$df.residual |> round(4)
 
 m_small_w_rsq <- m_small |>
   tidy() |>
@@ -188,14 +192,24 @@ m_small_w_rsq <- m_small |>
   add_row(term = glue("df = {m_small_df_residual}"))
 
 m_small_w_rsq |>
-  kbl(linesep = "", booktabs = TRUE, 
-      digits = c(0,0,0,2,4), align = "lrrrr", format.args = list(big.mark = ","))  |>
-  kable_styling(bootstrap_options = c("striped", "condensed"), 
-                latex_options = c("striped")) |>
+  kbl(
+    linesep = "",
+    booktabs = TRUE,
+    digits = c(0, 0, 0, 2, 4),
+    align = "lrrrr",
+    format.args = list(big.mark = ",")
+  ) |>
+  kable_styling(
+    bootstrap_options = c("striped", "condensed"),
+    latex_options = c("striped")
+  ) |>
   column_spec(1, width = "20em") |>
-  column_spec(1, monospace = ifelse(as.numeric(rownames(m_small_w_rsq)) < 3, TRUE, FALSE)) |>
+  column_spec(
+    1,
+    monospace = ifelse(as.numeric(rownames(m_small_w_rsq)) < 3, TRUE, FALSE)
+  ) |>
   column_spec(2:5, width = "5em") |>
-  pack_rows("", 3,4) |>
+  pack_rows("", 3, 4) |>
   add_indent(3:4) |>
   row_spec(3:4, italic = TRUE)
 ```
@@ -218,11 +232,11 @@ The residuals from the linear model can be used to assess whether a linear model
 ```{r}
 #| label: fig-price-resid-slr
 #| fig-cap: |
-#|   Residuals versus predicted values for the model predicting 
+#|   Residuals versus predicted values for the model predicting
 #|   sale price from area of home.
 #| fig-alt: |
-#|   Residual scatterplot showing predicted sale price on the y axis and 
-#|   residual on the y axis from the model on square feet only. There is a fan 
+#|   Residual scatterplot showing predicted sale price on the y axis and
+#|   residual on the y axis from the model on square feet only. There is a fan
 #|   shape showing a possible deviation from the equal variance condition.
 #| fig-width: 7
 duke_forest |>
@@ -235,8 +249,8 @@ duke_forest |>
     y = "Residuals"
   ) +
   geom_hline(yintercept = 0, linetype = "dashed") +
-  scale_x_continuous(labels = label_dollar(scale = 1/1000, suffix = "K")) +
-  scale_y_continuous(labels = label_dollar(scale = 1/1000, suffix = "K"))
+  scale_x_continuous(labels = label_dollar(scale = 1 / 1000, suffix = "K")) +
+  scale_y_continuous(labels = label_dollar(scale = 1 / 1000, suffix = "K"))
 ```
 
 \clearpage
@@ -262,10 +276,10 @@ It seems as though the predictions of home price might be more accurate if more 
 #|   variables.
 #| tbl-pos: H
 m_full <- duke_forest |>
-  lm(price ~ area + bed + bath + year_built + cooling + lot, data = _) 
+  lm(price ~ area + bed + bath + year_built + cooling + lot, data = _)
 
-m_full_r_sq_adj <-  glance(m_full)$adj.r.squared |> round(4)
-m_full_df_residual <-  glance(m_full)$df.residual |> round(4)
+m_full_r_sq_adj <- glance(m_full)$adj.r.squared |> round(4)
+m_full_df_residual <- glance(m_full)$df.residual |> round(4)
 
 m_full_w_rsq <- m_full |>
   tidy() |>
@@ -274,12 +288,22 @@ m_full_w_rsq <- m_full |>
   add_row(term = glue("df = {m_full_df_residual}"))
 
 m_full_w_rsq |>
-  kbl(linesep = "", booktabs = TRUE, 
-      digits = c(0,0,0,2,4), align = "lrrrr", format.args = list(big.mark = ","))  |>
-  kable_styling(bootstrap_options = c("striped", "condensed"), 
-                latex_options = c("striped")) |>
+  kbl(
+    linesep = "",
+    booktabs = TRUE,
+    digits = c(0, 0, 0, 2, 4),
+    align = "lrrrr",
+    format.args = list(big.mark = ",")
+  ) |>
+  kable_styling(
+    bootstrap_options = c("striped", "condensed"),
+    latex_options = c("striped")
+  ) |>
   column_spec(1, width = "20em") |>
-  column_spec(1, monospace = ifelse(as.numeric(rownames(m_full_w_rsq)) < 8, TRUE, FALSE)) |>
+  column_spec(
+    1,
+    monospace = ifelse(as.numeric(rownames(m_full_w_rsq)) < 8, TRUE, FALSE)
+  ) |>
   column_spec(2:5, width = "5em") |>
   pack_rows("", 8, 9) |>
   add_indent(8:9) |>
@@ -314,12 +338,34 @@ You consider taking a variable out, but you aren't sure which one to remove.
 
 ```{r}
 #| label: backward-step-1
-m_area_r_sq_adj <- update(m_full, . ~ . - area, data = duke_forest) |> glance() |> pull(adj.r.squared) |> round(4)
-m_bed_r_sq_adj <- update(m_full, . ~ . - bed, data = duke_forest) |> glance() |> pull(adj.r.squared) |> round(4)
-m_bath_r_sq_adj <- update(m_full, . ~ . - bath, data = duke_forest) |> glance() |> pull(adj.r.squared) |> round(4)
-m_year_built_r_sq_adj <- update(m_full, . ~ . - year_built, data = duke_forest) |> glance() |> pull(adj.r.squared) |> round(4)
-m_cooling_r_sq_adj <- update(m_full, . ~ . - cooling, data = duke_forest) |> glance() |> pull(adj.r.squared) |> round(4)
-m_lot_r_sq_adj <- update(m_full, . ~ . - lot, data = duke_forest) |> glance() |> pull(adj.r.squared) |> round(4)
+m_area_r_sq_adj <- update(m_full, . ~ . - area, data = duke_forest) |>
+  glance() |>
+  pull(adj.r.squared) |>
+  round(4)
+m_bed_r_sq_adj <- update(m_full, . ~ . - bed, data = duke_forest) |>
+  glance() |>
+  pull(adj.r.squared) |>
+  round(4)
+m_bath_r_sq_adj <- update(m_full, . ~ . - bath, data = duke_forest) |>
+  glance() |>
+  pull(adj.r.squared) |>
+  round(4)
+m_year_built_r_sq_adj <- update(
+  m_full,
+  . ~ . - year_built,
+  data = duke_forest
+) |>
+  glance() |>
+  pull(adj.r.squared) |>
+  round(4)
+m_cooling_r_sq_adj <- update(m_full, . ~ . - cooling, data = duke_forest) |>
+  glance() |>
+  pull(adj.r.squared) |>
+  round(4)
+m_lot_r_sq_adj <- update(m_full, . ~ . - lot, data = duke_forest) |>
+  glance() |>
+  pull(adj.r.squared) |>
+  round(4)
 ```
 
 ::: {.workedexample data-latex=""}
@@ -352,13 +398,36 @@ We fit another set of new models, which consider eliminating each of the remaini
 ```{r}
 #| label: backward-step-2
 m_full_no_bed <- duke_forest |>
-  lm(price ~ area + bath + year_built + cooling + lot, data = _) 
+  lm(price ~ area + bath + year_built + cooling + lot, data = _)
 
-m_area_r_sq_adj <- update(m_full_no_bed, . ~ . - area, data = duke_forest) |> glance() |> pull(adj.r.squared) |> round(4)
-m_bath_r_sq_adj <- update(m_full_no_bed, . ~ . - bath, data = duke_forest) |> glance() |> pull(adj.r.squared) |> round(4)
-m_year_built_r_sq_adj <- update(m_full_no_bed, . ~ . - year_built, data = duke_forest) |> glance() |> pull(adj.r.squared) |> round(4)
-m_cooling_r_sq_adj <- update(m_full_no_bed, . ~ . - cooling, data = duke_forest) |> glance() |> pull(adj.r.squared) |> round(4)
-m_lot_r_sq_adj <- update(m_full_no_bed, . ~ . - lot, data = duke_forest) |> glance() |> pull(adj.r.squared) |> round(4)
+m_area_r_sq_adj <- update(m_full_no_bed, . ~ . - area, data = duke_forest) |>
+  glance() |>
+  pull(adj.r.squared) |>
+  round(4)
+m_bath_r_sq_adj <- update(m_full_no_bed, . ~ . - bath, data = duke_forest) |>
+  glance() |>
+  pull(adj.r.squared) |>
+  round(4)
+m_year_built_r_sq_adj <- update(
+  m_full_no_bed,
+  . ~ . - year_built,
+  data = duke_forest
+) |>
+  glance() |>
+  pull(adj.r.squared) |>
+  round(4)
+m_cooling_r_sq_adj <- update(
+  m_full_no_bed,
+  . ~ . - cooling,
+  data = duke_forest
+) |>
+  glance() |>
+  pull(adj.r.squared) |>
+  round(4)
+m_lot_r_sq_adj <- update(m_full_no_bed, . ~ . - lot, data = duke_forest) |>
+  glance() |>
+  pull(adj.r.squared) |>
+  round(4)
 ```
 
 -   Excluding `bed` and `area`: `r m_area_r_sq_adj`
@@ -375,11 +444,11 @@ That is, after backward elimination, we are left with the model that keeps all p
 ```{r}
 #| label: tbl-price-full-except-bed
 #| tbl-cap: |
-#|   Summary of least squares fit for price on multiple predictor 
+#|   Summary of least squares fit for price on multiple predictor
 #|   variables, excluding number of bedrooms.
 #| tbl-pos: H
-m_full_no_bed_r_sq_adj <-  glance(m_full_no_bed)$adj.r.squared |> round(4)
-m_full_no_bed_df_residual <-  glance(m_full_no_bed)$df.residual |> round(4)
+m_full_no_bed_r_sq_adj <- glance(m_full_no_bed)$adj.r.squared |> round(4)
+m_full_no_bed_df_residual <- glance(m_full_no_bed)$df.residual |> round(4)
 
 m_full_no_bed_w_rsq <- m_full_no_bed |>
   tidy() |>
@@ -388,14 +457,28 @@ m_full_no_bed_w_rsq <- m_full_no_bed |>
   add_row(term = glue("df = {m_full_no_bed_df_residual}"))
 
 m_full_no_bed_w_rsq |>
-  kbl(linesep = "", booktabs = TRUE, 
-      digits = c(0,0,0,2,4), align = "lrrrr", format.args = list(big.mark = ","))  |>
-  kable_styling(bootstrap_options = c("striped", "condensed"), 
-                latex_options = c("striped")) |>
+  kbl(
+    linesep = "",
+    booktabs = TRUE,
+    digits = c(0, 0, 0, 2, 4),
+    align = "lrrrr",
+    format.args = list(big.mark = ",")
+  ) |>
+  kable_styling(
+    bootstrap_options = c("striped", "condensed"),
+    latex_options = c("striped")
+  ) |>
   column_spec(1, width = "20em") |>
-  column_spec(1, monospace = ifelse(as.numeric(rownames(m_full_no_bed_w_rsq)) < 7, TRUE, FALSE)) |>
+  column_spec(
+    1,
+    monospace = ifelse(
+      as.numeric(rownames(m_full_no_bed_w_rsq)) < 7,
+      TRUE,
+      FALSE
+    )
+  ) |>
   column_spec(2:5, width = "5em") |>
-  pack_rows("", 7,8) |>
+  pack_rows("", 7, 8) |>
   add_indent(7:8) |>
   row_spec(7:8, italic = TRUE)
 ```
@@ -425,7 +508,7 @@ Also, we observe again that the residuals are quite large for expensive homes.
 ```{r}
 #| label: fig-price-resid-mlr-nobed
 #| fig-cap: |
-#|   Residuals versus predicted values for the model predicting 
+#|   Residuals versus predicted values for the model predicting
 #|   sale price from all predictors except for number of bedrooms.
 #| fig-alt: |
 #|   Residual scatterplot showing predicted sale price on the y axis
@@ -443,26 +526,26 @@ m_full_no_bed |>
     y = "Residuals"
   ) +
   geom_hline(yintercept = 0, linetype = "dashed") +
-  scale_x_continuous(labels = label_dollar(scale = 1/1000, suffix = "K")) +
-  scale_y_continuous(labels = label_dollar(scale = 1/1000, suffix = "K"))
+  scale_x_continuous(labels = label_dollar(scale = 1 / 1000, suffix = "K")) +
+  scale_y_continuous(labels = label_dollar(scale = 1 / 1000, suffix = "K"))
 ```
 
 ```{r}
 # note:  none of this code is used because the two GPs are now
-# hard coded.  the coefficients didn't have sig fig, so the 
+# hard coded.  the coefficients didn't have sig fig, so the
 # predictions with rounded coefficients were too different from
 # the predicted value that came from predict()
 
 new_house <- tibble(
- area = 1803,
- bath = 2.5,
- lot = 0.145,
- year_built = 1941,
- cooling = "central"
+  area = 1803,
+  bath = 2.5,
+  lot = 0.145,
+  year_built = 1941,
+  cooling = "central"
 )
 
 new_house_pred <- round(predict(m_full_no_bed, newdata = new_house), 0)
-new_house_obs  <- 804133
+new_house_obs <- 804133
 new_house_resid <- 804133 - new_house_pred
 ```
 

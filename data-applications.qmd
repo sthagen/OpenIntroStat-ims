@@ -40,10 +40,19 @@ paralympic_1500 |>
   slice_tail(n = 5) |>
   kbl(
     col.names = c(
-      "", "year", "city", "country_of_games", "division", "type", 
-      "name", "country_of_athlete", "time", "time_min"
+      "",
+      "year",
+      "city",
+      "country_of_games",
+      "division",
+      "type",
+      "name",
+      "country_of_athlete",
+      "time",
+      "time_min"
     ),
-    linesep = "", booktabs = TRUE,
+    linesep = "",
+    booktabs = TRUE,
     row.names = FALSE
   ) |>
   kable_styling(
@@ -66,10 +75,19 @@ paralympic_1500 |>
   slice_head(n = 5) |>
   kbl(
     col.names = c(
-      "", "year", "city", "country_of_games", "division", "type", 
-      "name", "country_of_athlete", "time", "time_min"
+      "",
+      "year",
+      "city",
+      "country_of_games",
+      "division",
+      "type",
+      "name",
+      "country_of_athlete",
+      "time",
+      "time_min"
     ),
-    linesep = "", booktabs = TRUE,
+    linesep = "",
+    booktabs = TRUE,
     row.names = FALSE
   ) |>
   kable_styling(
@@ -107,26 +125,28 @@ The data dictionary is provided in @tbl-paralympic-var-def.
 #| tbl-cap: Variables and their descriptions for the `paralympic_1500` dataset.
 #| tbl-pos: H
 paralympic_var_def <- tribble(
-  ~variable, ~description,
-  "year", "Year the Games took place.",
-  "city", "City of the Games.",
-  "country_of_games", "Country of the Games.",
-  "division", "Division: `Men` or `Women`.",
-  "type", "Type: `Olympic`, `T11`, `T12`, or `T13`.",
-  "name", "Name of the athlete.",
-  "country_of_athlete", "Country of athlete.",
-  "time", "Time of gold medal race, in m:s.",
-  "time_min", "Time of gold medal race, in decimal minutes (min + sec/60)."
+  ~variable            , ~description                                                  ,
+  "year"               , "Year the Games took place."                                  ,
+  "city"               , "City of the Games."                                          ,
+  "country_of_games"   , "Country of the Games."                                       ,
+  "division"           , "Division: `Men` or `Women`."                                 ,
+  "type"               , "Type: `Olympic`, `T11`, `T12`, or `T13`."                    ,
+  "name"               , "Name of the athlete."                                        ,
+  "country_of_athlete" , "Country of athlete."                                         ,
+  "time"               , "Time of gold medal race, in m:s."                            ,
+  "time_min"           , "Time of gold medal race, in decimal minutes (min + sec/60)."
 )
 
 paralympic_var_def |>
   kbl(
-    linesep = "", booktabs = TRUE,
+    linesep = "",
+    booktabs = TRUE,
     col.names = c("Variable", "Description")
   ) |>
   kable_styling(
     bootstrap_options = c("striped", "condensed"),
-    latex_options = c("striped"), full_width = TRUE
+    latex_options = c("striped"),
+    full_width = TRUE
   ) |>
   column_spec(1, monospace = TRUE) |>
   column_spec(2, width = "30em")
@@ -168,7 +188,7 @@ The maximum race time, therefore, should be taken into context in terms of the y
 #| label: fig-paralympic-cat
 #| fig-cap: |
 #|   Distributions of categorical variables in the `paralympic_1500` dataset.
-#| fig-subcap: 
+#| fig-subcap:
 #|   - Country of origin of the athlete
 #|   - Country in which the Games gook place
 #| fig-alt: |
@@ -177,7 +197,7 @@ The maximum race time, therefore, should be taken into context in terms of the y
 #|   finishers, Kenya has had 7 top finishers, and Tunisia and Algeria have both
 #|   had 5. The right panel shows a bar plot counting the number of Games which
 #|   have happened in each country. The USA has hosted 4 Games, the UK has hosted
-#|   3 Games, and each of Japan, Greece, Germany, France, and Australia have 
+#|   3 Games, and each of Japan, Greece, Germany, France, and Australia have
 #|   hosted the Games twice.
 #| fig-asp: 2
 #| fig-width: 4
@@ -191,7 +211,8 @@ paralympic_1500 |>
   ungroup() |>
   mutate(country_of_games = fct_reorder(country_of_games, n)) |>
   ggplot(aes(
-    y = country_of_games, x = n,
+    y = country_of_games,
+    x = n,
     fill = fct_rev(country_of_games)
   )) +
   geom_col(show.legend = FALSE) +
@@ -261,7 +282,13 @@ In fact, some internet sleuthing tells you that the *top four* T13 finishers all
 paralympic_1500 |>
   filter(division == "Men") |>
   filter(year > 1950) |>
-  ggplot(aes(x = year, y = time_min, group = type, color = type, shape = type)) +
+  ggplot(aes(
+    x = year,
+    y = time_min,
+    group = type,
+    color = type,
+    shape = type
+  )) +
   geom_vline(xintercept = 2016, color = "darkgrey", lty = 2, lwd = 0.5) +
   geom_point(size = 2) +
   scale_color_openintro() +
@@ -274,7 +301,11 @@ paralympic_1500 |>
   ) +
   theme(
     legend.position = c(0.1, 0.75),
-    legend.background = element_rect(fill = "white", color = "gray", linewidth = 0.1)
+    legend.background = element_rect(
+      fill = "white",
+      color = "gray",
+      linewidth = 0.1
+    )
   )
 ```
 
@@ -298,7 +329,7 @@ That is, for later years, the predicted gold medal time is higher than in earlie
 #|   1500m race time for Men's Olympic and Paralympic (T11) athletes. The line
 #|   represents a line of best fit to the entire dataset.
 #| fig-alt: |
-#|   A scatterplot with year on the x-axis and gold medal 1500m time on the 
+#|   A scatterplot with year on the x-axis and gold medal 1500m time on the
 #|   y-axis. A line of best fit is drawn over the points.
 #| fig-asp: 0.5
 paralympic_1500 |>
@@ -333,8 +364,11 @@ paralympic_1500 |>
   filter(division == "Men", type == "Olympic" | type == "T11") |>
   filter(year > 1950) |>
   ggplot(aes(
-    x = year, y = time_min, group = type,
-    color = type, shape = type
+    x = year,
+    y = time_min,
+    group = type,
+    color = type,
+    shape = type
   )) +
   geom_point(size = 2) +
   geom_smooth(method = "lm", se = FALSE) +
@@ -348,7 +382,11 @@ paralympic_1500 |>
   ) +
   theme(
     legend.position = c(0.1, 0.8),
-    legend.background = element_rect(fill = "white", color = "gray", linewidth = 0.1)
+    legend.background = element_rect(
+      fill = "white",
+      color = "gray",
+      linewidth = 0.1
+    )
   )
 ```
 

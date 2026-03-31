@@ -42,7 +42,7 @@ terms_chp_05 <- c("scatterplot")
 #|   A scatterplot of loan amount versus total income for the `loan50`
 #|   dataset.
 #| fig-alt: |
-#|   A scatterplot with total income on the x-axis and loan amount on the 
+#|   A scatterplot with total income on the x-axis and loan amount on the
 #|   y-axis. The relationship is moderately positive.
 #| fig-asp: 0.48
 ggplot(loan50, aes(x = total_income, y = loan_amount)) +
@@ -68,8 +68,10 @@ Looking at @fig-loan50-amount-income, we see that there are many borrowers with 
 #| fig-asp: 0.48
 ggplot(county, aes(x = poverty / 100, y = median_hh_income)) +
   geom_point(
-    alpha = 0.3, fill = IMSCOL["black", "full"],
-    shape = 21, size = 3
+    alpha = 0.3,
+    fill = IMSCOL["black", "full"],
+    shape = 21,
+    size = 3
   ) +
   geom_smooth(linetype = "dashed", color = IMSCOL["red", "full"], se = FALSE) +
   labs(x = "Poverty rate", y = "Median household income") +
@@ -150,8 +152,8 @@ ggplot(loan50, aes(x = interest_rate)) +
   geom_polygon(
     data = tibble(
       x = c(
-        loan50_interest_rate_mean - 1, 
-        loan50_interest_rate_mean + 1, 
+        loan50_interest_rate_mean - 1,
+        loan50_interest_rate_mean + 1,
         loan50_interest_rate_mean
       ),
       y = c(-0.1, -0.1, 0)
@@ -247,19 +249,22 @@ Results of this trial are summarized in @tbl-drug-asthma-results.
 #| tbl-cap: Results of a trial of 1500 adults that suffer from asthma.
 #| tbl-pos: H
 drug_asthma <- tribble(
-  ~x, ~`New drug`, ~`Standard drug`,
-  "Number of patients", 500, 1000,
-  "Total asthma attacks", 200, 300
+  ~x                     , ~`New drug` , ~`Standard drug` ,
+  "Number of patients"   ,         500 ,             1000 ,
+  "Total asthma attacks" ,         200 ,              300
 )
 
 drug_asthma |>
   kbl(
-    linesep = "", booktabs = TRUE,
-    col.names = c("", "New drug", "Standard drug"), align = "lcc"
+    linesep = "",
+    booktabs = TRUE,
+    col.names = c("", "New drug", "Standard drug"),
+    align = "lcc"
   ) |>
   kable_styling(
     bootstrap_options = c("striped", "condensed"),
-    latex_options = c("striped"), full_width = FALSE
+    latex_options = c("striped"),
+    full_width = FALSE
   ) |>
   column_spec(1, width = "12em") |>
   column_spec(2:3, width = "8em")
@@ -419,7 +424,13 @@ Variables that show roughly equal trailing off in both directions are called **s
 
 ```{r}
 #| include: false
-terms_chp_05 <- c(terms_chp_05, "tail", "right skewed", "left skewed", "symmetric")
+terms_chp_05 <- c(
+  terms_chp_05,
+  "tail",
+  "right skewed",
+  "left skewed",
+  "symmetric"
+)
 ```
 
 ::: {.important data-latex=""}
@@ -466,9 +477,9 @@ terms_chp_05 <- c(terms_chp_05, "unimodal", "bimodal", "multimodal")
 #| fig-asp: 0.3
 #| out-width: 95%
 df_modes <- tibble(
-  uni   = rchisq(65, 6),
-  bi    = c(rchisq(25, 5.8), rnorm(40, 20, 2)),
-  multi =  c(rchisq(25, 3), rnorm(25, 15), rnorm(15, 25, 1.5))
+  uni = rchisq(65, 6),
+  bi = c(rchisq(25, 5.8), rnorm(40, 20, 2)),
+  multi = c(rchisq(25, 3), rnorm(25, 15), rnorm(15, 25, 1.5))
 )
 
 p_uni <- ggplot(df_modes, aes(x = uni)) +
@@ -532,8 +543,14 @@ terms_chp_05 <- c(terms_chp_05, "deviation")
 
 ```{r}
 #| include: false
-loan50_interest_rate_deviation <- round(loan50$interest_rate - loan50_interest_rate_mean, 2)
-loan50_interest_rate_deviation_squared <- round(loan50_interest_rate_deviation^2, 2)
+loan50_interest_rate_deviation <- round(
+  loan50$interest_rate - loan50_interest_rate_mean,
+  2
+)
+loan50_interest_rate_deviation_squared <- round(
+  loan50_interest_rate_deviation^2,
+  2
+)
 loan50_interest_rate_var <- var(loan50$interest_rate)
 loan50_interest_rate_sd <- sd(loan50$interest_rate)
 ```
@@ -674,10 +691,28 @@ box_sd3 <- tibble(
 ggplot(loan50, aes(x = interest_rate)) +
   labs(x = "Interest rate", y = "Count") +
   geom_histogram(breaks = seq(5, 27.5, 2.5)) +
-  geom_polygon(data = box_sd1, aes(x = x, y = y), fill = IMSCOL["gray", "f5"], alpha = 0.3) +
-  geom_polygon(data = box_sd2, aes(x = x, y = y), fill = IMSCOL["gray", "f5"], alpha = 0.3) +
-  geom_polygon(data = box_sd3, aes(x = x, y = y), fill = IMSCOL["gray", "f5"], alpha = 0.3) +
-  scale_x_continuous(breaks = seq(-5, 25, 5), labels = label_percent(scale = 1, accuracy = 1)) +
+  geom_polygon(
+    data = box_sd1,
+    aes(x = x, y = y),
+    fill = IMSCOL["gray", "f5"],
+    alpha = 0.3
+  ) +
+  geom_polygon(
+    data = box_sd2,
+    aes(x = x, y = y),
+    fill = IMSCOL["gray", "f5"],
+    alpha = 0.3
+  ) +
+  geom_polygon(
+    data = box_sd3,
+    aes(x = x, y = y),
+    fill = IMSCOL["gray", "f5"],
+    alpha = 0.3
+  ) +
+  scale_x_continuous(
+    breaks = seq(-5, 25, 5),
+    labels = label_percent(scale = 1, accuracy = 1)
+  ) +
   theme(
     panel.grid.major.x = element_blank(),
     panel.grid.minor.x = element_blank(),
@@ -725,15 +760,21 @@ ggplot(dists_mean0_sd1, aes(x = x)) +
   labs(x = NULL) +
   geom_polygon(
     data = tibble(x = c(-1, -1, 1, 1), y = c(0, 1000, 1000, 0)),
-    aes(x = x, y = y), fill = IMSCOL["gray", "f5"], alpha = 0.3
+    aes(x = x, y = y),
+    fill = IMSCOL["gray", "f5"],
+    alpha = 0.3
   ) +
   geom_polygon(
     data = tibble(x = c(-2, -2, 2, 2), y = c(0, 1000, 1000, 0)),
-    aes(x = x, y = y), fill = IMSCOL["gray", "f5"], alpha = 0.3
+    aes(x = x, y = y),
+    fill = IMSCOL["gray", "f5"],
+    alpha = 0.3
   ) +
   geom_polygon(
     data = tibble(x = c(-3, -3, 3, 3), y = c(0, 1000, 1000, 0)),
-    aes(x = x, y = y), fill = IMSCOL["gray", "f5"], alpha = 0.3
+    aes(x = x, y = y),
+    fill = IMSCOL["gray", "f5"],
+    alpha = 0.3
   ) +
   theme(
     panel.grid.major.x = element_blank(),
@@ -776,8 +817,8 @@ terms_chp_05 <- c(terms_chp_05, "box plot")
 #|   - Dot plot
 #|   - Box plot
 #| fig-alt: |
-#|   Two plots showing the same variable, interests rates. The top image is a 
-#|   dot plot, the bottom image is a box plot. Both images re-establish that 
+#|   Two plots showing the same variable, interests rates. The top image is a
+#|   dot plot, the bottom image is a box plot. Both images re-establish that
 #|   the distribution of interest rates are right skewed.
 #| fig-asp: 0.3
 ggplot(loan50, aes(x = interest_rate)) +
@@ -832,7 +873,8 @@ matrix(
 ) |>
   data.frame(row.names = c("1", "10", "20", "30", "40")) |>
   kbl(
-    linesep = "", booktabs = TRUE,
+    linesep = "",
+    booktabs = TRUE,
     col.names = as.character(1:10)
   ) |>
   kable_styling(
@@ -865,7 +907,14 @@ The two boundaries of the box are called the **first quartile**\index{first quar
 
 ```{r}
 #| include: false
-terms_chp_05 <- c(terms_chp_05, "interquartile range", "IQR", "first quartile", "third quartile", "percentile")
+terms_chp_05 <- c(
+  terms_chp_05,
+  "interquartile range",
+  "IQR",
+  "first quartile",
+  "third quartile",
+  "percentile"
+)
 ```
 
 ::: {.important data-latex=""}
@@ -958,7 +1007,14 @@ loan50_robust_check <- bind_rows(
   loan50_15 |> mutate(Scenario = "Move 26.3% to 15%"),
   loan50_35 |> mutate(Scenario = "Move 26.3% to 35%")
 ) |>
-  mutate(Scenario = fct_relevel(Scenario, "Original data", "Move 26.3% to 15%", "Move 26.3% to 35%"))
+  mutate(
+    Scenario = fct_relevel(
+      Scenario,
+      "Original data",
+      "Move 26.3% to 15%",
+      "Move 26.3% to 35%"
+    )
+  )
 
 loan50_robust_check |>
   group_by(Scenario) |>
@@ -1105,9 +1161,9 @@ Nearly all of the data fall into the left-most bin, and the extreme skew obscure
 ```{r}
 #| label: fig-county-unemployed-pop-transform
 #| fig-cap: |
-#|   Histograms of percentage unenmployed, population, and their log transformed 
-#|   versions in all US counties. For the plots of transformed variables, the 
-#|   x-value corresponds to the power of 10, e.g., 1 on the x-axis corresponds 
+#|   Histograms of percentage unenmployed, population, and their log transformed
+#|   versions in all US counties. For the plots of transformed variables, the
+#|   x-value corresponds to the power of 10, e.g., 1 on the x-axis corresponds
 #|   to $10^1 =$ 10 and 5 on the x-axis corresponds to $10^5=$ 100,000. Data
 #|   are from 2017.
 #| fig-subcap:
@@ -1145,7 +1201,9 @@ ggplot(county, aes(x = log(unemployment_rate, base = 10))) +
 
 ggplot(county_complete, aes(x = pop_2019)) +
   geom_histogram(binwidth = 500000) +
-  scale_x_continuous(labels = label_number(scale = 0.000001, suffix = "M", accuracy = 1)) +
+  scale_x_continuous(
+    labels = label_number(scale = 0.000001, suffix = "M", accuracy = 1)
+  ) +
   labs(
     x = "Population (M = millions)",
     y = "Count"
@@ -1181,7 +1239,7 @@ In fact, we may be interested in fitting a trend line to the data when we explor
 ```{r}
 #| label: fig-county-pop-change-transform
 #| fig-cap: |
-#|   Scatterplots of population change and log$_{10}$-transformed population 
+#|   Scatterplots of population change and log$_{10}$-transformed population
 #|   change vs. population before change.
 #| fig-subcap:
 #|   - Population change
@@ -1199,7 +1257,9 @@ In fact, we may be interested in fitting a trend line to the data when we explor
 #| fig-asp: 0.8
 ggplot(county, aes(y = pop_change, x = pop2010)) +
   geom_point(alpha = 0.5) +
-  scale_x_continuous(labels = label_number(scale = 0.000001, suffix = "M", accuracy = 1)) +
+  scale_x_continuous(
+    labels = label_number(scale = 0.000001, suffix = "M", accuracy = 1)
+  ) +
   labs(
     x = "Population before change\n(M = millions)",
     y = "Population change"
@@ -1263,21 +1323,31 @@ dfips <- maps::county.fips |>
 map_county <- map_data("county") |>
   as_tibble() |>
   left_join(dfips) |>
-  mutate(fips = case_when(
-    subregion == "okaloosa" & region == "florida" ~ 12091L,
-    subregion == "st martin" & region == "louisiana" ~ 22099L,
-    subregion == "currituck" & region == "north carolina" ~ 37053L,
-    # Oglala Lakota Count, see https://en.wikipedia.org/wiki/Oglala_Lakota_County,_South_Dakota
-    subregion == "shannon" & region == "south dakota" ~ 46113L,
-    subregion == "galveston" & region == "texas" ~ 48167L,
-    subregion == "accomack" & region == "virginia" ~ 51001L,
-    subregion == "pierce" & region == "washington" ~ 53053L,
-    subregion == "san juan" & region == "washington" ~ 53055L,
-    TRUE ~ fips
-  ))
+  mutate(
+    fips = case_when(
+      subregion == "okaloosa" & region == "florida" ~ 12091L,
+      subregion == "st martin" & region == "louisiana" ~ 22099L,
+      subregion == "currituck" & region == "north carolina" ~ 37053L,
+      # Oglala Lakota Count, see https://en.wikipedia.org/wiki/Oglala_Lakota_County,_South_Dakota
+      subregion == "shannon" & region == "south dakota" ~ 46113L,
+      subregion == "galveston" & region == "texas" ~ 48167L,
+      subregion == "accomack" & region == "virginia" ~ 51001L,
+      subregion == "pierce" & region == "washington" ~ 53053L,
+      subregion == "san juan" & region == "washington" ~ 53055L,
+      TRUE ~ fips
+    )
+  )
 
 county_for_map <- county_complete |>
-  select(fips, name, state, poverty_2017, unemployment_rate_2017, homeownership_2010, median_household_income_2017)
+  select(
+    fips,
+    name,
+    state,
+    poverty_2017,
+    unemployment_rate_2017,
+    homeownership_2010,
+    median_household_income_2017
+  )
 
 map_county <- map_county |>
   left_join(county_for_map, by = "fips")
@@ -1298,8 +1368,8 @@ map_county <- map_county |>
 #|   of the midwest. In the second plot, the county is colored by the unemployment
 #|   rate which seems higher in the southwest and parts of the post-industrial
 #|   Midwest. In the third plot, the county is colored by home ownership rate
-#|   which is lowest on the west coast. In the fourth and last plot, the county 
-#|   is colored by median household income which is highest in the Bay Area 
+#|   which is lowest on the west coast. In the fourth and last plot, the county
+#|   is colored by median household income which is highest in the Bay Area
 #|   and along the New England coast.
 #| fig-asp: 0.42
 ggplot(map_county, aes(x = long, y = lat, group = group)) +
@@ -1320,7 +1390,10 @@ ggplot(map_county, aes(x = long, y = lat, group = group)) +
 
 ggplot(map_county, aes(x = long, y = lat, group = group)) +
   geom_polygon(aes(fill = unemployment_rate_2017)) +
-  scale_fill_viridis_c(option = "A", labels = label_percent(scale = 1, accuracy = 1)) +
+  scale_fill_viridis_c(
+    option = "A",
+    labels = label_percent(scale = 1, accuracy = 1)
+  ) +
   labs(x = NULL, y = NULL, fill = "Unemployment\nrate") +
   theme(
     axis.title.x = element_blank(),
@@ -1352,7 +1425,10 @@ ggplot(map_county, aes(x = long, y = lat, group = group)) +
 
 ggplot(map_county, aes(x = long, y = lat, group = group)) +
   geom_polygon(aes(fill = median_household_income_2017)) +
-  scale_fill_viridis_c(option = "C", labels = label_dollar(scale = 0.001, suffix = "K")) +
+  scale_fill_viridis_c(
+    option = "C",
+    labels = label_dollar(scale = 0.001, suffix = "K")
+  ) +
   labs(x = NULL, y = NULL, fill = "Median\nhousehold\nincome") +
   theme(
     axis.title.x = element_blank(),

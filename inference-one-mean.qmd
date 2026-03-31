@@ -83,12 +83,12 @@ As mentioned previously, to get a sense of the cars at Awesome Auto, you take a 
 #| fig-cap: |
 #|   As seen previously, the idea behind bootstrapping is to consider the sample
 #|   at hand as an estimate of the population. Sampling from the sample (of 5
-#|   cars) is identical to sampling from an infinite population which is made 
+#|   cars) is identical to sampling from an infinite population which is made
 #|   up of only the cars in the original sample.
 #| fig-alt: |
 #|   The sample of 5 cars is drawn from a large population with other values
 #|   (i.e., other car prices) unknown. The sample of five cars is replicated
-#|   infinitely many times to create a proxy population where the car prices 
+#|   infinitely many times to create a proxy population where the car prices
 #|   are given by the original dataset in the same relative distribution as
 #|   measured in the sample.
 include_graphics("images/bootpop1mean.png")
@@ -154,7 +154,7 @@ The conclusion is that we are 95% confident that the true average car price at A
 #| label: fig-carsbsmean
 #| fig-cap: |
 #|   The original Awesome Auto data is bootstrapped 1,000 times. The histogram
-#|   provides a sense for the variability of the average car prices from sample 
+#|   provides a sense for the variability of the average car prices from sample
 #|   to sample.
 #| fig-alt: |
 #|   A histogram of the means of 1000 bootstrapped samples
@@ -183,8 +183,10 @@ ggplot(bscars_mean, aes(x = stat)) +
   geom_histogram(binwidth = 1500) +
   annotate(
     "segment",
-    x = stat_quantiles, xend = stat_quantiles,
-    y = rep(0, 8), yend = c(50, 75, 100, 150, 150, 100, 75, 50),
+    x = stat_quantiles,
+    xend = stat_quantiles,
+    y = rep(0, 8),
+    yend = c(50, 75, 100, 150, 150, 100, 75, 50),
     linetype = "dashed"
   ) +
   annotate(
@@ -192,14 +194,16 @@ ggplot(bscars_mean, aes(x = stat)) +
     x = stat_quantiles,
     y = c(50, 75, 100, 150, 150, 100, 75, 50) + 15,
     label = paste0(probs * 100, "th percentile"),
-    hjust = c(rep(1, 4), rep(0, 4)), size = 3
+    hjust = c(rep(1, 4), rep(0, 4)),
+    size = 3
   ) +
   annotate(
     "text",
     x = stat_quantiles,
     y = c(50, 75, 100, 150, 150, 100, 75, 50) + 5,
     label = format(stat_quantiles, big.mark = ","),
-    hjust = c(rep(1, 4), rep(0, 4)), size = 3
+    hjust = c(rep(1, 4), rep(0, 4)),
+    size = 3
   ) +
   coord_cartesian(xlim = c(8000, 27000)) +
   scale_x_continuous(labels = label_dollar()) +

@@ -139,7 +139,8 @@ mlb_players_18 |>
   kbl(linesep = "", booktabs = TRUE, align = "lllrrrrrr") |>
   kable_styling(
     bootstrap_options = c("striped", "condensed"),
-    latex_options = c("striped"), full_width = TRUE
+    latex_options = c("striped"),
+    full_width = TRUE
   ) |>
   column_spec(1, width = "7em")
 ```
@@ -151,26 +152,28 @@ mlb_players_18 |>
 #| tbl-cap: Variables and their descriptions for the `mlb_players_18` dataset.
 #| tbl-pos: H
 mlb_players_18_vars <- tribble(
-  ~variable, ~col1,
-  "name", "Player name",
-  "team", "The abbreviated name of the player's team",
-  "position", "The player's primary field position (OF, IF, C)",
-  "AB", "Number of opportunities at bat",
-  "H", "Number of hits",
-  "HR", "Number of home runs",
-  "RBI", "Number of runs batted in",
-  "AVG", "Batting average, which is equal to H/AB",
-  "OBP", "On-base percentage, which is roughly equal to the fraction of times a player gets on base or hits a home run"
+  ~variable  , ~col1                                                                                                          ,
+  "name"     , "Player name"                                                                                                  ,
+  "team"     , "The abbreviated name of the player's team"                                                                    ,
+  "position" , "The player's primary field position (OF, IF, C)"                                                              ,
+  "AB"       , "Number of opportunities at bat"                                                                               ,
+  "H"        , "Number of hits"                                                                                               ,
+  "HR"       , "Number of home runs"                                                                                          ,
+  "RBI"      , "Number of runs batted in"                                                                                     ,
+  "AVG"      , "Batting average, which is equal to H/AB"                                                                      ,
+  "OBP"      , "On-base percentage, which is roughly equal to the fraction of times a player gets on base or hits a home run"
 )
 
 mlb_players_18_vars |>
   kbl(
-    linesep = "", booktabs = TRUE,
+    linesep = "",
+    booktabs = TRUE,
     col.names = c("Variable", "Description")
   ) |>
   kable_styling(
     bootstrap_options = c("striped", "condensed"),
-    latex_options = c("striped"), full_width = TRUE
+    latex_options = c("striped"),
+    full_width = TRUE
   ) |>
   column_spec(1, monospace = TRUE) |>
   column_spec(2, width = "30em")
@@ -209,18 +212,20 @@ Notice that the variability appears to be approximately constant across groups; 
 mlb_players_18 |>
   group_by(position) |>
   summarise(
-    n    = n(),
+    n = n(),
     mean = round(mean(OBP), 3),
-    sd   = round(sd(OBP), 3)
+    sd = round(sd(OBP), 3)
   ) |>
   kbl(
-    linesep = "", booktabs = TRUE,
+    linesep = "",
+    booktabs = TRUE,
     col.names = c("Position", "n", "Mean", "SD"),
     align = "lccc"
   ) |>
   kable_styling(
     bootstrap_options = c("striped", "condensed"),
-    latex_options = c("striped"), full_width = FALSE
+    latex_options = c("striped"),
+    full_width = FALSE
   ) |>
   column_spec(1:4, width = "6em")
 ```
@@ -302,7 +307,15 @@ However, we typically use software for these computations.
 
 ```{r}
 #| include: false
-terms_chp_22 <- c(terms_chp_22, "mean square between groups (MSG)", "degrees of freedom", "sum of squares between groups (SSG)", "mean square error (MSE)", "sum of squares total (SST)", "sum of squared error (SSE)")
+terms_chp_22 <- c(
+  terms_chp_22,
+  "mean square between groups (MSG)",
+  "degrees of freedom",
+  "sum of squares between groups (SSG)",
+  "mean square error (MSE)",
+  "sum of squares total (SST)",
+  "sum of squared error (SSE)"
+)
 ```
 
 The mean square between the groups is, on its own, quite useless in a hypothesis test.
@@ -363,20 +376,22 @@ classdata <- classdata |>
 classdata |>
   group_by(exam) |>
   summarise(
-    n    = n(),
+    n = n(),
     mean = round(mean(m1), 1),
-    sd   = round(sd(m1), 1),
-    min  = min(m1),
-    max  = max(m1)
+    sd = round(sd(m1), 1),
+    min = min(m1),
+    max = max(m1)
   ) |>
   kbl(
-    linesep = "", booktabs = TRUE,
+    linesep = "",
+    booktabs = TRUE,
     col.names = c("Exam", "n", "Mean", "SD", "Min", "Max"),
     align = "lccccc"
   ) |>
   kable_styling(
     bootstrap_options = c("striped", "condensed"),
-    latex_options = c("striped"), full_width = FALSE
+    latex_options = c("striped"),
+    full_width = FALSE
   ) |>
   column_spec(1:6, width = "5em")
 ```
@@ -392,7 +407,13 @@ classdata |>
   ggplot(aes(x = exam, y = m1, color = exam)) +
   geom_boxplot(show.legend = FALSE) +
   geom_point(show.legend = FALSE) +
-  scale_color_manual(values = c(IMSCOL["red", "full"], IMSCOL["green", "full"], IMSCOL["blue", "full"])) +
+  scale_color_manual(
+    values = c(
+      IMSCOL["red", "full"],
+      IMSCOL["green", "full"],
+      IMSCOL["blue", "full"]
+    )
+  ) +
   labs(
     x = "Exam",
     y = "Score",
@@ -488,8 +509,10 @@ classdata |>
   calculate(stat = "F") |> # get_p_value(obs_stat = class_Fstat, direction = "greater")
   visualize() +
   shade_p_value(
-    obs_stat = class_Fstat, direction = "greater",
-    fill = IMSCOL["red", "f3"], color = IMSCOL["red", "full"]
+    obs_stat = class_Fstat,
+    direction = "greater",
+    fill = IMSCOL["red", "f3"],
+    color = IMSCOL["red", "full"]
   ) +
   labs(
     y = "Count",
@@ -563,18 +586,19 @@ terms_chp_22 <- c(terms_chp_22, "F-test")
 X <- seq(0, 8, len = 300)
 Y <- df(X, 2.00001, 426)
 par(mar = c(2, 0, 0, 0))
-plot(X, Y,
-  type = "l",
-  xlab = "F",
-  ylab = "",
-  axes = FALSE
-)
+plot(X, Y, type = "l", xlab = "F", ylab = "", axes = FALSE)
 lines(c(0, 8), rep(0, 2))
 axis(1)
 temp <- which(X > 5.077)
 x <- X[c(temp, rev(temp), temp[1])]
 y <- c(Y[temp], rep(0, length(temp)), Y[temp[1]])
-polygon(x, y, col = IMSCOL["red", "full"], border = IMSCOL["red", "full"], lwd = 2)
+polygon(
+  x,
+  y,
+  col = IMSCOL["red", "full"],
+  border = IMSCOL["red", "full"],
+  lwd = 2
+)
 arrows(6.3, 0.3, 6.5, 0.05, length = 0.05)
 text(6.3, 0.3, "Small tail area", pos = 3)
 ```
@@ -621,8 +645,10 @@ anova(mod) |>
   tidy() |>
   mutate(p.value = ifelse(p.value < 0.0001, "<0.0001", round(p.value, 4))) |>
   kbl(
-    linesep = "", booktabs = TRUE,
-    digits = 4, align = "lrrrrr"
+    linesep = "",
+    booktabs = TRUE,
+    digits = 4,
+    align = "lrrrrr"
   ) |>
   kable_styling(
     bootstrap_options = c("striped", "condensed"),
