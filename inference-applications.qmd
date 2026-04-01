@@ -88,19 +88,36 @@ zsim_table <- tribble(
   "Conditions"            , "1. Independence, 2. Success-failure"               , "1. Independence, 2. Success-failure"
 )
 
+library(gt)
+
 zsim_table |>
-  kbl(
-    booktabs = TRUE,
-    linesep = "\\addlinespace",
-    escape = FALSE,
-    col.names = c("", "One sample ", "Two independent samples")
+  gt() |>
+  fmt_markdown(
+    columns = starts_with("col"),
+    rows = 2:5
   ) |>
-  kable_styling(
-    bootstrap_options = c("striped", "condensed"),
-    latex_options = c("striped"),
-    full_width = TRUE
+  cols_width(
+    variable ~ px(120)
   ) |>
-  column_spec(1, width = "10em")
+  cols_label(
+    variable = "",
+    col1 = "One sample",
+    col2 = "Two independent samples"
+  )
+
+#kbl(
+#  booktabs = TRUE,
+#  linesep = "\\addlinespace",
+#  escape = FALSE,
+#  col.names = c("", "One sample ", "Two independent samples"),
+#  format = "latex"
+#) |>
+#kable_styling(
+#  bootstrap_options = c("striped", "condensed"),
+#  latex_options = c("striped"),
+#  full_width = TRUE
+#) |>
+#column_spec(1, width = "10em")
 ```
 
 **Hypothesis tests.** When applying the $z$-distribution for a hypothesis test, we proceed as follows:
@@ -154,23 +171,38 @@ tsim_table <- tribble(
 )
 
 tsim_table |>
-  kbl(
-    linesep = "\\addlinespace",
-    booktabs = TRUE,
-    col.names = c(
-      "",
-      "One sample ",
-      "Paired sample",
-      "Two independent samples"
-    ),
-    escape = FALSE
+  gt() |>
+  fmt_markdown(
+    columns = starts_with("col"),
+    rows = 2:5
   ) |>
-  kable_styling(
-    bootstrap_options = c("striped", "condensed"),
-    latex_options = c("striped"),
-    full_width = TRUE
+  cols_width(
+    variable ~ px(120)
   ) |>
-  column_spec(1, width = "10em")
+  cols_label(
+    variable = "",
+    col1 = "One sample",
+    col2 = "Paired samples",
+    col3 = "Two independent samples"
+  )
+
+#kbl(
+#  linesep = "\\addlinespace",
+#  booktabs = TRUE,
+#  col.names = c(
+#    "",
+#    "One sample ",
+#    "Paired sample",
+#    "Two independent samples"
+#  ),
+#  escape = FALSE
+#) |>
+#kable_styling(
+#  bootstrap_options = c("striped", "condensed"),
+#  latex_options = c("striped"),
+#  full_width = TRUE
+#) |>
+#column_spec(1, width = "10em")
 ```
 
 \clearpage

@@ -367,8 +367,8 @@ Two samples of coins with the same number of low coins (3), but a different numb
 #| out-width: 45%
 #| fig-align: center
 knitr::include_graphics("images/lowsame.png")
-``
-`
+```
+
 :::
 
 \vspace{-5mm}
@@ -381,11 +381,7 @@ What is the difference in total amount?
 
 Two samples of coins with the same total number of coins (4), but a different number of low coins (3 vs 4) and a different total amount (\$0.41 vs \$0.17).
 
-`
-``
-{
-  r
-}
+```{r}
 #| label: totalsame
 #| fig-alt: |
 #|   A set of four coins is shown: one of each penny, nickle, dime, and quarter.
@@ -395,9 +391,8 @@ Two samples of coins with the same total number of coins (4), but a different nu
 #| out-width: 45%
 #| fig-align: center
 knitr::include_graphics("images/totalsame.png")
-`
-`
-`
+```
+
 :::
 
 \clearpage
@@ -437,11 +432,7 @@ $$
 \end{aligned}
 $$
 
-`
-``
-{
-  r
-}
+```{r}
 #| label: tbl-coinhighlow
 #| tbl-cap: |
 #|    Linear model output predicting the total amount of money based on both
@@ -813,6 +804,7 @@ The prediction error from the cross-validated model can be used to calculate a s
 The cross-validation SSE is the sum of squared cross-validation prediction errors.
 
 $$\mbox{CV SSE} = \sum_{i=1}^n (\hat{y}_{cv,i} - y_i)^2$$
+
 :::
 
 The same process is repeated for the larger number of explanatory variables.

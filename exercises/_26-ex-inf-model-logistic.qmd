@@ -22,17 +22,17 @@
     [@Ellis:1979]
 
     ```{r}
-glm(student ~ parents, data = drug_use, family = "binomial") |>
-  tidy() |>
-  mutate(p.value = ifelse(p.value < 0.0001, "<0.0001", round(p.value, 4))) |>
-  kbl(linesep = "", booktabs = TRUE, align = "lrrrr", digits = 3) |>
-  kable_styling(
-    bootstrap_options = c("striped", "condensed"),
-    latex_options = "HOLD_position",
-    full_width = FALSE
-  ) |>
-  column_spec(1, width = "10em", monospace = TRUE) |>
-  column_spec(2:5, width = "5em")
+    glm(student ~ parents, data = drug_use, family = "binomial") |>
+      tidy() |>
+      mutate(p.value = ifelse(p.value < 0.0001, "<0.0001", round(p.value, 4))) |>
+      kbl(linesep = "", booktabs = TRUE, align = "lrrrr", digits = 3) |>
+      kable_styling(
+        bootstrap_options = c("striped", "condensed"), 
+        latex_options = "HOLD_position",
+        full_width = FALSE
+      ) |>
+      column_spec(1, width = "10em", monospace = TRUE) |>
+      column_spec(2:5, width = "5em")
     ```
 
 \vfill
@@ -43,17 +43,17 @@ glm(student ~ parents, data = drug_use, family = "binomial") |>
     [@Anturane:1980]
 
     ```{r}
-glm(outcome ~ group, data = sulphinpyrazone, family = "binomial") |>
-  tidy() |>
-  mutate(p.value = ifelse(p.value < 0.0001, "<0.0001", round(p.value, 4))) |>
-  kbl(linesep = "", booktabs = TRUE, align = "lrrrr", digits = 3) |>
-  kable_styling(
-    bootstrap_options = c("striped", "condensed"),
-    latex_options = "HOLD_position",
-    full_width = FALSE
-  ) |>
-  column_spec(1, width = "10em", monospace = TRUE) |>
-  column_spec(2:5, width = "5em")
+    glm(outcome ~ group, data = sulphinpyrazone, family = "binomial") |>
+     tidy() |>
+     mutate(p.value = ifelse(p.value < 0.0001, "<0.0001", round(p.value, 4))) |>
+     kbl(linesep = "", booktabs = TRUE, align = "lrrrr", digits = 3) |>
+     kable_styling(
+       bootstrap_options = c("striped", "condensed"), 
+       latex_options = "HOLD_position",
+       full_width = FALSE
+      ) |>
+     column_spec(1, width = "10em", monospace = TRUE) |>
+     column_spec(2:5, width = "5em")
     ```
 
 \clearpage
@@ -66,38 +66,33 @@ glm(outcome ~ group, data = sulphinpyrazone, family = "binomial") |>
     The outcome variable, called `pop`, takes value 1 when a possum is from Victoria and 0 when it is from New South Wales or Queensland.[^_26-ex-inf-model-logistic-3]
     
     ```{r}
-possum <- openintro::possum |>
-  mutate(pop = as.factor(ifelse(pop == "Vic", "Victoria", "other")))
+    possum <- openintro::possum |>
+      mutate(pop = as.factor(ifelse(pop == "Vic", "Victoria", "other")))
 
-set.seed(4)
-possum_CV1 <- train(
-  pop ~ tail_l,
-  data = possum,
-  na.action = na.omit,
-  method = "glm",
-  family = "binomial",
-  trControl = trainControl(
-    method = "cv",
-    number = 4,
-    classProbs = TRUE,
-    savePredictions = TRUE
-  )
-)
-possum_CV2 <- train(
-  pop ~ total_l + sex,
-  data = possum,
-  na.action = na.omit,
-  method = "glm",
-  family = "binomial",
-  trControl = trainControl(
-    method = "cv",
-    number = 4,
-    classProbs = TRUE,
-    savePredictions = TRUE
-  )
-)
-``
-`
+    set.seed(4)
+    possum_CV1 <- train(pop ~ tail_l,
+      data = possum,
+      na.action = na.omit,
+      method = "glm",
+      family = "binomial",
+      trControl = trainControl(
+        method = "cv", number = 4,
+        classProbs = TRUE,
+        savePredictions = TRUE
+      )
+    )
+    possum_CV2 <- train(pop ~ total_l + sex,
+      data = possum,
+      na.action = na.omit,
+      method = "glm",
+      family = "binomial",
+      trControl = trainControl(
+        method = "cv", number = 4,
+        classProbs = TRUE,
+        savePredictions = TRUE
+      )
+    )
+    ```
     
     :::: {layout="[0.49, -0.02, 0.49]" layout-valign="top"}
     
@@ -125,8 +120,7 @@ possum_CV2 <- train(
       facet_wrap(~Resample) +
       theme(legend.position = "none") +
       scale_fill_continuous(high = IMSCOL["blue", 1], low = IMSCOL["blue", 6])
-    `
-``
+    ```
     :::
 
     :::{#larger}
@@ -135,26 +129,25 @@ possum_CV2 <- train(
     $$
 
     ```{r}
-#| out-width: 100%
-#| fig-width: 5
-#| fig-asp: 1
-possum_CV2$pred |>
-  select(obs, pred, Resample) |>
-  table() |>
-  as.data.frame() |>
-  ggplot(aes(x = forcats::fct_rev(pred), y = obs)) +
-  geom_tile(aes(fill = Freq)) +
-  labs(
-    x = "Predicted region",
-    y = "Observed region",
-    title = "Model with total length and sex as predictors"
-  ) +
-  geom_text(aes(label = sprintf("%1.0f", Freq)), vjust = 1) +
-  facet_wrap(~Resample) +
-  theme(legend.position = "none") +
-  scale_fill_continuous(high = IMSCOL["blue", 1], low = IMSCOL["blue", 6])
-``
-`
+    #| out-width: 100%
+    #| fig-width: 5
+    #| fig-asp: 1
+    possum_CV2$pred |>
+      select(obs, pred, Resample) |>
+      table() |>
+      as.data.frame() |>
+      ggplot(aes(x = forcats::fct_rev(pred), y = obs)) +
+      geom_tile(aes(fill = Freq)) +
+      labs(
+        x = "Predicted region",
+        y = "Observed region",
+        title = "Model with total length and sex as predictors"
+      ) +
+      geom_text(aes(label = sprintf("%1.0f", Freq)), vjust = 1) +
+      facet_wrap(~Resample) +
+      theme(legend.position = "none") +
+      scale_fill_continuous(high = IMSCOL["blue", 1], low = IMSCOL["blue", 6])
+    ```
     :::
     
     ::::
@@ -207,8 +200,7 @@ possum_CV2$pred |>
         savePredictions = TRUE
       )
     )
-    `
-``
+    ```
     
     :::: {layout="[0.49, -0.02, 0.49]" layout-valign="bottom"}
 
@@ -225,26 +217,25 @@ possum_CV2$pred |>
     $$
     
     ```{r}
-#| out-width: 100%
-#| fig-width: 5
-#| fig-asp: 0.5
-premie_CV1$pred |>
-  select(obs, pred, Resample) |>
-  table() |>
-  as.data.frame() |>
-  ggplot(aes(x = forcats::fct_rev(pred), y = obs)) +
-  geom_tile(aes(fill = Freq)) +
-  labs(
-    x = "Predicted birth",
-    y = "Observed birth",
-    title = "Model with 6 predictors"
-  ) +
-  geom_text(aes(label = sprintf("%1.0f", Freq)), vjust = 1) +
-  facet_wrap(~Resample) +
-  theme(legend.position = "none") +
-  scale_fill_continuous(high = IMSCOL["blue", 1], low = IMSCOL["blue", 6])
-``
-`
+    #| out-width: 100%
+    #| fig-width: 5
+    #| fig-asp: 0.5
+    premie_CV1$pred |>
+      select(obs, pred, Resample) |>
+      table() |>
+      as.data.frame() |>
+      ggplot(aes(x = forcats::fct_rev(pred), y = obs)) +
+      geom_tile(aes(fill = Freq)) +
+      labs(
+        x = "Predicted birth",
+        y = "Observed birth",
+        title = "Model with 6 predictors"
+      ) +
+      geom_text(aes(label = sprintf("%1.0f", Freq)), vjust = 1) +
+      facet_wrap(~Resample) +
+      theme(legend.position = "none") +
+      scale_fill_continuous(high = IMSCOL["blue", 1], low = IMSCOL["blue", 6])
+    ```
     :::
     
     :::{#smaller}
@@ -274,8 +265,7 @@ premie_CV1$pred |>
       facet_wrap(~Resample) +
       theme(legend.position = "none") +
       scale_fill_continuous(high = IMSCOL["blue", 1], low = IMSCOL["blue", 6])
-    `
-``
+    ```
     :::
     ::::
 
@@ -299,36 +289,32 @@ premie_CV1$pred |>
     The outcome variable, called `pop`, takes value 1 when a possum is from Victoria and 0 when it is from New South Wales or Queensland.
     
     ```{r}
-possum <- openintro::possum |>
-  mutate(pop = as.factor(ifelse(pop == "Vic", "Victoria", "other")))
+    possum <- openintro::possum |>
+      mutate(pop = as.factor(ifelse(pop == "Vic", "Victoria", "other")))
 
-set.seed(4)
-possum_CV1 <- train(
-  pop ~ tail_l,
-  data = possum,
-  na.action = na.omit,
-  method = "glm",
-  family = "binomial",
-  trControl = trainControl(
-    method = "cv",
-    number = 4,
-    classProbs = TRUE,
-    savePredictions = TRUE
-  )
-)
-possum_CV2 <- train(
-  pop ~ total_l + sex,
-  data = possum,
-  na.action = na.omit,
-  method = "glm",
-  family = "binomial",
-  trControl = trainControl(
-    method = "cv",
-    number = 4,
-    classProbs = TRUE,
-    savePredictions = TRUE
-  )
-)
+    set.seed(4)
+    possum_CV1 <- train(pop ~ tail_l,
+      data = possum,
+      na.action = na.omit,
+      method = "glm",
+      family = "binomial",
+      trControl = trainControl(
+        method = "cv", number = 4,
+        classProbs = TRUE,
+        savePredictions = TRUE
+      )
+    )
+    possum_CV2 <- train(pop ~ total_l + sex,
+      data = possum,
+      na.action = na.omit,
+      method = "glm",
+      family = "binomial",
+      trControl = trainControl(
+        method = "cv", number = 4,
+        classProbs = TRUE,
+        savePredictions = TRUE
+      )
+    )
     ```
 
     :::: {layout="[0.49, -0.02, 0.49]" layout-valign="top"}
@@ -339,26 +325,25 @@ possum_CV2 <- train(
     $$
     
     ```{r}
-#| out-width: 100%
-#| fig-width: 5
-#| fig-asp: 1
-possum_CV1$pred |>
-  select(obs, pred, Resample) |>
-  table() |>
-  as.data.frame() |>
-  ggplot(aes(x = forcats::fct_rev(pred), y = obs)) +
-  geom_tile(aes(fill = Freq)) +
-  labs(
-    x = "Predicted region",
-    y = "Observed region",
-    title = "Model with tail length as predictor"
-  ) +
-  geom_text(aes(label = sprintf("%1.0f", Freq)), vjust = 1) +
-  facet_wrap(~Resample) +
-  theme(legend.position = "none") +
-  scale_fill_continuous(high = IMSCOL["blue", 1], low = IMSCOL["blue", 6])
-``
-`
+    #| out-width: 100%
+    #| fig-width: 5
+    #| fig-asp: 1
+    possum_CV1$pred |>
+      select(obs, pred, Resample) |>
+      table() |>
+      as.data.frame() |>
+      ggplot(aes(x = forcats::fct_rev(pred), y = obs)) +
+      geom_tile(aes(fill = Freq)) +
+      labs(
+        x = "Predicted region",
+        y = "Observed region",
+        title = "Model with tail length as predictor"
+      ) +
+      geom_text(aes(label = sprintf("%1.0f", Freq)), vjust = 1) +
+      facet_wrap(~Resample) +
+      theme(legend.position = "none") +
+      scale_fill_continuous(high = IMSCOL["blue", 1], low = IMSCOL["blue", 6])
+    ```
     :::
 
     :::{#larger}
@@ -385,8 +370,7 @@ possum_CV1$pred |>
       facet_wrap(~Resample) +
       theme(legend.position = "none") +
       scale_fill_continuous(high = IMSCOL["blue", 1], low = IMSCOL["blue", 6])
-    `
-``
+    ```
     :::
     
     ::::
@@ -411,42 +395,36 @@ possum_CV1$pred |>
     [@data:births14]
     
     ```{r}
-births14_nona <- births14 |>
-  select(-fage) |>
-  drop_na() |>
-  mutate(
-    lowbw = as.factor(ifelse(lowbirthweight == "low", "low", "not_low"))
-  ) |>
-  mutate(premie = as.factor(ifelse(premie == "premie", "premie", "full_term")))
+    births14_nona <- births14 |>
+      select(-fage) |>
+      drop_na() |>
+      mutate(lowbw = as.factor(ifelse(lowbirthweight == "low", "low", "not_low"))) |>
+      mutate(premie = as.factor(ifelse(premie == "premie", "premie", "full_term")))
 
-set.seed(473)
-premie_CV1 <- train(
-  premie ~ mage + weight + mature + visits + gained + habit,
-  data = births14_nona,
-  na.action = na.omit,
-  method = "glm",
-  family = "binomial",
-  trControl = trainControl(
-    method = "cv",
-    number = 3,
-    classProbs = TRUE,
-    savePredictions = TRUE
-  )
-)
-set.seed(473)
-premie_CV2 <- train(
-  premie ~ weight + mature,
-  data = births14_nona,
-  na.action = na.omit,
-  method = "glm",
-  family = "binomial",
-  trControl = trainControl(
-    method = "cv",
-    number = 3,
-    classProbs = TRUE,
-    savePredictions = TRUE
-  )
-)
+    set.seed(473)
+    premie_CV1 <- train(premie ~ mage + weight + mature + visits + gained + habit,
+      data = births14_nona,
+      na.action = na.omit,
+      method = "glm",
+      family = "binomial",
+      trControl = trainControl(
+        method = "cv", number = 3,
+        classProbs = TRUE,
+        savePredictions = TRUE
+      )
+    )
+    set.seed(473)
+    premie_CV2 <- train(premie ~ weight + mature,
+      data = births14_nona,
+      na.action = na.omit,
+      method = "glm",
+      family = "binomial",
+      trControl = trainControl(
+        method = "cv", number = 3,
+        classProbs = TRUE,
+        savePredictions = TRUE
+      )
+    )
     ```
 
     :::: {layout="[0.49, -0.02, 0.49]" layout-valign="bottom"}
@@ -464,26 +442,25 @@ premie_CV2 <- train(
     $$
     
     ```{r}
-#| out-width: 100%
-#| fig-width: 5
-#| fig-asp: 0.5
-premie_CV1$pred |>
-  select(obs, pred, Resample) |>
-  table() |>
-  as.data.frame() |>
-  ggplot(aes(x = forcats::fct_rev(pred), y = obs)) +
-  geom_tile(aes(fill = Freq)) +
-  labs(
-    x = "Predicted birth",
-    y = "Observed birth",
-    title = "Model with 6 predictors"
-  ) +
-  geom_text(aes(label = sprintf("%1.0f", Freq)), vjust = 1) +
-  facet_wrap(~Resample) +
-  theme(legend.position = "none") +
-  scale_fill_continuous(high = IMSCOL["blue", 1], low = IMSCOL["blue", 6])
-``
-`
+    #| out-width: 100%
+    #| fig-width: 5
+    #| fig-asp: 0.5
+    premie_CV1$pred |>
+      select(obs, pred, Resample) |>
+      table() |>
+      as.data.frame() |>
+      ggplot(aes(x = forcats::fct_rev(pred), y = obs)) +
+      geom_tile(aes(fill = Freq)) +
+      labs(
+        x = "Predicted birth",
+        y = "Observed birth",
+        title = "Model with 6 predictors"
+      ) +
+      geom_text(aes(label = sprintf("%1.0f", Freq)), vjust = 1) +
+      facet_wrap(~Resample) +
+      theme(legend.position = "none") +
+      scale_fill_continuous(high = IMSCOL["blue", 1], low = IMSCOL["blue", 6])
+    ```
     :::
     
     :::{#smaller}
@@ -513,8 +490,7 @@ premie_CV1$pred |>
       facet_wrap(~Resample) +
       theme(legend.position = "none") +
       scale_fill_continuous(high = IMSCOL["blue", 1], low = IMSCOL["blue", 6])
-    `
-``
+    ```
     :::
     ::::
 
