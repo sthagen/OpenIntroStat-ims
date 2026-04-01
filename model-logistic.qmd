@@ -82,16 +82,25 @@ resume_names_1 |>
   bind_cols(resume_names_2) |>
   bind_cols(resume_names_3) |>
   kbl(
-    linesep = "", booktabs = TRUE, align = "lllllllll",
+    linesep = "",
+    booktabs = TRUE,
+    align = "lllllllll",
     col.names = c(
-      "first_name", "race", "sex",
-      "first_name", "race", "sex",
-      "first_name", "race", "sex"
+      "first_name",
+      "race",
+      "sex",
+      "first_name",
+      "race",
+      "sex",
+      "first_name",
+      "race",
+      "sex"
     )
   ) |>
   kable_styling(
     bootstrap_options = c("striped", "condensed"),
-    latex_options = c("striped"), full_width = FALSE
+    latex_options = c("striped"),
+    full_width = FALSE
   ) |>
   column_spec(4, border_left = T) |>
   column_spec(7, border_left = T)
@@ -112,8 +121,15 @@ resume <- resume |>
     race = if_else(race == "black", "Black", "White")
   ) |>
   select(
-    received_callback, job_city, college_degree, years_experience,
-    honors, military, has_email_address, race, sex
+    received_callback,
+    job_city,
+    college_degree,
+    years_experience,
+    honors,
+    military,
+    has_email_address,
+    race,
+    sex
   )
 ```
 
@@ -130,16 +146,16 @@ The full set of attributes considered is provided in @tbl-resume-variables.
 #|   0 otherwise.
 #| tbl-pos: H
 resume_variables <- tribble(
-  ~variable,           ~description,
-  "received_callback", "Specifies whether the employer called the applicant following submission of the application for the job.",
-  "job_city",          "City where the job was located: Boston or Chicago.",
-  "college_degree",    "An indicator for whether the resume listed a college degree.",
-  "years_experience",  "Number of years of experience listed on the resume.",
-  "honors",            "Indicator for the resume listing some sort of honors, e.g. employee of the month.",
-  "military",          "Indicator for if the resume listed any military experience.",
-  "has_email_address", "Indicator for if the resume listed an email address for the applicant.",
-  "race",              "Race of the applicant, implied by their first name listed on the resume.",
-  "sex",               "Sex of the applicant (limited to only man and woman), implied by the first name listed on the resume."
+  ~variable           , ~description                                                                                               ,
+  "received_callback" , "Specifies whether the employer called the applicant following submission of the application for the job." ,
+  "job_city"          , "City where the job was located: Boston or Chicago."                                                       ,
+  "college_degree"    , "An indicator for whether the resume listed a college degree."                                             ,
+  "years_experience"  , "Number of years of experience listed on the resume."                                                      ,
+  "honors"            , "Indicator for the resume listing some sort of honors, e.g. employee of the month."                        ,
+  "military"          , "Indicator for if the resume listed any military experience."                                              ,
+  "has_email_address" , "Indicator for if the resume listed an email address for the applicant."                                   ,
+  "race"              , "Race of the applicant, implied by their first name listed on the resume."                                 ,
+  "sex"               , "Sex of the applicant (limited to only man and woman), implied by the first name listed on the resume."
 )
 
 resume_variables |>
@@ -213,12 +229,12 @@ $$
 #| label: fig-logit-transformation
 #| fig-cap: Values of $p_i$ against values of $logit(p_i)$.
 #| fig-alt: |
-#|   A scatterplot with a superimposed line connecting values of p from -5 
+#|   A scatterplot with a superimposed line connecting values of p from -5
 #|   to +6 (on the x-axis) with their logit transformed value (on the y-axis).
 #| out-width: 100%
 #| fig-asp: 0.45
 logit_df_line <- tibble(
-  p  = seq(0.0001, 0.9999, 0.0001),
+  p = seq(0.0001, 0.9999, 0.0001),
   lp = log(p / (1 - p))
 )
 
@@ -237,32 +253,47 @@ logit_df_point <- tibble(
   )
 
 ggplot(logit_df_line, aes(x = lp, y = p)) +
-  geom_hline(yintercept = 0, linetype = "dashed", color = IMSCOL["blue", "full"]) +
-  geom_hline(yintercept = 1, linetype = "dashed", color = IMSCOL["blue", "full"]) +
+  geom_hline(
+    yintercept = 0,
+    linetype = "dashed",
+    color = IMSCOL["blue", "full"]
+  ) +
+  geom_hline(
+    yintercept = 1,
+    linetype = "dashed",
+    color = IMSCOL["blue", "full"]
+  ) +
   geom_line(linewidth = 0.5) +
   coord_cartesian(
     xlim = c(-5.5, 6.15),
     ylim = c(-0.05, 1.1)
   ) +
   geom_point(
-    data = logit_df_point, shape = "circle open",
-    size = 3, color = IMSCOL["red", "full"], stroke = 2
+    data = logit_df_point,
+    shape = "circle open",
+    size = 3,
+    color = IMSCOL["red", "full"],
+    stroke = 2
   ) +
   geom_text(
     data = logit_df_point |> filter(label_pos == "above"),
-    aes(label = label), vjust = -2
+    aes(label = label),
+    vjust = -2
   ) +
   geom_text(
     data = logit_df_point |> filter(label_pos == "below"),
-    aes(label = label), vjust = 2.5
+    aes(label = label),
+    vjust = 2.5
   ) +
   geom_text(
     data = logit_df_point |> filter(label_pos == "right"),
-    aes(label = label), hjust = -0.25
+    aes(label = label),
+    hjust = -0.25
   ) +
   geom_text(
     data = logit_df_point |> filter(label_pos == "left"),
-    aes(label = label), hjust = 1.25
+    aes(label = label),
+    hjust = 1.25
   ) +
   labs(
     x = expression(logit(p[i])),
@@ -324,14 +355,27 @@ Like multiple regression, the result may be presented in a summary table, which 
 #|   resume callback example.
 #| tbl-pos: H
 resume_full_fit <- logistic_reg() |>
-  fit(received_callback ~ job_city + college_degree + years_experience + honors + military + has_email_address + race + sex, data = resume, family = "binomial")
+  fit(
+    received_callback ~ job_city +
+      college_degree +
+      years_experience +
+      honors +
+      military +
+      has_email_address +
+      race +
+      sex,
+    data = resume,
+    family = "binomial"
+  )
 
 resume_full_fit |>
   tidy() |>
   mutate(p.value = ifelse(p.value < 0.0001, "<0.0001", round(p.value, 4))) |>
   kbl(
-    linesep = "", booktabs = TRUE,
-    digits = 2, align = "lrrrrr"
+    linesep = "",
+    booktabs = TRUE,
+    digits = 2,
+    align = "lrrrrr"
   ) |>
   kable_styling(
     bootstrap_options = c("striped", "condensed"),
@@ -359,14 +403,27 @@ It is important to note that AIC provides information about the quality of a mod
 #|   resume callback example.
 #| tbl-pos: H
 resume_full_fit <- logistic_reg() |>
-  fit(received_callback ~ job_city + college_degree + years_experience + honors + military + has_email_address + race + sex, data = resume, family = "binomial")
+  fit(
+    received_callback ~ job_city +
+      college_degree +
+      years_experience +
+      honors +
+      military +
+      has_email_address +
+      race +
+      sex,
+    data = resume,
+    family = "binomial"
+  )
 
 resume_full_fit |>
   glance() |>
   select(AIC, number_observations = nobs) |>
   kbl(
-    linesep = "", booktabs = TRUE,
-    digits = 2, align = "rr"
+    linesep = "",
+    booktabs = TRUE,
+    digits = 2,
+    align = "rr"
   ) |>
   kable_styling(
     bootstrap_options = c("striped", "condensed"),
@@ -385,14 +442,26 @@ We will look for models with a lower AIC using a backward elimination strategy. 
 #|   resume callback example without `college_degree`.
 #| tbl-pos: H
 resume_fit <- logistic_reg() |>
-  fit(received_callback ~ job_city + years_experience + honors + military + has_email_address + race + sex, data = resume, family = "binomial")
+  fit(
+    received_callback ~ job_city +
+      years_experience +
+      honors +
+      military +
+      has_email_address +
+      race +
+      sex,
+    data = resume,
+    family = "binomial"
+  )
 
 resume_fit |>
   glance() |>
   select(AIC, number_observations = nobs) |>
   kbl(
-    linesep = "", booktabs = TRUE,
-    digits = 2, align = "rrr"
+    linesep = "",
+    booktabs = TRUE,
+    digits = 2,
+    align = "rrr"
   ) |>
   kable_styling(
     bootstrap_options = c("striped", "condensed"),
@@ -417,14 +486,26 @@ terms_chp_09 <- c(terms_chp_09, "Akaike information criterion", "AIC")
 #|   using AIC and `college_degree` has been dropped from the model.
 #| tbl-pos: H
 resume_fit <- logistic_reg() |>
-  fit(received_callback ~ job_city + years_experience + honors + military + has_email_address + race + sex, data = resume, family = "binomial")
+  fit(
+    received_callback ~ job_city +
+      years_experience +
+      honors +
+      military +
+      has_email_address +
+      race +
+      sex,
+    data = resume,
+    family = "binomial"
+  )
 
 resume_fit |>
   tidy() |>
   mutate(p.value = ifelse(p.value < 0.0001, "<0.0001", round(p.value, 4))) |>
   kbl(
-    linesep = "", booktabs = TRUE,
-    digits = 2, align = "lrrrrr"
+    linesep = "",
+    booktabs = TRUE,
+    digits = 2,
+    align = "lrrrrr"
   ) |>
   kable_styling(
     bootstrap_options = c("striped", "condensed"),

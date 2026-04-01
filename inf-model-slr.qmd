@@ -55,7 +55,7 @@ There appears to be a linear relationship between advertising dollars and revenu
 #|   Revenue as a linear model of advertising dollars for a population of sandwich
 #|   stores, in thousands of dollars.
 #| fig-alt: |
-#|   Scatterplot with advertising amount on the x-axis and revenue on the y-axis. 
+#|   Scatterplot with advertising amount on the x-axis and revenue on the y-axis.
 #|   A linear model is superimposed. The points show a reasonably strong and
 #|   positive linear trend.
 set.seed(4747)
@@ -108,21 +108,31 @@ sandwich_many <- sandwich |>
 ```{r}
 #| label: fig-sand-samp
 #| fig-cap: |
-#|   Two random samples of 20 stores from the entire population. A linear 
+#|   Two random samples of 20 stores from the entire population. A linear
 #|   trend between advertising and revenue is observed in both.
-#| fig-subcap: 
+#| fig-subcap:
 #|   - First sample.
 #|   - Second sample.
 #| fig-alt: |
-#|   For two random samples of 20 stores, scatterplots with advertising amount on 
-#|   the x-axis and revenue on the y-axis. Linear models are superimposed. 
+#|   For two random samples of 20 stores, scatterplots with advertising amount on
+#|   the x-axis and revenue on the y-axis. Linear models are superimposed.
 #|   The points in each plot show reasonably strong and positive linear trends.
 #| layout-ncol: 2
 #| out-width: 100%
 #| fig-width: 5
 ggplot(sandwich2, aes(x = ad, y = rev)) +
-  geom_point(size = 3, fill = IMSCOL["green", "full"], color = "#FFFFFF", shape = 22) +
-  geom_smooth(method = "lm", se = FALSE, fullrange = TRUE, color = IMSCOL["green", "full"]) +
+  geom_point(
+    size = 3,
+    fill = IMSCOL["green", "full"],
+    color = "#FFFFFF",
+    shape = 22
+  ) +
+  geom_smooth(
+    method = "lm",
+    se = FALSE,
+    fullrange = TRUE,
+    color = IMSCOL["green", "full"]
+  ) +
   scale_x_continuous(labels = label_dollar(suffix = "K")) +
   scale_y_continuous(labels = label_dollar(suffix = "K")) +
   labs(
@@ -134,8 +144,18 @@ ggplot(sandwich2, aes(x = ad, y = rev)) +
   coord_cartesian(ylim = c(0, 65))
 
 ggplot(sandwich3, aes(x = ad, y = rev)) +
-  geom_point(size = 3, fill = IMSCOL["gray", "full"], color = "#FFFFFF", shape = 23) +
-  geom_smooth(method = "lm", se = FALSE, fullrange = TRUE, color = IMSCOL["gray", "full"]) +
+  geom_point(
+    size = 3,
+    fill = IMSCOL["gray", "full"],
+    color = "#FFFFFF",
+    shape = 23
+  ) +
+  geom_smooth(
+    method = "lm",
+    se = FALSE,
+    fullrange = TRUE,
+    color = IMSCOL["gray", "full"]
+  ) +
   scale_x_continuous(labels = label_dollar(suffix = "K")) +
   scale_y_continuous(labels = label_dollar(suffix = "K")) +
   labs(
@@ -165,24 +185,45 @@ terms_chp_24 <- c(terms_chp_24, "variability of the slope")
 #|   The linear models from the two random samples are quite similar,
 #|   but not exactly the same.
 #| fig-alt: |
-#|   For two different random samples, superimposed onto the same plot, 
-#|   scatterplot with advertising amount on the x-axis and revenue on the y-axis. 
-#|   Two linear models are plotted to demonstrate that the lines are very similar, 
+#|   For two different random samples, superimposed onto the same plot,
+#|   scatterplot with advertising amount on the x-axis and revenue on the y-axis.
+#|   Two linear models are plotted to demonstrate that the lines are very similar,
 #|   yet they are not the same.
-#| fig-asp: 0.5   
+#| fig-asp: 0.5
 ggplot() +
-  geom_point(data = sandwich2, aes(x = ad, y = rev), 
-             size = 3, shape = 22,
-             fill = IMSCOL["green", "full"], color = "#FFFFFF") +
-  geom_smooth(data = sandwich2, aes(x = ad, y = rev), 
-              method = "lm", se = FALSE, fullrange = TRUE, 
-              color = IMSCOL["green", "full"]) +
-  geom_point(data = sandwich3, aes(x = ad, y = rev), 
-             size = 3, , shape = 23,
-             fill = IMSCOL["gray", "full"], color = "#FFFFFF") +
-  geom_smooth(data = sandwich3, aes(x = ad, y = rev), 
-              method = "lm", se = FALSE, fullrange = TRUE, 
-              color = IMSCOL["gray", "full"]) +
+  geom_point(
+    data = sandwich2,
+    aes(x = ad, y = rev),
+    size = 3,
+    shape = 22,
+    fill = IMSCOL["green", "full"],
+    color = "#FFFFFF"
+  ) +
+  geom_smooth(
+    data = sandwich2,
+    aes(x = ad, y = rev),
+    method = "lm",
+    se = FALSE,
+    fullrange = TRUE,
+    color = IMSCOL["green", "full"]
+  ) +
+  geom_point(
+    data = sandwich3,
+    aes(x = ad, y = rev),
+    size = 3,
+    ,
+    shape = 23,
+    fill = IMSCOL["gray", "full"],
+    color = "#FFFFFF"
+  ) +
+  geom_smooth(
+    data = sandwich3,
+    aes(x = ad, y = rev),
+    method = "lm",
+    se = FALSE,
+    fullrange = TRUE,
+    color = IMSCOL["gray", "full"]
+  ) +
   scale_x_continuous(labels = label_dollar(suffix = "K")) +
   scale_y_continuous(labels = label_dollar(suffix = "K")) +
   labs(
@@ -205,20 +246,28 @@ ggplot() +
 #|   linear model will be slightly different. The red line provides the linear fit to
 #|   the entire population.
 #| fig-alt: |
-#|   An x-y coordinate system with least squares regression lines from many 
-#|   random samples of size 20 (no points are plotted). The lines vary around the 
-#|   true population line. On the x-axis is advertising amount; on the y-axis 
+#|   An x-y coordinate system with least squares regression lines from many
+#|   random samples of size 20 (no points are plotted). The lines vary around the
+#|   true population line. On the x-axis is advertising amount; on the y-axis
 #|   is revenue.
-#| fig-asp: 0.5   
+#| fig-asp: 0.5
 ggplot() +
   geom_smooth(
-    data = sandwich_many, aes(x = ad, y = rev, group = replicate),
-    method = "lm", se = FALSE, fullrange = TRUE, 
-    color = IMSCOL["gray", "f2"], size = 0.5
+    data = sandwich_many,
+    aes(x = ad, y = rev, group = replicate),
+    method = "lm",
+    se = FALSE,
+    fullrange = TRUE,
+    color = IMSCOL["gray", "f2"],
+    size = 0.5
   ) +
   geom_smooth(
-    data = sandwich, aes(x = ad, y = rev), method = "lm", se = FALSE,
-    fullrange = TRUE, color = IMSCOL["red", "full"]
+    data = sandwich,
+    aes(x = ad, y = rev),
+    method = "lm",
+    se = FALSE,
+    fullrange = TRUE,
+    color = IMSCOL["red", "full"]
   ) +
   scale_x_continuous(labels = label_dollar(suffix = "K")) +
   scale_y_continuous(labels = label_dollar(suffix = "K")) +
@@ -245,7 +294,7 @@ The distribution of slopes (for samples of size $n=20$) can be seen in @fig-sand
 #|   Variability of slope estimates from many different samples of stores,
 #|   each of size 20.
 #| fig-alt: |
-#|   Histogram of the slope values from many random samples of size 20. 
+#|   Histogram of the slope values from many random samples of size 20.
 #|   The slope estimates vary from about 2.1 to 8. The histogram is reasonably
 #|   bell-shaped.
 sandwich_many_lm <- sandwich_many |>
@@ -305,9 +354,9 @@ terms_chp_24 <- c(terms_chp_24, "randomization test for the slope")
 #|   (mother's weight gain, mother's age, number of hospital visits, and weeks
 #|   gestation).
 #| fig-alt: |
-#|   Four different scatterplots, all with weight of baby on the y-axis. 
-#|   On the x-axis are weight gained by mother, mother's age, number of hospital 
-#|   visits, and weeks gestation. Weeks gestation and weight of baby show the 
+#|   Four different scatterplots, all with weight of baby on the y-axis.
+#|   On the x-axis are weight gained by mother, mother's age, number of hospital
+#|   visits, and weeks gestation. Weeks gestation and weight of baby show the
 #|   strongest linear relationship (which is positive).
 set.seed(47)
 births14_100 <- births14 |>
@@ -331,8 +380,7 @@ p_weeks <- ggplot(births14_100) +
   xlab("Weeks of gestation") +
   ylab("Weight of baby")
 
-p_gained + p_mage + p_visits + p_weeks +
-  plot_layout(ncol = 2)
+p_gained + p_mage + p_visits + p_weeks + plot_layout(ncol = 2)
 ```
 
 As you have seen previously, statistical inference typically relies on setting a null hypothesis which is hoped to be subsequently rejected.
@@ -361,12 +409,12 @@ If the observed slope is inconsistent with the slopes from permuting, we can con
 #|   Repeated permutations allow for quantifying the variability in the slope
 #|   under the condition that there is no linear relationship (i.e., that the
 #|   null hypothesis is true).
-#| fig-subcap: 
+#| fig-subcap:
 #|   - Original data.
 #|   - Permuted data.
 #| fig-alt: |
-#|   Two scatterplots, both with length of gestation on the x-axis and weight 
-#|   of baby on the y-axis. The left panel is the original data. The right panel 
+#|   Two scatterplots, both with length of gestation on the x-axis and weight
+#|   of baby on the y-axis. The left panel is the original data. The right panel
 #|   is data where the weight of the baby has been permuted across the
 #|   observations.
 #| out-width: 100%
@@ -399,16 +447,17 @@ The columns in @tbl-ls-births are further described in @sec-mathslope.
 ```{r}
 #| label: tbl-ls-births
 #| tbl-cap: |
-#|   The least squares estimates of the intercept and slope are given in 
+#|   The least squares estimates of the intercept and slope are given in
 #|   the estimate column. The observed slope is 0.335.
 #| tbl-pos: H
 lm(weight ~ weeks, data = births14_100) |>
   tidy() |>
   mutate(p.value = ifelse(p.value < 0.0001, "<0.0001", round(p.value, 4))) |>
-  kbl(linesep = "", booktabs = TRUE, 
-      digits = 2, align = "lrrrr") |>
-  kable_styling(bootstrap_options = c("striped", "condensed"), 
-                latex_options = c("striped")) |>
+  kbl(linesep = "", booktabs = TRUE, digits = 2, align = "lrrrr") |>
+  kable_styling(
+    bootstrap_options = c("striped", "condensed"),
+    latex_options = c("striped")
+  ) |>
   column_spec(1, width = "10em", monospace = TRUE) |>
   column_spec(2:5, width = "5em")
 ```
@@ -422,15 +471,15 @@ Repeated permutations and slope calculations describe the variability in the lin
 ```{r}
 #| label: fig-permweekslm
 #| fig-cap: |
-#|   Two permutations of `weight` with slightly different least 
+#|   Two permutations of `weight` with slightly different least
 #|   squares regression lines.
 #| fig-subcap:
 #|   - First permutation.
 #|   - Second permutation.
 #| fig-alt: |
-#|   Two scatterplots, both with length of gestation on the x-axis and 
-#|   weight of baby on the y-axis. Each plot includes data where the weight of 
-#|   the baby has been permuted across the observations. The two different 
+#|   Two scatterplots, both with length of gestation on the x-axis and
+#|   weight of baby on the y-axis. Each plot includes data where the weight of
+#|   the baby has been permuted across the observations. The two different
 #|   permutations produce slightly different least squares regression lines.
 #| out-width: 100%
 #| layout-ncol: 2
@@ -466,8 +515,8 @@ Because the randomization happens under the condition of no underlying relations
 #|   Histogram of slopes given different permutations of the `weight` variable.
 #|   The vertical red line is at the observed value of the slope, 0.335.
 #| fig-alt: |
-#|   Histogram of slopes describing the linear model from permuted weight 
-#|   regressed on weeks gestation. The permuted slopes range from -0.15 to +0.15 
+#|   Histogram of slopes describing the linear model from permuted weight
+#|   regressed on weeks gestation. The permuted slopes range from -0.15 to +0.15
 #|   and are nowhere near the observed slope value of 0.335.
 #| fig-asp: 0.48
 perm_slope <- births14_100 |>
@@ -532,20 +581,22 @@ births_many_BS <- births14_100 |>
 ```{r}
 #| label: fig-magePlot
 #| fig-cap: |
-#|   Using the original data, the weight of baby as a linear model of 
-#|   mother's age. Notice that the relationship between mother's age and weight 
-#|   of baby is not as strong as the relationship we saw previously between 
+#|   Using the original data, the weight of baby as a linear model of
+#|   mother's age. Notice that the relationship between mother's age and weight
+#|   of baby is not as strong as the relationship we saw previously between
 #|   weeks gestation and weight of baby.
 #| fig-alt: |
-#|   Scatterplot with mother's age on the x-axis and baby's weight on the 
-#|   y-axis. A linear model is superimposed. The points show a weak positive 
+#|   Scatterplot with mother's age on the x-axis and baby's weight on the
+#|   y-axis. A linear model is superimposed. The points show a weak positive
 #|   linear trend.
 #| fig-asp: 0.5
 ggplot(births14_100) +
   geom_point(aes(x = mage, y = weight)) +
-  geom_smooth(aes(x = mage, y = weight),
-    method = "lm", se = FALSE,
-    fullrange = TRUE, 
+  geom_smooth(
+    aes(x = mage, y = weight),
+    method = "lm",
+    se = FALSE,
+    fullrange = TRUE,
   ) +
   labs(x = "Mother's age", y = "Weight of baby")
 ```
@@ -553,16 +604,17 @@ ggplot(births14_100) +
 ```{r}
 #| label: tbl-ls-births-mage
 #| tbl-cap: |
-#|   The least squares estimates of the intercept and slope are given in 
+#|   The least squares estimates of the intercept and slope are given in
 #|   the estimate column. The observed slope is 0.036.
 #| tbl-pos: H
 lm(weight ~ mage, data = births14_100) |>
   tidy() |>
   mutate(p.value = ifelse(p.value < 0.0001, "<0.0001", round(p.value, 4))) |>
-  kbl(linesep = "", booktabs = TRUE, 
-      digits = 2, align = "lrrrr") |>
-  kable_styling(bootstrap_options = c("striped", "condensed"), 
-                latex_options = c("striped")) |>
+  kbl(linesep = "", booktabs = TRUE, digits = 2, align = "lrrrr") |>
+  kable_styling(
+    bootstrap_options = c("striped", "condensed"),
+    latex_options = c("striped")
+  ) |>
   column_spec(1, width = "10em", monospace = TRUE) |>
   column_spec(2:5, width = "5em")
 ```
@@ -578,49 +630,65 @@ The measurements are linked to the dot (i.e., to the birth in the sample).
 ```{r}
 #| label: fig-birth2BS
 #| fig-cap: |
-#|   Original and one bootstrap sample of the births data. It is difficult to 
-#|   differentiate between the two plots, as (within a single bootstrap sample) 
-#|   the observations which have been resampled twice are plotted as points on 
-#|   top of one another. The red circles represent points in the original data 
-#|   which were not included in the bootstrap sample. The blue circles represent 
-#|   a data point that was repeatedly resampled (and is therefore darker) in the 
-#|   bootstrap sample. The green circles represent a particular structure to the 
+#|   Original and one bootstrap sample of the births data. It is difficult to
+#|   differentiate between the two plots, as (within a single bootstrap sample)
+#|   the observations which have been resampled twice are plotted as points on
+#|   top of one another. The red circles represent points in the original data
+#|   which were not included in the bootstrap sample. The blue circles represent
+#|   a data point that was repeatedly resampled (and is therefore darker) in the
+#|   bootstrap sample. The green circles represent a particular structure to the
 #|   data which is observed in both the original and bootstrap samples.
-#| fig-subcap: 
+#| fig-subcap:
 #|   - Original data.
 #|   - Bootstrapped data.
 #| fig-alt: |
-#|   Two scatterplots, both with mother's age on the x-axis and baby's weight 
-#|   on the y-axis. The left plot is the original data. The right plot is the 
-#|   bootstrapped data. Comparing the bootstrapped points to the original points, 
-#|   we can see that some observations were sampled more than once, and some 
+#|   Two scatterplots, both with mother's age on the x-axis and baby's weight
+#|   on the y-axis. The left plot is the original data. The right plot is the
+#|   bootstrapped data. Comparing the bootstrapped points to the original points,
+#|   we can see that some observations were sampled more than once, and some
 #|   observations were not selected for the bootstrap sample at all.
 #| out-width: 100%
 #| layout-ncol: 2
 #| fig-width: 5
 ggplot(births14_100) +
   geom_point(aes(x = mage, y = weight), alpha = 0.4) +
-  geom_smooth(aes(x = mage, y = weight),
-    method = "lm", se = FALSE,
+  geom_smooth(
+    aes(x = mage, y = weight),
+    method = "lm",
+    se = FALSE,
     fullrange = TRUE
   ) +
   xlab("mother's age") +
   ylab("weight of baby") +
   ggtitle("Original data") +
-  geom_point(x = 29, y = 9, color = IMSCOL["green", "full"], pch = 1, size = 8) +
+  geom_point(
+    x = 29,
+    y = 9,
+    color = IMSCOL["green", "full"],
+    pch = 1,
+    size = 8
+  ) +
   geom_point(x = 20, y = 6, color = IMSCOL["red", "full"], pch = 1, size = 8) +
   geom_point(x = 39, y = 9, pch = 1, size = 8)
 
 ggplot(births5) +
   geom_point(aes(x = mage, y = weight), alpha = 0.4) +
-  geom_smooth(aes(x = mage, y = weight),
-    method = "lm", se = FALSE,
+  geom_smooth(
+    aes(x = mage, y = weight),
+    method = "lm",
+    se = FALSE,
     fullrange = TRUE
   ) +
   xlab("mother's age") +
   ylab("weight of baby") +
   ggtitle("Bootstrap sample") +
-  geom_point(x = 29, y = 9, color = IMSCOL["green", "full"], pch = 1, size = 8) +
+  geom_point(
+    x = 29,
+    y = 9,
+    color = IMSCOL["green", "full"],
+    pch = 1,
+    size = 8
+  ) +
   geom_point(x = 20, y = 6, color = IMSCOL["red", "full"], pch = 1, size = 8) +
   geom_point(x = 39, y = 9, pch = 1, size = 8)
 ```
@@ -637,11 +705,16 @@ By repeatedly resampling, we can see dozens of bootstrapped slopes on the same p
 #|   Repeated bootstrap resamples of size 100 are taken from the original data. Each
 #|   of the bootstrapped linear models is slightly different.
 #| fig-alt: |
-#|   An x-y coordinate system with least squares regression lines from many 
-#|   bootstrap samples (no points are plotted). The lines vary around the observed 
+#|   An x-y coordinate system with least squares regression lines from many
+#|   bootstrap samples (no points are plotted). The lines vary around the observed
 #|   population line. On the x-axis is mother's age; on the y-axis is baby's weight.
 ggplot(births_many_BS, aes(x = mage, y = weight, group = replicate)) +
-  geom_smooth(method = "lm", se = FALSE, color = IMSCOL["blue", "f2"], fullrange = TRUE) +
+  geom_smooth(
+    method = "lm",
+    se = FALSE,
+    color = IMSCOL["blue", "f2"],
+    fullrange = TRUE
+  ) +
   labs(
     x = "Mother's age",
     y = "Weight of baby"
@@ -656,13 +729,13 @@ We are 95% confident that for the model describing the population of births, pre
 ```{r}
 #| label: fig-mageBSslopes
 #| fig-cap: |
-#|   The original births data on baby's weight and mother's age is 
-#|   bootstrapped 1,000 times. The histogram provides a sense for the 
+#|   The original births data on baby's weight and mother's age is
+#|   bootstrapped 1,000 times. The histogram provides a sense for the
 #|   variability of the slope of the linear model from sample to sample.
 #| fig-alt: |
-#|   Histogram of the slopes computed from many bootstrapped samples. 
-#|   The bootstrap samples range from -0.05 (with the 2.5 percentile at -0.01) to 
-#|   +0.1 (with the 97.5 percentile at 0.081). The bootstrapped slopes form a 
+#|   Histogram of the slopes computed from many bootstrapped samples.
+#|   The bootstrap samples range from -0.05 (with the 2.5 percentile at -0.01) to
+#|   +0.1 (with the 97.5 percentile at 0.081). The bootstrapped slopes form a
 #|   histogram that is reasonably symmetric and bell-shaped.
 set.seed(47)
 births_many_BS_1000 <- births14_100 |>
@@ -678,10 +751,36 @@ upper <- round(quantile(births_many_lm_BS$estimate, 0.975), 3)
 
 ggplot(births_many_lm_BS, aes(x = estimate)) +
   geom_histogram() +
-  annotate("segment", x = lower, xend = lower, y = 0, yend = 25, linetype = "dashed") +
-  annotate("segment", x = upper, xend = upper, y = 0, yend = 25, linetype = "dashed") +
-  annotate("text", x = lower, y = 35, label = "2.5 percentile\n-0.01", size = 5) +
-  annotate("text", x = upper, y = 35, label = "97.5 percentile\n0.081", size = 5) +
+  annotate(
+    "segment",
+    x = lower,
+    xend = lower,
+    y = 0,
+    yend = 25,
+    linetype = "dashed"
+  ) +
+  annotate(
+    "segment",
+    x = upper,
+    xend = upper,
+    y = 0,
+    yend = 25,
+    linetype = "dashed"
+  ) +
+  annotate(
+    "text",
+    x = lower,
+    y = 35,
+    label = "2.5 percentile\n-0.01",
+    size = 5
+  ) +
+  annotate(
+    "text",
+    x = upper,
+    y = 35,
+    label = "97.5 percentile\n0.081",
+    size = 5
+  ) +
   labs(
     x = "Bootstrapped values of the slope for predicting weight of baby from mother's age",
     y = NULL
@@ -752,9 +851,9 @@ While the data are collected sequentially, a separate analysis was used to check
 #|   Great Depression have been removed, and a least squares regression line has been
 #|   fit to the data.
 #| fig-alt: |
-#|   Scatterplot with percent unemployed on the x-axis and percent change in 
-#|   House seats for the President's party on the y-axis. Each point represents a 
-#|   different President's midterm and is colored according to their political party 
+#|   Scatterplot with percent unemployed on the x-axis and percent change in
+#|   House seats for the President's party on the y-axis. Each point represents a
+#|   different President's midterm and is colored according to their political party
 #|   (Democrat or Republican). The relationship is moderate and negative.
 #| out-width: 100%
 #| fig-asp: 0.5
@@ -762,9 +861,9 @@ years_to_label <- c(2019, 2003, 1995, 1983, 2011, 1899)
 
 midterms_house_with_labels <- midterms_house |>
   mutate(
-    label_top = word(potus, -1), 
+    label_top = word(potus, -1),
     label_bottom = year - 1
-    ) 
+  )
 
 midterms_house_with_labels |>
   filter(!(year %in% c(1935, 1939))) |>
@@ -773,15 +872,30 @@ midterms_house_with_labels |>
   geom_smooth(method = "lm", se = FALSE, fullrange = TRUE) +
   scale_color_openintro() +
   scale_shape_manual(values = c(16, 17)) +
-  scale_x_continuous(labels = label_percent(scale = 1, accuracy = 1), limits = c(3.5, 12.1), breaks = c(4, 8, 12)) +
-  scale_y_continuous(labels = label_percent(scale = 1, accuracy = 1), limits = c(-31, 11), breaks = c(-30, -20, -10, 0, 10)) +
+  scale_x_continuous(
+    labels = label_percent(scale = 1, accuracy = 1),
+    limits = c(3.5, 12.1),
+    breaks = c(4, 8, 12)
+  ) +
+  scale_y_continuous(
+    labels = label_percent(scale = 1, accuracy = 1),
+    limits = c(-31, 11),
+    breaks = c(-30, -20, -10, 0, 10)
+  ) +
   labs(
-    x = "Percent unemployed", 
+    x = "Percent unemployed",
     y = "Percent change in House seats\nfor the President's party",
-    color = "Party", shape = "Party"
-    ) +
-  geom_text(data = midterms_house_with_labels |> filter(year %in% years_to_label),
-    aes(x = unemp, y = house_change + 4, label = paste0(label_top, "\n", label_bottom)), color = IMSCOL["black", "full"]
+    color = "Party",
+    shape = "Party"
+  ) +
+  geom_text(
+    data = midterms_house_with_labels |> filter(year %in% years_to_label),
+    aes(
+      x = unemp,
+      y = house_change + 4,
+      label = paste0(label_top, "\n", label_bottom)
+    ),
+    color = IMSCOL["black", "full"]
   ) +
   theme(
     legend.position = c(0.8, 0.8),
@@ -835,7 +949,7 @@ terms_chp_24 <- c(terms_chp_24, "t-distribution for slope")
 ```{r}
 #| label: tbl-midtermUnempRegTable
 #| tbl-cap: |
-#|   Output from statistical software for the regression line modeling the 
+#|   Output from statistical software for the regression line modeling the
 #|   midterm election losses for the President's party as a response to
 #|   unemployment.
 #| tbl-pos: H
@@ -844,10 +958,11 @@ th <- !d$year %in% c(1935, 1939)
 lm(house_change ~ unemp, d[th, ]) |>
   tidy() |>
   mutate(p.value = ifelse(p.value < 0.0001, "<0.0001", round(p.value, 4))) |>
-  kbl(linesep = "", booktabs = TRUE, 
-      digits = 2, align = "lrrrr") |>
-  kable_styling(bootstrap_options = c("striped", "condensed"), 
-                latex_options = c("striped")) |>
+  kbl(linesep = "", booktabs = TRUE, digits = 2, align = "lrrrr") |>
+  kable_styling(
+    bootstrap_options = c("striped", "condensed"),
+    latex_options = c("striped")
+  ) |>
   column_spec(1, width = "10em", monospace = TRUE) |>
   column_spec(2:5, width = "5em")
 ```
@@ -911,8 +1026,8 @@ The tools in this section help you go beyond a visual interpretation of the line
 ```{r}
 #| label: tbl-rOutputForIncomeAidLSRLineInInferenceSection
 #| tbl-cap: |
-#|   Summary of least squares fit for the Elmhurst College data, where we 
-#|   are predicting the gift aid by the university based on the family 
+#|   Summary of least squares fit for the Elmhurst College data, where we
+#|   are predicting the gift aid by the university based on the family
 #|   income of students.
 #| tbl-pos: H
 elmhurst |>
@@ -923,10 +1038,11 @@ elmhurst |>
   lm(gift_aid ~ family_income, data = _) |>
   tidy() |>
   mutate(p.value = ifelse(p.value < 0.0001, "<0.0001", round(p.value, 4))) |>
-  kbl(linesep = "", booktabs = TRUE,
-      digits = 2, align = "lrrrr") |>
-  kable_styling(bootstrap_options = c("striped", "condensed"), 
-                latex_options = c("striped")) |>
+  kbl(linesep = "", booktabs = TRUE, digits = 2, align = "lrrrr") |>
+  kable_styling(
+    bootstrap_options = c("striped", "condensed"),
+    latex_options = c("striped")
+  ) |>
   column_spec(1, width = "10em", monospace = TRUE) |>
   column_spec(2:5, width = "5em")
 ```
@@ -1033,22 +1149,22 @@ Additionally, a type of violation of normality happens when the positive residua
 #| label: fig-whatCanGoWrongWithLinearModel
 #| fig-cap: |
 #|   Four examples showing when the methods in this chapter are insufficient
-#|   to apply a linear model to the data. The top set of graphs represents the 
-#|   $x$ and $y$ relationship. The bottom set of graphs is a residual plot. 
-#|   First panel -- linearity fails. Second panel -- there are outliers, most 
-#|   especially one point that is very far away from the line. Third panel -- 
-#|   the variability of the errors is related to the value of $x$. Fourth panel -- 
+#|   to apply a linear model to the data. The top set of graphs represents the
+#|   $x$ and $y$ relationship. The bottom set of graphs is a residual plot.
+#|   First panel -- linearity fails. Second panel -- there are outliers, most
+#|   especially one point that is very far away from the line. Third panel --
+#|   the variability of the errors is related to the value of $x$. Fourth panel --
 #|   a time series dataset is shown, where successive observations are highly correlated.
 #| fig-alt: |
-#|   A grid of 2 by 4 scatterplots with fabricated data. The top row of plots 
-#|   contains original x-y data plots with a least squares regression line. The 
-#|   bottom row of plots is a series of residual plot with predicted value on the 
-#|   x-axis and residual on the y-axis. The first column of plots gives an example 
-#|   of points that have a quadratic relationship instead of a linear relationship. 
-#|   The second column of plots gives an example where a single outlying point 
-#|   does not fit the linear model. The third column of points gives an example 
-#|   where the points have increasing variability as the value of x increases. 
-#|   The last column of points gives an example where the points are correlated 
+#|   A grid of 2 by 4 scatterplots with fabricated data. The top row of plots
+#|   contains original x-y data plots with a least squares regression line. The
+#|   bottom row of plots is a series of residual plot with predicted value on the
+#|   x-axis and residual on the y-axis. The first column of plots gives an example
+#|   of points that have a quadratic relationship instead of a linear relationship.
+#|   The second column of plots gives an example where a single outlying point
+#|   does not fit the linear model. The third column of points gives an example
+#|   where the points have increasing variability as the value of x increases.
+#|   The last column of points gives an example where the points are correlated
 #|   with one another, possibly as part of a time series.
 #| out-width: 100%
 #| fig-width: 9
@@ -1071,162 +1187,130 @@ layout(
 these <- simulated_scatter$group == 20
 x <- simulated_scatter$x[these]
 y <- simulated_scatter$y[these]
-plot(x, y,
-  axes = FALSE,
-  pch = pch,
-  cex = cex,
-  col = "#00000000"
-)
+plot(x, y, axes = FALSE, pch = pch, cex = cex, col = "#00000000")
 box()
-mtext("x", side=1, line=0.2)
-mtext("y", side=2, line=0.2)
+mtext("x", side = 1, line = 0.2)
+mtext("y", side = 2, line = 0.2)
 
-makeTube(x, y,
-  type = "quad",
-  addLine = FALSE,
-  col =  IMSCOL["lgray", "f2"]
-)
-points(x, y,
-  pch = pch,
-  cex = cex,
-  col =  IMSCOL["blue", "f1"]
-)
+makeTube(x, y, type = "quad", addLine = FALSE, col = IMSCOL["lgray", "f2"])
+points(x, y, pch = pch, cex = cex, col = IMSCOL["blue", "f1"])
 g <- lm(y ~ x)
 abline(g)
 yR <- range(g$residuals)
 yR <- yR + c(-1, 1) * diff(yR) / 10
-plot(x, g$residuals,
-  xlab = "", ylab = "",
+plot(
+  x,
+  g$residuals,
+  xlab = "",
+  ylab = "",
   axes = FALSE,
   pch = pch,
   cex = cex,
-  col =  IMSCOL["blue", "f1"],
+  col = IMSCOL["blue", "f1"],
   ylim = yR
 )
 abline(h = 0, lty = 2)
 box()
-mtext("Predicted y", side=1, line=0.2)
-mtext("Residual", side=2, line=0.1)
+mtext("Predicted y", side = 1, line = 0.2)
+mtext("Residual", side = 2, line = 0.1)
 
 these <- simulated_scatter$group == 21
 x <- simulated_scatter$x[these]
 y <- simulated_scatter$y[these]
-plot(x, y,
-  axes = FALSE,
-  pch = pch,
-  cex = cex,
-  col = "#00000000"
-)
+plot(x, y, axes = FALSE, pch = pch, cex = cex, col = "#00000000")
 box()
-mtext("x", side=1, line=0.2)
-mtext("y", side=2, line=0.2)
+mtext("x", side = 1, line = 0.2)
+mtext("y", side = 2, line = 0.2)
 
-makeTube(x, y,
-  addLine = FALSE,
-  col =  IMSCOL["lgray", "f2"]
-)
-points(x, y,
-  pch = pch,
-  cex = cex,
-  col =  IMSCOL["blue", "f1"]
-)
+makeTube(x, y, addLine = FALSE, col = IMSCOL["lgray", "f2"])
+points(x, y, pch = pch, cex = cex, col = IMSCOL["blue", "f1"])
 g <- lm(y ~ x)
 abline(g)
 yR <- range(g$residuals)
 yR <- yR + c(-1, 1) * diff(yR) / 10
-plot(x, g$residuals,
-  xlab = "", ylab = "",
+plot(
+  x,
+  g$residuals,
+  xlab = "",
+  ylab = "",
   axes = FALSE,
   pch = pch,
   cex = cex,
-  col =  IMSCOL["blue", "f1"],
+  col = IMSCOL["blue", "f1"],
   ylim = yR
 )
 abline(h = 0, lty = 2)
 box()
-mtext("Predicted y", side=1, line=0.2)
-mtext("Residual", side=2, line=0.1)
+mtext("Predicted y", side = 1, line = 0.2)
+mtext("Residual", side = 2, line = 0.1)
 
 these <- simulated_scatter$group == 22
 x <- simulated_scatter$x[these]
 y <- simulated_scatter$y[these]
-plot(x, y,
-  axes = FALSE,
-  pch = pch,
-  cex = cex,
-  col = "#00000000"
-)
+plot(x, y, axes = FALSE, pch = pch, cex = cex, col = "#00000000")
 box()
-mtext("x", side=1, line=0.2)
-mtext("y", side=2, line=0.2)
+mtext("x", side = 1, line = 0.2)
+mtext("y", side = 2, line = 0.2)
 
-makeTubeAdv(x, y,
+makeTubeAdv(
+  x,
+  y,
   type = "l",
   variance = "l",
   bw = 0.03,
   Z = 1.7,
-  col =  IMSCOL["lgray", "f2"]
+  col = IMSCOL["lgray", "f2"]
 )
-points(x, y,
-  pch = pch,
-  cex = cex,
-  col =  IMSCOL["blue", "f1"]
-)
+points(x, y, pch = pch, cex = cex, col = IMSCOL["blue", "f1"])
 g <- lm(y ~ x)
 abline(g)
 yR <- range(g$residuals)
 yR <- yR + c(-1, 1) * diff(yR) / 10
-plot(x, g$residuals,
+plot(
+  x,
+  g$residuals,
   axes = FALSE,
-  xlab = "", ylab = "",
+  xlab = "",
+  ylab = "",
   pch = pch,
   cex = cex,
-  col =  IMSCOL["blue", "f1"],
+  col = IMSCOL["blue", "f1"],
   ylim = yR
 )
 abline(h = 0, lty = 2)
 box()
-mtext("Predicted y", side=1, line=0.2)
-mtext("Residual", side=2, line=0.1)
+mtext("Predicted y", side = 1, line = 0.2)
+mtext("Residual", side = 2, line = 0.1)
 
 these <- simulated_scatter$group == 23
 x <- simulated_scatter$x[these]
 y <- simulated_scatter$y[these]
-plot(x, y,
-  axes = FALSE,
-  pch = pch,
-  cex = cex,
-  col = "#00000000"
-)
+plot(x, y, axes = FALSE, pch = pch, cex = cex, col = "#00000000")
 box()
-mtext("x", side=1, line=0.2)
-mtext("y", side=2, line=0.2)
-makeTube(x, y,
-  addLine = FALSE,
-  col =  IMSCOL["lgray", "f2"]
-)
-points(x, y,
-  pch = pch,
-  cex = cex,
-  col =  IMSCOL["blue", "f1"]
-)
+mtext("x", side = 1, line = 0.2)
+mtext("y", side = 2, line = 0.2)
+makeTube(x, y, addLine = FALSE, col = IMSCOL["lgray", "f2"])
+points(x, y, pch = pch, cex = cex, col = IMSCOL["blue", "f1"])
 g <- lm(y ~ x)
 abline(g)
 yR <- range(g$residuals)
 yR <- yR + c(-1, 1) * diff(yR) / 10
-plot(x, g$residuals,
+plot(
+  x,
+  g$residuals,
   axes = FALSE,
-  xlab = "", ylab = "",
+  xlab = "",
+  ylab = "",
   pch = pch,
   cex = cex,
-  col =  IMSCOL["blue", "f1"],
+  col = IMSCOL["blue", "f1"],
   ylim = yR
 )
 abline(h = 0, lty = 2)
 box()
-mtext("Predicted y", side=1, line=0.2)
-mtext("Residual", side=2, line=0.1)
-makeTubeAdv(x, y, col =  IMSCOL["lgray", "f2"])
+mtext("Predicted y", side = 1, line = 0.2)
+mtext("Residual", side = 2, line = 0.1)
+makeTubeAdv(x, y, col = IMSCOL["lgray", "f2"])
 #par(par_og) # restore original par
 ```
 

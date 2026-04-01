@@ -42,25 +42,25 @@ Typically, a bar plot will be easier for the reader to digest than a pie chart, 
 
 ```{r}
 expenses <- tribble(
-  ~category,                     ~value,
-  "Cutting tools"                , 0.03,
-  "Buildings and Administration" , 0.22,
-  "Labor"                        , 0.31,
-  "Machinery"                    , 0.27,
+  ~category                      , ~value ,
+  "Cutting tools"                , 0.03   ,
+  "Buildings and Administration" , 0.22   ,
+  "Labor"                        , 0.31   ,
+  "Machinery"                    , 0.27   ,
   "Workplace materials"          , 0.17
 ) |>
-  mutate(value =  value * 100) |>
+  mutate(value = value * 100) |>
   uncount(weights = value)
 ```
 
 ```{r}
 #| label: fig-pie-to-bar
-#| fig-cap: Same information displayed with two very different visualizations. 
-#| fig-subcap: 
+#| fig-cap: Same information displayed with two very different visualizations.
+#| fig-subcap:
 #|   - A three-dimensional pie chart.
 #|   - A bar plot.
 #| fig-alt: |
-#|   A three dimensional pie chart and a bar plot. Both plots show that the 
+#|   A three dimensional pie chart and a bar plot. Both plots show that the
 #|   biggest sources of cost are labor, machinery, and buildings & administration,
 #|   in that order. Very little of the costs are due to cutting tools.
 #| fig-width: 3.5
@@ -88,17 +88,17 @@ Also note that not everyone sees color the same way, often it's useful to add co
 ```{r}
 #| label: fig-red-bar
 #| fig-cap: |
-#|   Three bar charts visualizing the same information with different coloring 
+#|   Three bar charts visualizing the same information with different coloring
 #|   to highlight different aspects.
-#| fig-subcap: 
+#| fig-subcap:
 #|   - Default coloring does nothing for the understanding of the data.
 #|   - Color draws attention directly to the bar on Buildings and Administration.
 #|   - Color and linetype draw attention directly to the bar on Buildings and Administration.
 #| fig-alt: |
-#|   Three bar charts visualizing the same information with different coloring 
+#|   Three bar charts visualizing the same information with different coloring
 #|   to highlight different aspects. First plot colors each bar (Cutting tools,
 #|   Workspace materials, Buildings and Administration, Machinery, and Labor)
-#|   differently, while in the second and third plots Buildings and 
+#|   differently, while in the second and third plots Buildings and
 #|   Administration is highlighted in red and the rest of the bars are grey.
 #| fig-width: 4.0
 #| fig-asp: 0.57
@@ -111,18 +111,32 @@ ggplot(expenses, aes(y = fct_infreq(category), fill = category)) +
   scale_y_discrete(labels = label_wrap(14))
 
 expenses |>
-  mutate(highlight = if_else(category == "Buildings and Administration", "yes", "no")) |>
+  mutate(
+    highlight = if_else(category == "Buildings and Administration", "yes", "no")
+  ) |>
   ggplot(aes(y = fct_infreq(category), fill = highlight)) +
   geom_bar(show.legend = FALSE) +
-  scale_fill_manual(values = c(IMSCOL["lgray", "full"], IMSCOL["red", "full"])) +
+  scale_fill_manual(
+    values = c(IMSCOL["lgray", "full"], IMSCOL["red", "full"])
+  ) +
   labs(x = NULL, y = NULL) +
   scale_y_discrete(labels = label_wrap(14))
 
 expenses |>
-  mutate(highlight = if_else(category == "Buildings and Administration", "yes", "no")) |>
-  ggplot(aes(y = fct_infreq(category), fill = highlight, color = highlight, linetype = highlight, size = highlight)) +
+  mutate(
+    highlight = if_else(category == "Buildings and Administration", "yes", "no")
+  ) |>
+  ggplot(aes(
+    y = fct_infreq(category),
+    fill = highlight,
+    color = highlight,
+    linetype = highlight,
+    size = highlight
+  )) +
   geom_bar(show.legend = FALSE) +
-  scale_fill_manual(values = c(IMSCOL["lgray", "full"], IMSCOL["red", "full"])) +
+  scale_fill_manual(
+    values = c(IMSCOL["lgray", "full"], IMSCOL["red", "full"])
+  ) +
   labs(x = NULL, y = NULL) +
   scale_color_manual(values = c(IMSCOL["lgray", "full"], "white")) +
   scale_size_manual(values = c(0, 0.8)) +
@@ -142,12 +156,12 @@ Sometimes the additional information may be a diagonal line given by $y = x$, po
 ```{r}
 #| label: fig-duke-hires
 #| fig-cap: |
-#|   Time series plot showing monthly Duke University hiring trends 
+#|   Time series plot showing monthly Duke University hiring trends
 #|   over five calendar years.
 #| fig-alp: |
-#|   Time series plot showing monthly Duke University hiring trends 
+#|   Time series plot showing monthly Duke University hiring trends
 #|   over five calendar years. Hiring spikes in July.
-#| fig-subcap: 
+#| fig-subcap:
 #|   - Colored by year
 #|   - Same color for all years, annotation summarizing trend
 #| out-width: 100%
@@ -188,7 +202,9 @@ ggplot(duke_hires, aes(x = month, y = n, color = year)) +
   scale_y_continuous(breaks = seq(0, 800, 100), minor_breaks = NULL) +
   labs(
     title = "Duke hires by month",
-    y = NULL, x = NULL, color = NULL
+    y = NULL,
+    x = NULL,
+    color = NULL
   ) +
   theme(
     legend.position = c(0.12, 0.65),
@@ -202,11 +218,13 @@ ggplot(duke_hires, aes(x = month, y = n, group = year)) +
   scale_y_continuous(breaks = seq(0, 800, 200), minor_breaks = NULL) +
   labs(
     title = "Duke hires by month",
-    y = NULL, x = NULL
+    y = NULL,
+    x = NULL
   ) +
   annotate(
     "label",
-    x = 7, y = 250,
+    x = 7,
+    y = 250,
     label = "Hires always peak in\nJuly, which is the start\nof Duke's fiscal year.",
     hjust = -0.1
   )
@@ -239,16 +257,39 @@ In September 2019, YouGov survey asked 1,639 Great Britain adults the following 
 ```{r}
 brexit <- tibble(
   opinion = c(
-    rep("Very well", 123), rep("Fairly well", 219), rep("Fairly badly", 332),
-    rep("Very badly", 818), rep("Don't know", 151)
-    ),
+    rep("Very well", 123),
+    rep("Fairly well", 219),
+    rep("Fairly badly", 332),
+    rep("Very badly", 818),
+    rep("Don't know", 151)
+  ),
   region = c(
-    rep("london", 10), rep("rest_of_south", 49), rep("midlands_wales", 32), rep("north", 24), rep("scot", 8),
-    rep("london", 18), rep("rest_of_south", 93), rep("midlands_wales", 50), rep("north", 48), rep("scot", 10),
-    rep("london", 33), rep("rest_of_south", 126), rep("midlands_wales", 74), rep("north", 76), rep("scot", 23),
-    rep("london", 118), rep("rest_of_south", 246), rep("midlands_wales", 152), rep("north", 212), rep("scot", 90),
-    rep("london", 16), rep("rest_of_south", 38), rep("midlands_wales", 46), rep("north", 40), rep("scot", 11)
-    )
+    rep("london", 10),
+    rep("rest_of_south", 49),
+    rep("midlands_wales", 32),
+    rep("north", 24),
+    rep("scot", 8),
+    rep("london", 18),
+    rep("rest_of_south", 93),
+    rep("midlands_wales", 50),
+    rep("north", 48),
+    rep("scot", 10),
+    rep("london", 33),
+    rep("rest_of_south", 126),
+    rep("midlands_wales", 74),
+    rep("north", 76),
+    rep("scot", 23),
+    rep("london", 118),
+    rep("rest_of_south", 246),
+    rep("midlands_wales", 152),
+    rep("north", 212),
+    rep("scot", 90),
+    rep("london", 16),
+    rep("rest_of_south", 38),
+    rep("midlands_wales", 46),
+    rep("north", 40),
+    rep("scot", 11)
+  )
 )
 ```
 
@@ -256,32 +297,41 @@ brexit <- tibble(
 #| label: fig-brexit-bars
 #| fig-cap: |
 #|   Three bar charts visualizing the same information with arrangement of levels.
-#| fig-subcap: 
+#| fig-subcap:
 #|   - Alphabetic order
 #|   - Frequecy order
 #|   - Same order as presented in the survey question
 #| fig-alt: |
-#|   Three bar plots with the bars (Very well, Fairly well, Fairly badly, 
-#|   Very badly, Don't know) arranged differently in each plot. In the first 
-#|   plot they're in alphabetical order, in the second in frequency order 
-#|   (highest Very badly to lowest Very well), and in the third plot in the 
+#|   Three bar plots with the bars (Very well, Fairly well, Fairly badly,
+#|   Very badly, Don't know) arranged differently in each plot. In the first
+#|   plot they're in alphabetical order, in the second in frequency order
+#|   (highest Very badly to lowest Very well), and in the third plot in the
 #|   same order as presented in the survey question.
 #| fig-width: 4.0
 #| out-width: 100%
 #| layout-ncol: 2
 #| fig-asp: 0.5
 ggplot(brexit, aes(y = fct_rev(opinion))) +
-  geom_bar() + 
+  geom_bar() +
   labs(y = "Opinion", x = "Count")
 
 ggplot(brexit, aes(y = fct_rev(fct_infreq(opinion)))) +
-  geom_bar() + 
+  geom_bar() +
   labs(y = "Opinion", x = "Count")
 
 brexit |>
-  mutate(opinion = fct_relevel(opinion, "Very well", "Fairly well", "Fairly badly", "Very badly", "Don't know")) |>
+  mutate(
+    opinion = fct_relevel(
+      opinion,
+      "Very well",
+      "Fairly well",
+      "Fairly badly",
+      "Very badly",
+      "Don't know"
+    )
+  ) |>
   ggplot(aes(y = opinion)) +
-  geom_bar() + 
+  geom_bar() +
   labs(y = "Opinion", x = "Count")
 ```
 
@@ -299,18 +349,27 @@ brexit <- brexit |>
   mutate(
     region = fct_relevel(
       region,
-      "london", "rest_of_south", "midlands_wales", "north", "scot"
+      "london",
+      "rest_of_south",
+      "midlands_wales",
+      "north",
+      "scot"
     ),
     region = fct_recode(
       region,
-      London = "london", 
-      `Rest of South` = "rest_of_south", 
-      `Midlands / Wales` = "midlands_wales", 
-      North = "north", 
+      London = "london",
+      `Rest of South` = "rest_of_south",
+      `Midlands / Wales` = "midlands_wales",
+      North = "north",
       Scotland = "scot"
     )
   ) |>
-  mutate(Opinion = fct_relevel(opinion, c("Very well", "Fairly well", "Fairly badly", "Very badly", "Don't know")))
+  mutate(
+    Opinion = fct_relevel(
+      opinion,
+      c("Very well", "Fairly well", "Fairly badly", "Very badly", "Don't know")
+    )
+  )
 ```
 
 ::: {#fig-brexit-region layout="[[100], [100]]"}
@@ -319,7 +378,7 @@ brexit <- brexit |>
 #| label: fig-brexit-region-1
 #| fig-cap: Vertical bars across the x-axis.
 #| fig-alt: |
-#|   Stacked bar plot of region and opinion, where vertical bars are on 
+#|   Stacked bar plot of region and opinion, where vertical bars are on
 #|   the x-axis.
 #| fig-asp: 0.25
 #| out-width: 100%
@@ -333,7 +392,7 @@ ggplot(brexit, aes(x = region, fill = Opinion)) +
 #| label: fig-brexit-region-2
 #| fig-cap: Horizontal bars across the y-axis.
 #| fig-alt: |
-#|   Stacked bar plot of region and opinion, where horizontal bars are on 
+#|   Stacked bar plot of region and opinion, where horizontal bars are on
 #|   the y-axis.
 #| fig-asp: 0.3
 #| out-width: 100%
@@ -370,7 +429,7 @@ Other deliberate decisions to consider include using informative labels and avoi
 #| fig-alt: Stacked bar plot of region and opinion, showing percentages.
 #| fig-asp: 0.3
 #| out-width: 100%
-ggplot(brexit, aes(y = region,  fill = Opinion)) +
+ggplot(brexit, aes(y = region, fill = Opinion)) +
   geom_bar(position = "fill") +
   labs(x = "Percent", y = NULL) +
   scale_fill_openintro("five") +
@@ -385,7 +444,7 @@ ggplot(brexit, aes(y = region,  fill = Opinion)) +
 #| fig-asp: 0.3
 #| out-width: 100%
 ggplot(brexit, aes(y = region, fill = Opinion)) +
-  geom_bar() + 
+  geom_bar() +
   labs(x = "Count", y = NULL) +
   scale_fill_openintro("five") +
   theme(legend.position = "top")
@@ -405,8 +464,9 @@ ggplot(brexit, aes(y = Opinion)) +
   labs(
     title = "How well or badly do you think the government are doing at handling Britain's exit\nfrom the European Union?",
     subtitle = "YouGov Survey Results, 2-3 September 2019",
-    caption = "Source: bit.ly/2lCJZVg", 
-    x = NULL, y = NULL
+    caption = "Source: bit.ly/2lCJZVg",
+    x = NULL,
+    y = NULL
   ) +
   theme(plot.title.position = "plot")
 ```
@@ -432,7 +492,7 @@ The cividis scale works well with ordinal data.
 #| fig-subcap:
 #|   - Default color scale
 #|   - Cividis scale
-#| fig-alt: Identical bar plots with two different coloring options. 
+#| fig-alt: Identical bar plots with two different coloring options.
 #| fig-asp: 0.4
 #| out-width: 100%
 p <- ggplot(brexit, aes(y = region, fill = Opinion)) +
@@ -441,7 +501,9 @@ p <- ggplot(brexit, aes(y = region, fill = Opinion)) +
     title = "How well or badly do you think the government are doing at handling Britain's exit\nfrom the European Union?",
     subtitle = "YouGov Survey Results, 2-3 September 2019",
     caption = "Source: bit.ly/2lCJZVg",
-    x = NULL, y = NULL, fill = NULL
+    x = NULL,
+    y = NULL,
+    fill = NULL
   ) +
   theme(plot.title.position = "plot")
 

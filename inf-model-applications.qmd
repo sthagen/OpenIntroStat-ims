@@ -35,7 +35,7 @@ mariokart |>
   slice_head(n = 4) |>
   kbl(linesep = "", booktabs = TRUE, row.names = FALSE, align = "ccccc") |>
   kable_styling(
-    bootstrap_options = c("striped", "condensed"), 
+    bootstrap_options = c("striped", "condensed"),
     latex_options = c("striped"),
     full_width = FALSE
   ) |>
@@ -47,19 +47,23 @@ mariokart |>
 #| tbl-cap: Variables and their descriptions for the `mariokart` dataset.
 #| tbl-pos: H
 mariokart_var_def <- tribble(
-  ~variable, ~description,
-  "price", "Final auction price plus shipping costs, in US dollars.",
-  "cond_new", "Indicator variable for if the game is new (1) or used (0).",
-  "stock_photo", "Indicator variable for if the auction's main photo is a stock photo.",
-  "duration", "The length of the auction, in days, taking values from 1 to 10.",
-  "wheels", "The number of Wii wheels included with the auction. A Wii wheel is an optional steering wheel accessory that holds the Wii controller."
+  ~variable     , ~description                                                                                                                             ,
+  "price"       , "Final auction price plus shipping costs, in US dollars."                                                                                ,
+  "cond_new"    , "Indicator variable for if the game is new (1) or used (0)."                                                                             ,
+  "stock_photo" , "Indicator variable for if the auction's main photo is a stock photo."                                                                   ,
+  "duration"    , "The length of the auction, in days, taking values from 1 to 10."                                                                        ,
+  "wheels"      , "The number of Wii wheels included with the auction. A Wii wheel is an optional steering wheel accessory that holds the Wii controller."
 )
 
 mariokart_var_def |>
-  kbl(linesep = "", booktabs = TRUE, col.names = c("Variable", "Description")) |>
+  kbl(
+    linesep = "",
+    booktabs = TRUE,
+    col.names = c("Variable", "Description")
+  ) |>
   kable_styling(
     bootstrap_options = c("striped", "condensed"),
-    latex_options = c("striped"), 
+    latex_options = c("striped"),
     full_width = TRUE
   ) |>
   column_spec(1, monospace = TRUE) |>
@@ -82,11 +86,11 @@ Results of the model are summarized below:
 #| tbl-pos: H
 mariokart <- mariokart |>
   mutate(
-    cond_new = ifelse(cond_new == "used", 0 , 1),
+    cond_new = ifelse(cond_new == "used", 0, 1),
     stock_photo = ifelse(stock_photo == "yes", 1, 0)
   )
 
-lm(price ~ cond_new, data = mariokart) |> 
+lm(price ~ cond_new, data = mariokart) |>
   tidy() |>
   mutate(p.value = ifelse(p.value < 0.0001, "<0.0001", round(p.value, 4))) |>
   kbl(linesep = "", booktabs = TRUE, digits = 2, align = "lrrrr") |>
@@ -126,7 +130,7 @@ Using the output, we identify the point estimates of each coefficient and the co
 #|   Summary of a linear model for predicting `price` based on `cond_new`,
 #|   `stock_photo`, `duration`, and `wheels`.
 #| tbl-pos: H
-lm(price ~ cond_new + stock_photo + duration + wheels, data = mariokart) |> 
+lm(price ~ cond_new + stock_photo + duration + wheels, data = mariokart) |>
   tidy() |>
   mutate(p.value = ifelse(p.value < 0.0001, "<0.0001", round(p.value, 4))) |>
   kbl(linesep = "", booktabs = TRUE, digits = 2, align = "lrrrr") |>
@@ -179,14 +183,14 @@ Previously, using a mathematical model, we investigated the coefficients associa
 ```{r}
 #| label: fig-mariokart-rand-dist
 #| fig-cap: |
-#|   Estimated slopes from linear models (`price` regressed on `cond_new`) 
-#|   built on 1,000 randomized datasets. Each dataset was permuted under the 
+#|   Estimated slopes from linear models (`price` regressed on `cond_new`)
+#|   built on 1,000 randomized datasets. Each dataset was permuted under the
 #|   null hypothesis.
 #| fig-alt: |
-#|   Estimated slopes from linear models (of price regressed on cond_new) 
-#|   built on 1,000 randomized datasets. Each dataset was permuted under the 
+#|   Estimated slopes from linear models (of price regressed on cond_new)
+#|   built on 1,000 randomized datasets. Each dataset was permuted under the
 #|   null hypothesis. The randomized slopes range from about -5 to +5, and the
-#|   observed slope value is 10.9 which is not near the distribution of 
+#|   observed slope value is 10.9 which is not near the distribution of
 #|   randomized slopes.
 #| fig-asp: 0.5
 set.seed(47)
@@ -201,8 +205,8 @@ mariokart |>
     title = "Slopes from models fit to 1,000 permutations of the data",
     x = "Slope of model fit to permuted data",
     y = "Count"
-    ) +
-  geom_vline(xintercept = 10.9, color = IMSCOL["red","full"], size = 1) +
+  ) +
+  geom_vline(xintercept = 10.9, color = IMSCOL["red", "full"], size = 1) +
   theme(plot.title.position = "plot")
 ```
 
@@ -241,14 +245,14 @@ That is, $\beta_1$ represents the population value for the difference in price b
 ```{r}
 #| label: fig-mariokart-boot-dist
 #| fig-cap: |
-#|   Estimated slopes from linear models (`price` regressed on `cond_new`) 
+#|   Estimated slopes from linear models (`price` regressed on `cond_new`)
 #|   built on 1,000 bootstrapped datasets. Each bootstrap sample was
 #|   taken from the original Mario Kart auction data.
 #| fig-alt: |
-#|   Estimated slopes from linear models (of price regressed on cond new) 
-#|   built on 1,000 bootstrapped datasets. Each bootstrap sample was 
+#|   Estimated slopes from linear models (of price regressed on cond new)
+#|   built on 1,000 bootstrapped datasets. Each bootstrap sample was
 #|   taken from the original Mario Kart auction data. The histogram of the
-#|   boostrapped slopes is bell-shaped, symmetric, and centered around the 
+#|   boostrapped slopes is bell-shaped, symmetric, and centered around the
 #|   observed value of 10.9.
 #| fig-asp: 0.5
 set.seed(47)
@@ -262,7 +266,7 @@ mariokart |>
     title = "Slopes from models fit to 1,000 bootstrap samples of the data",
     x = "Slope of model fit to bootstrapped data",
     y = "Count"
-    ) +
+  ) +
   theme(plot.title.position = "plot")
 ```
 
@@ -311,39 +315,43 @@ The residuals give us a sense for how well the model will do at predicting obser
 ```{r}
 #| label: fig-mariokart-cv-residuals
 #| fig-cap: |
-#|   Cross-validation predictions and errors from linear models built on 
+#|   Cross-validation predictions and errors from linear models built on
 #|   two different sets of variables.
-#| fig-subcap: 
+#| fig-subcap:
 #|   - "`price` vs. `cond_new`"
 #|   - "`price` vs. `cond_new`, `stock_photo`, `duration`, and `wheels`"
 #| fig-alt: |
-#|   Cross-validation predictions and errors from linear models built on 
-#|   two different sets of variables. Left regressed price on cond new; 
-#|   right regressed price on cond new, stock photo, duration, and wheels. For 
-#|   each of the two models, the x-axis plots the predicted value and the 
-#|   y-axis plots the prediction error. More variables lead to smaller 
+#|   Cross-validation predictions and errors from linear models built on
+#|   two different sets of variables. Left regressed price on cond new;
+#|   right regressed price on cond new, stock photo, duration, and wheels. For
+#|   each of the two models, the x-axis plots the predicted value and the
+#|   y-axis plots the prediction error. More variables lead to smaller
 #|   prediction errors.
 #| out-width: 100%
 #| layout-ncol: 2
 #| fig-width: 5
 #| fig-asp: 0.7
 set.seed(4)
-mario_CV1 <- train(price ~ cond_new,
+mario_CV1 <- train(
+  price ~ cond_new,
   data = mariokart,
   na.action = na.omit,
   method = "lm",
   trControl = trainControl(
-    method = "cv", number = 3,
+    method = "cv",
+    number = 3,
     savePredictions = TRUE
   )
 )
 
-mario_CV2 <- train(price ~ cond_new + stock_photo + duration + wheels,
+mario_CV2 <- train(
+  price ~ cond_new + stock_photo + duration + wheels,
   data = mariokart,
   na.action = na.omit,
   method = "lm",
   trControl = trainControl(
-    method = "cv", number = 3,
+    method = "cv",
+    number = 3,
     savePredictions = TRUE
   )
 )
@@ -373,8 +381,10 @@ mario_CV1$pred |>
   ylim(c(-15, 25)) +
   xlim(c(20, 65)) +
   labs(
-    color = "CV Fold", shape = "CV Fold",
-    x = "Predicted", y = "Prediction error (residual)"
+    color = "CV Fold",
+    shape = "CV Fold",
+    x = "Predicted",
+    y = "Prediction error (residual)"
   ) +
   annotate(geom = "text", x = 55, y = 25, label = paste("CV SSE =", SSE_CV1)) +
   labs(title = "Model with one predictor") +
@@ -393,8 +403,10 @@ mario_CV2$pred |>
   ylim(c(-15, 25)) +
   xlim(c(20, 65)) +
   labs(
-    color = "CV Fold", shape = "CV Fold",
-    x = "Predicted", y = "Prediction error (residual)"
+    color = "CV Fold",
+    shape = "CV Fold",
+    x = "Predicted",
+    y = "Prediction error (residual)"
   ) +
   annotate(geom = "text", x = 55, y = 25, label = paste("CV SSE =", SSE_CV2)) +
   labs(title = "Model with four predictors") +

@@ -31,13 +31,13 @@ However, the prediction would be far from perfect, since other factors play a ro
 ```{r}
 #| label: fig-perfLinearModel
 #| fig-cap: |
-#|   Requests from twelve separate buyers were simultaneously placed with a 
-#|   trading company to purchase Target Corporation stock (ticker TGT, December 
-#|   28th, 2018), and the total cost of the shares was reported. Because the 
+#|   Requests from twelve separate buyers were simultaneously placed with a
+#|   trading company to purchase Target Corporation stock (ticker TGT, December
+#|   28th, 2018), and the total cost of the shares was reported. Because the
 #|   cost is computed using a linear formula, the linear fit is perfect.
 #| fig-alt: |
-#|   A scatterplot showing a perfect linear relationship between number of 
-#|   stocks to purchase on the x-axis and total cost of the share purchase 
+#|   A scatterplot showing a perfect linear relationship between number of
+#|   stocks to purchase on the x-axis and total cost of the share purchase
 #|   on the y-axis.
 #| fig-asp: 0.4
 target <- simulated_scatter |>
@@ -46,7 +46,10 @@ target <- simulated_scatter |>
 ggplot(target, aes(x = x, y = y)) +
   geom_smooth(method = "lm") +
   geom_point(size = 3) +
-  scale_y_continuous(labels = label_dollar(scale = 0.001, suffix = "K", accuracy = 1), breaks = c(0, 1000, 2000)) +
+  scale_y_continuous(
+    labels = label_dollar(scale = 0.001, suffix = "K", accuracy = 1),
+    breaks = c(0, 1000, 2000)
+  ) +
   labs(
     x = "Number of Target Corporation stocks to purchase",
     y = "Total cost of the\nshare purchase"
@@ -100,9 +103,9 @@ As we move forward in this chapter, we will learn about criteria for line-fittin
 #|   Three datasets where a linear model may be useful even though the data do
 #|   not all fall exactly on the line.
 #| fig-alt: |
-#|   Three scatterplots with fabricated data. The first panel shows a 
-#|   strong negative linear relationship. The second panel shows a moderate 
-#|   positive linear relationship. The last panel shows no relationship 
+#|   Three scatterplots with fabricated data. The first panel shows a
+#|   strong negative linear relationship. The second panel shows a moderate
+#|   positive linear relationship. The last panel shows no relationship
 #|   between the x and y variables.
 #| out-width: 100%
 #| fig-asp: 0.25
@@ -137,14 +140,14 @@ We discuss nonlinear trends in this chapter and the next, but details of fitting
 ```{r}
 #| label: fig-notGoodAtAllForALinearModel
 #| fig-cap: |
-#|   The best fitting line for these data is flat, which is not a useful way 
-#|   to describe the non-linear relationship. These data are from a physics 
+#|   The best fitting line for these data is flat, which is not a useful way
+#|   to describe the non-linear relationship. These data are from a physics
 #|   experiment.
 #| fig-alt: |
-#|   A scatterplot showing a perfect quadratic relationship between angle of 
-#|   incline on the x-axis and distance traveled on the y-axis. The line of 
+#|   A scatterplot showing a perfect quadratic relationship between angle of
+#|   incline on the x-axis and distance traveled on the y-axis. The line of
 #|   best fit is superimposed as a perfectly horizontal line. That is to say,
-#|   the variables are clearly related, but they do not have a linear 
+#|   the variables are clearly related, but they do not have a linear
 #|   relationship.
 #| fig-asp: 0.25
 bad <- simulated_scatter |> filter(group == 5)
@@ -190,12 +193,12 @@ While the relationship is not perfectly linear, it could be helpful to partially
 #| label: fig-scattHeadLTotalL
 #| fig-cap: |
 #|   A scatterplot showing head length against total length for 104 brushtail
-#|   possums. A point representing a possum with head length 86.7 mm and total 
+#|   possums. A point representing a possum with head length 86.7 mm and total
 #|   length 84 cm is highlighted.
 #| fig-alt: |
-#|   A scatterplot with total length on the x-axis and head length on the 
-#|   y-axis. The variables show a moderately strong positive linear 
-#|   relationship. A single observation is circled in red with coordinates 
+#|   A scatterplot with total length on the x-axis and head length on the
+#|   y-axis. The variables show a moderately strong positive linear
+#|   relationship. A single observation is circled in red with coordinates
 #|   of approximately 84cm of total length and 87mm of head length.
 #| fig-asp: 0.5
 ggplot(possum, aes(x = total_l, y = head_l)) +
@@ -205,10 +208,12 @@ ggplot(possum, aes(x = total_l, y = head_l)) +
     y = "Head Length (mm)"
   ) +
   geom_point(
-    data = tibble(x = 84, y = 86.7), 
-    aes(x = x, y = y), 
-    color = IMSCOL["red", "full"], 
-    size = 5, shape = "circle open", stroke = 2
+    data = tibble(x = 84, y = 86.7),
+    aes(x = x, y = y),
+    color = IMSCOL["red", "full"],
+    size = 5,
+    shape = "circle open",
+    stroke = 2
   )
 ```
 
@@ -220,10 +225,10 @@ In this example, we will use the total length as the predictor variable, $x,$ to
 ```{r}
 #| label: fig-scattHeadLTotalLLine
 #| fig-cap: |
-#|   A reasonable linear model was fit to represent the relationship between 
+#|   A reasonable linear model was fit to represent the relationship between
 #|   head length and total length.
 #| fig-alt: |
-#|   A scatterplot with total length on the x-axis and head length on the 
+#|   A scatterplot with total length on the x-axis and head length on the
 #|   y-axis. The variables show a moderately strong positive linear relationship.
 #|   A least squares line is superimposed.
 #| fig-asp: 0.5
@@ -267,26 +272,32 @@ It's harder to tell if age changes the relationship between total length and hea
 ```{r}
 #| label: fig-scattHeadLTotalL-sex-age
 #| fig-cap: |
-#|   Relationship between total length and head length of brushtail possums, 
+#|   Relationship between total length and head length of brushtail possums,
 #|   taking into consideration their sex or age.
-#| fig-subcap: 
+#| fig-subcap:
 #|   - By sex
 #|   - By age
 #| fig-alt: |
-#|   Two scatterplots, both with total length on the x-axis and head 
+#|   Two scatterplots, both with total length on the x-axis and head
 #|   length on the y-axis. The top plot colors the points by sex where the female
 #|   possums seem slightly longer with slightly smaller head lengths. The bottom
 #|   plot is colored by age with no obvious trends between age and lengths.
 #| layout-ncol: 2
 #| fig-width: 5
 #| out-width: 100%
-p_sex <- ggplot(possum, aes(x = total_l, y = head_l, shape = sex, color = sex)) +
+p_sex <- ggplot(
+  possum,
+  aes(x = total_l, y = head_l, shape = sex, color = sex)
+) +
   geom_point(alpha = 0.8, size = 2) +
-  scale_color_manual(values = c(IMSCOL["red", "full"], IMSCOL["blue", "full"])) +
+  scale_color_manual(
+    values = c(IMSCOL["red", "full"], IMSCOL["blue", "full"])
+  ) +
   labs(
     x = "Total Length (cm)",
     y = "Head Length (mm)",
-    color = "Sex", shape = "Sex"
+    color = "Sex",
+    shape = "Sex"
   )
 
 p_age <- ggplot(possum, aes(x = total_l, y = head_l, color = age)) +
@@ -336,12 +347,12 @@ For example, the residual for the observation marked by a pink triangle is large
 ```{r}
 #| label: fig-scattHeadLTotalLLine-highlighted
 #| fig-cap: |
-#|   A reasonable linear model was fit to represent the relationship between 
+#|   A reasonable linear model was fit to represent the relationship between
 #|   head length and total length, with three points highlighted.
 #| fig-alt: |
-#|   A scatterplot with total length on the x-axis and head length on the 
+#|   A scatterplot with total length on the x-axis and head length on the
 #|   y-axis. A least squares line is superimposed onto the scatterplot.
-#|   Three individual observations are circled to indicate their vertical 
+#|   Three individual observations are circled to indicate their vertical
 #|   distance from the least square line.
 mod <- lm(head_l ~ total_l, data = possum)
 preds <- predict(mod, data.frame(total_l = c(76, 85, 95.5)))
@@ -355,27 +366,39 @@ ggplot(possum, aes(x = total_l, y = head_l)) +
   geom_smooth(method = "lm", se = FALSE) +
   geom_point(
     data = possum |> filter(total_l == 76),
-    shape = "circle open", stroke = 2,
-    size = 4, color = IMSCOL["red", "full"]
+    shape = "circle open",
+    stroke = 2,
+    size = 4,
+    color = IMSCOL["red", "full"]
   ) +
-  geom_segment(aes(x = 76, y = preds[1], xend = 76, yend = obs[1] + 0.4),
-    color = IMSCOL["red", "full"], inherit.aes = FALSE
+  geom_segment(
+    aes(x = 76, y = preds[1], xend = 76, yend = obs[1] + 0.4),
+    color = IMSCOL["red", "full"],
+    inherit.aes = FALSE
   ) +
   geom_point(
     data = possum |> filter(total_l == 85, head_l == 98.6),
-    shape = "diamond open", stroke = 2, size = 5,
+    shape = "diamond open",
+    stroke = 2,
+    size = 5,
     color = IMSCOL["gray", "full"]
   ) +
-  geom_segment(aes(x = 85, y = preds[2], xend = 85, yend = obs[2] - 0.5),
-    color = IMSCOL["gray", "full"], inherit.aes = FALSE
+  geom_segment(
+    aes(x = 85, y = preds[2], xend = 85, yend = obs[2] - 0.5),
+    color = IMSCOL["gray", "full"],
+    inherit.aes = FALSE
   ) +
   geom_point(
     data = possum |> filter(total_l == 95.5, head_l == 94),
-    shape = "triangle open", stroke = 2, size = 5,
+    shape = "triangle open",
+    stroke = 2,
+    size = 5,
     color = IMSCOL["pink", "full"]
   ) +
-  geom_segment(aes(x = 95.5, y = preds[3], xend = 95.5, yend = obs[3] + 0.5),
-    color = IMSCOL["pink", "full"], inherit.aes = FALSE
+  geom_segment(
+    aes(x = 95.5, y = preds[3], xend = 95.5, yend = obs[3] + 0.5),
+    color = IMSCOL["pink", "full"],
+    inherit.aes = FALSE
   )
 ```
 
@@ -430,10 +453,10 @@ For instance, the point $(85.0, 98.6)$ (marked by the blue diamond) had a predic
 #|   Residual plot for the model predicting head length from total length for
 #|   brushtail possums.
 #| fig-alt: |
-#|   A residual plot based on @fig-scattHeadLTotalLLine-highlighted 
-#|   displaying predicted values on the x-axis and residual values on the y-axis. 
-#|   The same three points that were circled in 
-#|   @fig-scattHeadLTotalLLine-highlighted are still circled, demonstrating the 
+#|   A residual plot based on @fig-scattHeadLTotalLLine-highlighted
+#|   displaying predicted values on the x-axis and residual values on the y-axis.
+#|   The same three points that were circled in
+#|   @fig-scattHeadLTotalLLine-highlighted are still circled, demonstrating the
 #|   vertical distance from the least squares line is the residual.
 m_head_total <- lm(head_l ~ total_l, data = possum)
 m_head_total_aug <- augment(m_head_total)
@@ -448,41 +471,56 @@ ggplot(m_head_total_aug, aes(x = .fitted, y = .resid)) +
   geom_point(
     data = m_head_total_aug |>
       filter(total_l == 76),
-    shape = "circle open", stroke = 2, size = 4,
+    shape = "circle open",
+    stroke = 2,
+    size = 4,
     color = IMSCOL["red", "full"]
   ) +
   geom_segment(
     aes(
-      x = preds[1], y = obs[1] - preds[1] + 0.2,
-      xend = preds[1], yend = 0
+      x = preds[1],
+      y = obs[1] - preds[1] + 0.2,
+      xend = preds[1],
+      yend = 0
     ),
-    color = IMSCOL["red", "full"], inherit.aes = FALSE
+    color = IMSCOL["red", "full"],
+    inherit.aes = FALSE
   ) +
   geom_point(
     data = m_head_total_aug |>
       filter(total_l == 85, head_l == 98.6),
-    shape = "diamond open", stroke = 2, size = 5,
+    shape = "diamond open",
+    stroke = 2,
+    size = 5,
     color = IMSCOL["gray", "full"]
   ) +
   geom_segment(
     aes(
-      x = preds[2], y = obs[2] - preds[2] - 0.3,
-      xend = preds[2], yend = 0
+      x = preds[2],
+      y = obs[2] - preds[2] - 0.3,
+      xend = preds[2],
+      yend = 0
     ),
-    color = IMSCOL["gray", "full"], inherit.aes = FALSE
+    color = IMSCOL["gray", "full"],
+    inherit.aes = FALSE
   ) +
   geom_point(
     data = m_head_total_aug |>
       filter(total_l == 95.5, head_l == 94),
-    shape = "triangle open", stroke = 2, size = 5,
+    shape = "triangle open",
+    stroke = 2,
+    size = 5,
     color = IMSCOL["pink", "full"]
   ) +
   geom_segment(
     aes(
-      x = preds[3], y = obs[3] - preds[3] + 0.3,
-      xend = preds[3], yend = 0
+      x = preds[3],
+      y = obs[3] - preds[3] + 0.3,
+      xend = preds[3],
+      yend = 0
     ),
-    color = IMSCOL["pink", "full"], inherit.aes = FALSE
+    color = IMSCOL["pink", "full"],
+    inherit.aes = FALSE
   )
 ```
 
@@ -496,13 +534,13 @@ Can you identify any patterns in the residuals?
 ```{r}
 #| label: sampleLinesAndResPlots
 #| fig-alt: |
-#|   A grid of 2 by 3 scatterplots with fabricated data. The top row of 
-#|   plots contains original x-y data plots with a least squares regression line. 
-#|   The bottom row of plots is a series of residual plot with predicted value on 
-#|   the x-axis and residual on the y-axis. The first column of plots gives an 
-#|   example of points that are well described by a linear model. The second 
-#|   column of plots gives an example where the correct model seems to be quadratic 
-#|   insead of linear. The third column of points gives an example where there is 
+#|   A grid of 2 by 3 scatterplots with fabricated data. The top row of
+#|   plots contains original x-y data plots with a least squares regression line.
+#|   The bottom row of plots is a series of residual plot with predicted value on
+#|   the x-axis and residual on the y-axis. The first column of plots gives an
+#|   example of points that are well described by a linear model. The second
+#|   column of plots gives an example where the correct model seems to be quadratic
+#|   insead of linear. The third column of points gives an example where there is
 #|   no visual relationship between x and y.
 #| fig-align: center
 #| fig-asp: 0.5
@@ -525,7 +563,7 @@ p_neg_cur <- ggplot(neg_cur, aes(x = x, y = y)) +
   geom_point(size = 2, alpha = 0.8) +
   geom_smooth(method = "lm", se = FALSE) +
   theme_void() +
-  theme(panel.border = element_rect(colour = "gray", fill = NA, size = 1))+
+  theme(panel.border = element_rect(colour = "gray", fill = NA, size = 1)) +
   labs(title = "Dataset 2")
 
 p_random <- ggplot(random, aes(x = x, y = y)) +
@@ -553,10 +591,16 @@ p_random_res <- ggplot(random_mod, aes(x = .fitted, y = .resid)) +
   theme_void() +
   theme(panel.border = element_rect(colour = "gray", fill = NA, size = 1))
 
-p_neg_lin + theme(plot.margin = unit(c(0, 10, 5, 0), "pt")) +
-  p_neg_cur + theme(plot.margin = unit(c(0, 10, 5, 0), "pt")) + p_random +
-  p_neg_lin_res + theme(plot.margin = unit(c(0, 10, 5, 0), "pt")) +
-  p_neg_cur_res + theme(plot.margin = unit(c(0, 10, 5, 0), "pt")) + p_random_res +
+p_neg_lin +
+  theme(plot.margin = unit(c(0, 10, 5, 0), "pt")) +
+  p_neg_cur +
+  theme(plot.margin = unit(c(0, 10, 5, 0), "pt")) +
+  p_random +
+  p_neg_lin_res +
+  theme(plot.margin = unit(c(0, 10, 5, 0), "pt")) +
+  p_neg_cur_res +
+  theme(plot.margin = unit(c(0, 10, 5, 0), "pt")) +
+  p_random_res +
   plot_layout(ncol = 3, heights = c(2, 1))
 ```
 
@@ -619,12 +663,12 @@ If there is no apparent linear relationship between the variables, then the corr
 #| label: fig-posNegCorPlots
 #| fig-cap: |
 #|   Sample scatterplots and their correlations. The first row shows variables
-#|   with a positive relationship, represented by the trend up and to the right. 
-#|   The second row shows variables with a negative trend, where a large value 
+#|   with a positive relationship, represented by the trend up and to the right.
+#|   The second row shows variables with a negative trend, where a large value
 #|   in one variable is associated with a lower value in the other.
 #| fig-alt: |
-#|   Eight scatterplots on fabricated data. The first seven plots show 
-#|   linear trends with correlations ranging from -1 to +1. The eighth plot shows 
+#|   Eight scatterplots on fabricated data. The first seven plots show
+#|   linear trends with correlations ranging from -1 to +1. The eighth plot shows
 #|   a quadratic relationship whih produces a correlation of -0.28.
 #| fig-asp: 0.5
 #| out-width: 100%
@@ -642,7 +686,7 @@ simulated_scatter |>
     strip.text.x = element_blank()
   ) +
   stat_cor(
-    aes(label = paste("r", ..r.., sep = "~`=`~")), 
+    aes(label = paste("r", ..r.., sep = "~`=`~")),
     geom = "label"
   )
 ```
@@ -654,14 +698,14 @@ Nonlinear trends, even when strong, sometimes produce correlations that do not r
 #| label: fig-corForNonLinearPlots
 #| fig-cap: |
 #|   Sample scatterplots and their correlations. In each case, there is a strong
-#|   relationship between the variables. However, because the relationship is 
+#|   relationship between the variables. However, because the relationship is
 #|   not linear, the correlation is relatively weak.
 #| fig-alt: |
 #|   Three scatterplots on fabricated data which demonstrate strong
-#|   patterns between the x and y variables. The first plot shows a 
+#|   patterns between the x and y variables. The first plot shows a
 #|   quadratic trend with a correlation of -0.23. The second plot shows a cyclic
 #|   trend (like a sin wave) with a correlation of 0.31. The third plot shows
-#|   a distinct relationship that is not obviously functional and has a 
+#|   a distinct relationship that is not obviously functional and has a
 #|   correlation of 0.5.
 #| fig-asp: 0.25
 #| out-width: 100%
@@ -721,7 +765,7 @@ crops_country <- crops_country |>
   summarise(total = sum(yield, na.rm = TRUE), .groups = "drop_last") |>
   mutate(prop = (total / sum(total)) * 100) |>
   ungroup() |>
-  filter(prop > 0) |> 
+  filter(prop > 0) |>
   pivot_wider(
     names_from = crop,
     values_from = c(total, prop),
@@ -732,10 +776,10 @@ crops_country <- crops_country |>
 ```{r}
 #| label: crop-yields-af
 #| fig-alt: |
-#|   From a real dataset, we display scatterplots of the relationship 
-#|   between percent of crop which is each of the following -- bananas, potatoes, 
-#|   cassava, soybeans, maize, cocoa, barley, peas, and wheat for each country. For 
-#|   example, potatoes and bananas are negatively correlated and bananas and cocoa 
+#|   From a real dataset, we display scatterplots of the relationship
+#|   between percent of crop which is each of the following -- bananas, potatoes,
+#|   cassava, soybeans, maize, cocoa, barley, peas, and wheat for each country. For
+#|   example, potatoes and bananas are negatively correlated and bananas and cocoa
 #|   do not seem correlated at all.
 #| fig-asp: 0.8
 #| out-width: 90%
@@ -815,7 +859,12 @@ pob <- ggplot(crops_country) +
     y = "% Barley"
   )
 
-peb + sc + mc + cb + pob + wb +
+peb +
+  sc +
+  mc +
+  cb +
+  pob +
+  wb +
   plot_layout(ncol = 2) +
   plot_annotation(tag_levels = "A")
 ```
@@ -854,17 +903,17 @@ The only visual change to the plot is the axis *labeling* of the points.
 ```{r}
 #| label: fig-bdims-units
 #| fig-cap: |
-#|   Two scatterplots, both displaying the relationship between weights and 
-#|   heights of 507 physically healthy adults and the correlation coefficient, 
+#|   Two scatterplots, both displaying the relationship between weights and
+#|   heights of 507 physically healthy adults and the correlation coefficient,
 #|   $r = 0.72$.
 #| fig-subcap:
 #|   - The units are kilograms and centimeters.
-#|   - The units are pounds and inches. 
+#|   - The units are pounds and inches.
 #| fig-alt: |
-#|   Two scatterplots, both displaying the relationship between weights and 
+#|   Two scatterplots, both displaying the relationship between weights and
 #|   heights of 507 physically healthy adults. In the first plot height is
-#|   measured in cm and weight is measured in kg. In the second plot height 
-#|   is measured in inches and weight is measured in pounds. The images 
+#|   measured in cm and weight is measured in kg. In the second plot height
+#|   is measured in inches and weight is measured in pounds. The images
 #|   look identical, except for the axes tick marks.
 #| fig-asp: 0.5
 p_1 <- ggplot(bdims, aes(x = hgt, y = wgt)) +
@@ -914,7 +963,7 @@ Is the correlation positive or negative in @fig-elmhurstScatterWLine?[^07-model-
 ```{r}
 #| label: fig-elmhurstScatterWLine
 #| fig-cap: |
-#|   Gift aid and family income for a random sample of 50 first-year 
+#|   Gift aid and family income for a random sample of 50 first-year
 #|   students from Elmhurst College.
 #| fig-alt: |
 #|   Scatterplot with family income on the x-axis and gift aid on the
@@ -923,8 +972,12 @@ Is the correlation positive or negative in @fig-elmhurstScatterWLine?[^07-model-
 ggplot(elmhurst, aes(x = family_income, y = gift_aid)) +
   geom_point(size = 2) +
   geom_smooth(method = "lm", se = FALSE) +
-  scale_y_continuous(labels = label_dollar(scale = 1, suffix = "K", accuracy = 1)) +
-  scale_x_continuous(labels = label_dollar(scale = 1, suffix = "K", accuracy = 1)) +
+  scale_y_continuous(
+    labels = label_dollar(scale = 1, suffix = "K", accuracy = 1)
+  ) +
+  scale_x_continuous(
+    labels = label_dollar(scale = 1, suffix = "K", accuracy = 1)
+  ) +
   labs(
     x = "Family income",
     y = "Gift aid from university"
@@ -950,9 +1003,9 @@ The resulting dashed line shown in @fig-elmhurstScatterW2Lines demonstrates this
 ```{r}
 #| label: fig-elmhurstScatterW2Lines
 #| fig-cap: |
-#|   Gift aid and family income for a random sample of 50 first-year Elmhurst 
-#|   College students. The dashed line is the line that minimizes 
-#|   the sum of the absolute value of residuals, the solid line is the 
+#|   Gift aid and family income for a random sample of 50 first-year Elmhurst
+#|   College students. The dashed line is the line that minimizes
+#|   the sum of the absolute value of residuals, the solid line is the
 #|   line that minimizes the sum of squared residuals, i.e., the least squares line.
 #| fig-alt: |
 #|   Scatterplot with family income on the x-axis and gift aid on the
@@ -964,9 +1017,18 @@ The resulting dashed line shown in @fig-elmhurstScatterW2Lines demonstrates this
 ggplot(elmhurst, aes(x = family_income, y = gift_aid)) +
   geom_point(alpha = 0.8) +
   geom_smooth(method = "lm", se = FALSE) +
-  geom_smooth(method = quantreg::rq, formula = y ~ x, se = FALSE, linetype = "dashed") +
-  scale_y_continuous(labels = label_dollar(scale = 1, suffix = "K", accuracy = 1)) +
-  scale_x_continuous(labels = label_dollar(scale = 1, suffix = "K", accuracy = 1)) +
+  geom_smooth(
+    method = quantreg::rq,
+    formula = y ~ x,
+    se = FALSE,
+    linetype = "dashed"
+  ) +
+  scale_y_continuous(
+    labels = label_dollar(scale = 1, suffix = "K", accuracy = 1)
+  ) +
+  scale_x_continuous(
+    labels = label_dollar(scale = 1, suffix = "K", accuracy = 1)
+  ) +
   labs(
     x = "Family income",
     y = "Gift aid from university"
@@ -982,7 +1044,7 @@ $$
 \clearpage
 
 The line that minimizes this least squares criterion is represented as the solid line in @fig-elmhurstScatterW2Lines and is commonly called the **least squares line**\index{least squares line}.
-The following are three possible reasons to choose the least squares option instead of trying to minimize the sum of residual magnitudes without any squaring:
+The following are four possible reasons to choose the least squares option instead of trying to minimize the sum of residual magnitudes without any squaring:
 
 ```{r}
 #| include: false
@@ -1025,7 +1087,8 @@ elmhurst |>
   kbl(linesep = "", booktabs = TRUE) |>
   kable_styling(
     bootstrap_options = c("striped", "condensed"),
-    latex_options = c("striped"), full_width = FALSE
+    latex_options = c("striped"),
+    full_width = FALSE
   ) |>
   column_spec(1:3, width = "8em")
 ```
@@ -1055,8 +1118,10 @@ m_ga_fi_slope <- m_ga_fi |>
 m_ga_fi |>
   mutate(p.value = ifelse(p.value < .0001, "<0.0001", round(p.value, 4))) |>
   kbl(
-    linesep = "", booktabs = TRUE,
-    digits = 2, align = "lrrrr"
+    linesep = "",
+    booktabs = TRUE,
+    digits = 2,
+    align = "lrrrr"
   ) |>
   kable_styling(
     bootstrap_options = c("striped", "condensed"),
@@ -1125,16 +1190,18 @@ elmhurst |>
     fi_s = sd(family_income),
     ga_m = mean(gift_aid),
     ga_s = sd(gift_aid),
-    r    = cor(family_income, gift_aid)
+    r = cor(family_income, gift_aid)
   ) |>
   kbl(
-    linesep = "", booktabs = TRUE,
+    linesep = "",
+    booktabs = TRUE,
     col.names = c("mean", "sd", "mean", "sd", "r"),
     align = "ccccc"
   ) |>
   kable_styling(
     bootstrap_options = c("striped", "condensed"),
-    latex_options = c("striped"), full_width = FALSE
+    latex_options = c("striped"),
+    full_width = FALSE
   ) |>
   add_header_above(c("Family income, x" = 2, "Gift aid, y" = 2, " " = 1)) |>
   column_spec(1:5, width = "6em")
@@ -1337,7 +1404,12 @@ $$
 
 ```{r}
 #| include: false
-terms_chp_07 <- c(terms_chp_07, "total sum of squares", "sum of squared error", "regression sum of squares")
+terms_chp_07 <- c(
+  terms_chp_07,
+  "total sum of squares",
+  "sum of squared error",
+  "regression sum of squares"
+)
 ```
 
 ::: {.workedexample data-latex=""}
@@ -1382,13 +1454,13 @@ Note that the original dataset contains some Mario Kart games being sold at pric
 ```{r}
 #| label: fig-marioKartNewUsed
 #| fig-cap: |
-#|   Total auction prices for the video game Mario Kart, divided into used 
-#|   ($x = 0$) and new ($x = 1$) condition games. The least squares regression 
+#|   Total auction prices for the video game Mario Kart, divided into used
+#|   ($x = 0$) and new ($x = 1$) condition games. The least squares regression
 #|   line is also shown.
 #| fig-alt: |
-#|   Scatterplot of Mario Kart data with condion (used or new) on the 
-#|   x-axis and total price on the y-axis. Despite the x-axis being categorical, a 
-#|   least squares line is fit to the data with the value of used set to 0 and the 
+#|   Scatterplot of Mario Kart data with condion (used or new) on the
+#|   x-axis and total price on the y-axis. Despite the x-axis being categorical, a
+#|   least squares line is fit to the data with the value of used set to 0 and the
 #|   value of new set to 1.
 mariokart_lt100 |>
   filter(total_pr < 100) |>
@@ -1443,8 +1515,10 @@ m_total_pr_cond_slope <- m_total_pr_cond_tidy |>
 m_total_pr_cond_tidy |>
   mutate(p.value = ifelse(p.value < 0.0001, "<0.0001", round(p.value, 4))) |>
   kbl(
-    linesep = "", booktabs = TRUE,
-    digits = 2, align = "lrrrr"
+    linesep = "",
+    booktabs = TRUE,
+    digits = 2,
+    align = "lrrrr"
   ) |>
   kable_styling(
     bootstrap_options = c("striped", "condensed"),
@@ -1526,28 +1600,28 @@ However, it falls quite close to the least squares line and does not appear to b
 ```{r}
 #| label: fig-outlier-plots
 #| fig-cap: |
-#|   Plots of six datasets, each with a least squares line and 
+#|   Plots of six datasets, each with a least squares line and
 #|   corresponding residual plot. Each dataset has at least one outlier.
-#| fig-subcap: 
+#| fig-subcap:
 #|   - Plots A, B, and C
 #|   - Plots D, E, and F
 #| fig-alt: |
-#|   A grid of 2 by 3 scatterplots with fabricated data, all of which 
+#|   A grid of 2 by 3 scatterplots with fabricated data, all of which
 #|   contain at least one outlying observation. The top row of plots contains
-#|   original x-y data plots with a least squares regression line. The bottom row 
-#|   of plots is a series of residual plot with predicted value on the x-axis and 
-#|   residual on the y-axis. The first column of plots gives an example of 
+#|   original x-y data plots with a least squares regression line. The bottom row
+#|   of plots is a series of residual plot with predicted value on the x-axis and
+#|   residual on the y-axis. The first column of plots gives an example of
 #|   an outlier in the bivariate model which does not impact the least squares
 #|   regression line. The second column gives an example of a point which is
 #|   outlying in both the x and y directions but it is not a model outlier.
 #|   The third column gives an example of a point that pulls the regression
-#|   line toward it, impacting the least squares line. The fourth column of 
-#|   plots gives an example of a small cloud of points that drags the 
-#|   regression line toward it. The fifth column gives an example of a point 
-#|   which is outlying enough in both the x and y direction that it changes 
+#|   line toward it, impacting the least squares line. The fourth column of
+#|   plots gives an example of a small cloud of points that drags the
+#|   regression line toward it. The fifth column gives an example of a point
+#|   which is outlying enough in both the x and y direction that it changes
 #|   a model which has no linearity into what seems like a strong positive
-#|   relationship. The sixth column gives an example of a point that is far 
-#|   in both the x and y directions but is in-line with the regression model 
+#|   relationship. The sixth column gives an example of a point that is far
+#|   in both the x and y directions but is in-line with the regression model
 #|   and has very little impact on the least squares regression line.
 #| out-width: 100%
 #| fig-asp: 0.4
@@ -1576,8 +1650,10 @@ p_1 <- ggplot(d1, aes(x = x, y = y)) +
   geom_smooth(method = "lm", se = FALSE) +
   geom_point(
     data = d1 |> filter(outlier),
-    size = 5, shape = "circle open",
-    color = IMSCOL["red", "full"], stroke = 2
+    size = 5,
+    shape = "circle open",
+    color = IMSCOL["red", "full"],
+    stroke = 2
   ) +
   labs(title = "A") +
   theme(
@@ -1594,8 +1670,10 @@ p_1_res <- ggplot(m1_aug, aes(x = .fitted, y = .resid)) +
   geom_hline(yintercept = 0, linetype = "dashed") +
   geom_point(
     data = m1_aug |> filter(outlier),
-    size = 5, shape = "circle open",
-    color = IMSCOL["red", "full"], stroke = 2
+    size = 5,
+    shape = "circle open",
+    color = IMSCOL["red", "full"],
+    stroke = 2
   ) +
   labs(x = "Predicted y", y = "Residual") +
   theme(
@@ -1611,8 +1689,10 @@ p_2 <- ggplot(d2, aes(x = x, y = y)) +
   geom_smooth(method = "lm", se = FALSE) +
   geom_point(
     data = d2 |> filter(outlier),
-    size = 5, shape = "circle open",
-    color = IMSCOL["green", "full"], stroke = 2
+    size = 5,
+    shape = "circle open",
+    color = IMSCOL["green", "full"],
+    stroke = 2
   ) +
   labs(title = "B") +
   theme(
@@ -1628,8 +1708,10 @@ p_2_res <- ggplot(m2_aug, aes(x = .fitted, y = .resid)) +
   geom_hline(yintercept = 0, linetype = "dashed") +
   geom_point(
     data = m2_aug |> filter(outlier),
-    size = 5, shape = "circle open",
-    color = IMSCOL["green", "full"], stroke = 2
+    size = 5,
+    shape = "circle open",
+    color = IMSCOL["green", "full"],
+    stroke = 2
   ) +
   labs(x = "Predicted y", y = "Residual") +
   theme(
@@ -1645,8 +1727,10 @@ p_3 <- ggplot(d3, aes(x = x, y = y)) +
   geom_smooth(method = "lm", se = FALSE) +
   geom_point(
     data = d3 |> filter(outlier),
-    size = 5, shape = "circle open",
-    color = IMSCOL["pink", "full"], stroke = 2
+    size = 5,
+    shape = "circle open",
+    color = IMSCOL["pink", "full"],
+    stroke = 2
   ) +
   labs(title = "C") +
   theme(
@@ -1662,8 +1746,10 @@ p_3_res <- ggplot(m3_aug, aes(x = .fitted, y = .resid)) +
   geom_hline(yintercept = 0, linetype = "dashed") +
   geom_point(
     data = m3_aug |> filter(outlier),
-    size = 5, shape = "circle open",
-    color = IMSCOL["pink", "full"], stroke = 2
+    size = 5,
+    shape = "circle open",
+    color = IMSCOL["pink", "full"],
+    stroke = 2
   ) +
   labs(x = "Predicted y", y = "Residual") +
   theme(
@@ -1674,10 +1760,16 @@ p_3_res <- ggplot(m3_aug, aes(x = .fitted, y = .resid)) +
   scale_x_continuous(expand = expansion(mult = 0.12)) +
   scale_y_continuous(limits = c(-8, 8), expand = expansion(mult = 0.12))
 
-p_1 + theme(plot.margin = unit(c(0, 10, 5, 0), "pt")) +
-  p_2 + theme(plot.margin = unit(c(0, 10, 5, 0), "pt")) + p_3 +
-  p_1_res + theme(plot.margin = unit(c(0, 10, 5, 0), "pt")) +
-  p_2_res + theme(plot.margin = unit(c(0, 10, 5, 0), "pt")) + p_3_res +
+p_1 +
+  theme(plot.margin = unit(c(0, 10, 5, 0), "pt")) +
+  p_2 +
+  theme(plot.margin = unit(c(0, 10, 5, 0), "pt")) +
+  p_3 +
+  p_1_res +
+  theme(plot.margin = unit(c(0, 10, 5, 0), "pt")) +
+  p_2_res +
+  theme(plot.margin = unit(c(0, 10, 5, 0), "pt")) +
+  p_3_res +
   plot_layout(ncol = 3, heights = c(2, 1))
 
 # def
@@ -1695,10 +1787,10 @@ p_4 <- ggplot(d4, aes(x = x, y = y)) +
   geom_point(size = 2, alpha = 0.7) +
   geom_smooth(method = "lm", se = FALSE) +
   theme(
-        panel.grid = element_blank(),
-        axis.text = element_blank(),
-        panel.border = element_rect(colour = "gray", fill = NA, size = 1)
-    ) +
+    panel.grid = element_blank(),
+    axis.text = element_blank(),
+    panel.border = element_rect(colour = "gray", fill = NA, size = 1)
+  ) +
   labs(title = "D")
 
 p_4_res <- ggplot(m4_aug, aes(x = .fitted, y = .resid)) +
@@ -1706,20 +1798,20 @@ p_4_res <- ggplot(m4_aug, aes(x = .fitted, y = .resid)) +
   geom_hline(yintercept = 0, linetype = "dashed") +
   labs(x = "Predicted y", y = "Residual") +
   theme(
-        panel.grid = element_blank(),
-        axis.text = element_blank(),
-        panel.border = element_rect(colour = "gray", fill = NA, size = 1)
-    ) +
+    panel.grid = element_blank(),
+    axis.text = element_blank(),
+    panel.border = element_rect(colour = "gray", fill = NA, size = 1)
+  ) +
   ylim(-4, 4)
 
 p_5 <- ggplot(d5, aes(x = x, y = y)) +
   geom_point(size = 2, alpha = 0.7) +
   geom_smooth(method = "lm", se = FALSE) +
   theme(
-        panel.grid = element_blank(),
-        axis.text = element_blank(),
-        panel.border = element_rect(colour = "gray", fill = NA, size = 1)
-    ) +
+    panel.grid = element_blank(),
+    axis.text = element_blank(),
+    panel.border = element_rect(colour = "gray", fill = NA, size = 1)
+  ) +
   labs(title = "E")
 
 p_5_res <- ggplot(m5_aug, aes(x = .fitted, y = .resid)) +
@@ -1727,20 +1819,20 @@ p_5_res <- ggplot(m5_aug, aes(x = .fitted, y = .resid)) +
   geom_hline(yintercept = 0, linetype = "dashed") +
   labs(x = "Predicted y", y = "Residual") +
   theme(
-        panel.grid = element_blank(),
-        axis.text = element_blank(),
-        panel.border = element_rect(colour = "gray", fill = NA, size = 1)
-    ) +
+    panel.grid = element_blank(),
+    axis.text = element_blank(),
+    panel.border = element_rect(colour = "gray", fill = NA, size = 1)
+  ) +
   ylim(-4, 4)
 
 p_6 <- ggplot(d6, aes(x = x, y = y)) +
   geom_point(size = 2, alpha = 0.7) +
   geom_smooth(method = "lm", se = FALSE) +
   theme(
-        panel.grid = element_blank(),
-        axis.text = element_blank(),
-        panel.border = element_rect(colour = "gray", fill = NA, size = 1)
-    ) +
+    panel.grid = element_blank(),
+    axis.text = element_blank(),
+    panel.border = element_rect(colour = "gray", fill = NA, size = 1)
+  ) +
   labs(title = "F")
 
 p_6_res <- ggplot(m6_aug, aes(x = .fitted, y = .resid)) +
@@ -1748,16 +1840,22 @@ p_6_res <- ggplot(m6_aug, aes(x = .fitted, y = .resid)) +
   geom_hline(yintercept = 0, linetype = "dashed") +
   labs(x = "Predicted y", y = "Residual") +
   theme(
-        panel.grid = element_blank(),
-        axis.text = element_blank(),
-        panel.border = element_rect(colour = "gray", fill = NA, size = 1)
-    ) +
+    panel.grid = element_blank(),
+    axis.text = element_blank(),
+    panel.border = element_rect(colour = "gray", fill = NA, size = 1)
+  ) +
   ylim(-4, 4)
 
-p_4 + theme(plot.margin = unit(c(0, 10, 5, 0), "pt")) +
-  p_5 + theme(plot.margin = unit(c(0, 10, 5, 0), "pt")) + p_6 +
-  p_4_res + theme(plot.margin = unit(c(0, 10, 5, 0), "pt")) +
-  p_5_res + theme(plot.margin = unit(c(0, 10, 5, 0), "pt")) + p_6_res +
+p_4 +
+  theme(plot.margin = unit(c(0, 10, 5, 0), "pt")) +
+  p_5 +
+  theme(plot.margin = unit(c(0, 10, 5, 0), "pt")) +
+  p_6 +
+  p_4_res +
+  theme(plot.margin = unit(c(0, 10, 5, 0), "pt")) +
+  p_5_res +
+  theme(plot.margin = unit(c(0, 10, 5, 0), "pt")) +
+  p_6_res +
   plot_layout(ncol = 3, heights = c(2, 1))
 ```
 
@@ -1782,7 +1880,13 @@ Usually we can say a point is influential if, had we fitted the line without it,
 
 ```{r}
 #| include: false
-terms_chp_07 <- c(terms_chp_07, "high leverage", "influential point", "outlier", "leverage point")
+terms_chp_07 <- c(
+  terms_chp_07,
+  "high leverage",
+  "influential point",
+  "outlier",
+  "leverage point"
+)
 ```
 
 ::: {.important data-latex=""}

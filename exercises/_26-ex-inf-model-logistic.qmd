@@ -154,7 +154,7 @@
 
     a.  How many observations are in Fold2?
         Use the model with only tail length as a predictor variable.
-        Of the observations in Fold2, how many of them were correctly predicted to be from Vicotria?
+        Of the observations in Fold2, how many of them were correctly predicted to be from Victoria?
         How many of them were incorrectly predicted to be from Victoria?
 
     b.  How many observations are used to build the model which predicts for the observations in Fold2?

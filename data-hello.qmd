@@ -60,9 +60,9 @@ stent <- stent30_renamed |>
   bind_cols(stent365_renamed) |>
   relocate(group) |>
   mutate(
-    group        = fct_rev(group),
-    `30 days`    = fct_rev(`30 days`),
-    `365 days`   = fct_rev(`365 days`),
+    group = fct_rev(group),
+    `30 days` = fct_rev(`30 days`),
+    `365 days` = fct_rev(`365 days`),
   )
 stent |>
   sample_n(5) |>
@@ -100,10 +100,14 @@ stent |>
   pivot_wider(names_from = c(stage, outcome), values_from = n) |>
   adorn_totals(where = "row") |>
   kbl(
-    linesep = "", booktabs = TRUE,
+    linesep = "",
+    booktabs = TRUE,
     col.names = c("Group", "Stroke", "No event", "Stroke", "No event")
   ) |>
-  add_header_above(c(" " = 1, "30 days" = 2, "365 days" = 2), extra_css = "border-bottom: 2px solid") |>
+  add_header_above(
+    c(" " = 1, "30 days" = 2, "365 days" = 2),
+    extra_css = "border-bottom: 2px solid"
+  ) |>
   row_spec(1, extra_css = "border-top: 2px solid") |>
   row_spec(3, extra_css = "border-top: 2px solid") |>
   kable_styling(
@@ -175,7 +179,13 @@ For example, the first row represents a loan of \$22,000 with an interest rate o
 
 ```{r}
 #| include: false
-terms_chp_1 <- c(terms_chp_1, "case", "unit of observation", "observation", "variable")
+terms_chp_1 <- c(
+  terms_chp_1,
+  "case",
+  "unit of observation",
+  "observation",
+  "variable"
+)
 ```
 
 ::: {.guidedpractice data-latex=""}
@@ -195,11 +205,21 @@ Descriptions of the variables in the `loan50` dataset are given in @tbl-loan-50-
 #| tbl-cap: Six observations from the `loan50` dataset.
 #| tbl-pos: H
 loan50 |>
-  select(loan_amount, interest_rate, term, grade, state, total_income, homeownership) |>
+  select(
+    loan_amount,
+    interest_rate,
+    term,
+    grade,
+    state,
+    total_income,
+    homeownership
+  ) |>
   slice_head(n = 6) |>
   kbl(
-    linesep = "", booktabs = TRUE,
-    row.names = TRUE, format.args = list(big.mark = ",")
+    linesep = "",
+    booktabs = TRUE,
+    row.names = TRUE,
+    format.args = list(big.mark = ",")
   ) |>
   kable_styling(
     bootstrap_options = c("striped", "condensed"),
@@ -212,19 +232,20 @@ loan50 |>
 #| tbl-cap: Variables and their descriptions for the `loan50` dataset.
 #| tbl-pos: H
 loan50_var_def <- tribble(
-  ~variable,       ~description,
-  "loan_amount",   "Amount of the loan received, in US dollars.",
-  "interest_rate", "Interest rate on the loan, in an annual percentage.",
-  "term",          "The length of the loan, which is always set as a whole number of months.",
-  "grade",         "Loan grade, which takes a values A through G and represents the quality of the loan and its likelihood of being repaid.",
-  "state",         "US state where the borrower resides.",
-  "total_income",  "Borrower's total income, including any second income, in US dollars.",
-  "homeownership", "Indicates whether the person owns, owns but has a mortgage, or rents."
+  ~variable       , ~description                                                                                                              ,
+  "loan_amount"   , "Amount of the loan received, in US dollars."                                                                             ,
+  "interest_rate" , "Interest rate on the loan, in an annual percentage."                                                                     ,
+  "term"          , "The length of the loan, which is always set as a whole number of months."                                                ,
+  "grade"         , "Loan grade, which takes a values A through G and represents the quality of the loan and its likelihood of being repaid." ,
+  "state"         , "US state where the borrower resides."                                                                                    ,
+  "total_income"  , "Borrower's total income, including any second income, in US dollars."                                                    ,
+  "homeownership" , "Indicates whether the person owns, owns but has a mortgage, or rents."
 )
 
 loan50_var_def |>
   kbl(
-    linesep = "", booktabs = TRUE,
+    linesep = "",
+    booktabs = TRUE,
     col.names = c("Variable", "Description")
   ) |>
   kable_styling(
@@ -277,7 +298,8 @@ county |>
   select(name, state, pop2017, pop_change, unemployment_rate, median_edu) |>
   slice_head(n = 6) |>
   kbl(
-    linesep = "", booktabs = TRUE,
+    linesep = "",
+    booktabs = TRUE,
     format.args = list(big.mark = ",")
   ) |>
   kable_styling(
@@ -291,27 +313,28 @@ county |>
 #| tbl-cap: Variables and their descriptions for the `county` dataset.
 #| tbl-pos: H
 county_var_def <- tribble(
-  ~variable,           ~description,
-  "name",              "Name of county.",
-  "state",             "Name of state.",
-  "pop2000",           "Population in 2000.",
-  "pop2010",           "Population in 2010.",
-  "pop2017",           "Population in 2017.",
-  "pop_change",        "Population change from 2010 to 2017 (in percent).",
-  "poverty",           "Percent of population in poverty in 2017.",
-  "homeownership",     "Homeownership rate, 2006-2010.",
-  "multi_unit",        "Multi-unit rate: percent of housing units that are in multi-unit structures, 2006-2010.",
-  "unemployment_rate", "Unemployment rate in 2017.",
-  "metro",             "Whether the county contains a metropolitan area, taking one of the values yes or no.",
-  "median_edu",        "Median education level (2013-2017), taking one of the values below_hs, hs_diploma, some_college, or bachelors.",
-  "per_capita_income", "Per capita (per person) income (2013-2017).",
-  "median_hh_income",  "Median household income.",
-  "smoking_ban",       "Describes the type of county-level smoking ban in place in 2010, taking one of the values none, partial, or comprehensive."
+  ~variable           , ~description                                                                                                                 ,
+  "name"              , "Name of county."                                                                                                            ,
+  "state"             , "Name of state."                                                                                                             ,
+  "pop2000"           , "Population in 2000."                                                                                                        ,
+  "pop2010"           , "Population in 2010."                                                                                                        ,
+  "pop2017"           , "Population in 2017."                                                                                                        ,
+  "pop_change"        , "Population change from 2010 to 2017 (in percent)."                                                                          ,
+  "poverty"           , "Percent of population in poverty in 2017."                                                                                  ,
+  "homeownership"     , "Homeownership rate, 2006-2010."                                                                                             ,
+  "multi_unit"        , "Multi-unit rate: percent of housing units that are in multi-unit structures, 2006-2010."                                    ,
+  "unemployment_rate" , "Unemployment rate in 2017."                                                                                                 ,
+  "metro"             , "Whether the county contains a metropolitan area, taking one of the values yes or no."                                       ,
+  "median_edu"        , "Median education level (2013-2017), taking one of the values below_hs, hs_diploma, some_college, or bachelors."             ,
+  "per_capita_income" , "Per capita (per person) income (2013-2017)."                                                                                ,
+  "median_hh_income"  , "Median household income."                                                                                                   ,
+  "smoking_ban"       , "Describes the type of county-level smoking ban in place in 2010, taking one of the values none, partial, or comprehensive."
 )
 
 county_var_def |>
   kbl(
-    linesep = "", booktabs = TRUE,
+    linesep = "",
+    booktabs = TRUE,
     col.names = c("Variable", "Description")
   ) |>
   kable_styling(
@@ -474,27 +497,41 @@ ggplot(county, aes(x = multi_unit, y = homeownership)) +
   ) +
   geom_point(
     data = county |> filter(name == "Chattahoochee County"),
-    size = 3, stroke = 2, color = IMSCOL["red", "full"], shape = 1
+    size = 3,
+    stroke = 2,
+    color = IMSCOL["red", "full"],
+    shape = 1
   ) +
   geom_text(
     data = county |> filter(name == "Chattahoochee County"),
-    label = "Chattahoochee County", fontface = "italic",
-    nudge_x = 21, nudge_y = -5, color = IMSCOL["red", "full"]
+    label = "Chattahoochee County",
+    fontface = "italic",
+    nudge_x = 21,
+    nudge_y = -5,
+    color = IMSCOL["red", "full"]
   ) +
   guides(color = FALSE) +
   geom_segment(
     data = county |> filter(name == "Chattahoochee County"),
     aes(
-      x = 0, y = homeownership, xend = multi_unit, yend = homeownership,
+      x = 0,
+      y = homeownership,
+      xend = multi_unit,
+      yend = homeownership,
       color = IMSCOL["red", "full"]
-    ), linetype = "dashed"
+    ),
+    linetype = "dashed"
   ) +
   geom_segment(
     data = county |> filter(name == "Chattahoochee County"),
     aes(
-      x = multi_unit, y = 0, xend = multi_unit, yend = homeownership,
+      x = multi_unit,
+      y = 0,
+      xend = multi_unit,
+      yend = homeownership,
       color = IMSCOL["red", "full"]
-    ), linetype = "dashed"
+    ),
+    linetype = "dashed"
   ) +
   scale_x_continuous(labels = percent_format(scale = 1)) +
   scale_y_continuous(labels = percent_format(scale = 1))
@@ -545,30 +582,42 @@ ggplot(county, aes(x = median_hh_income, y = pop_change)) +
   ) +
   geom_point(
     data = county |> filter(name == "Owsley County"),
-    size = 3, stroke = 2, color = IMSCOL["red", "full"], shape = 1
+    size = 3,
+    stroke = 2,
+    color = IMSCOL["red", "full"],
+    shape = 1
   ) +
   guides(color = FALSE) +
   geom_text(
     data = county |> filter(name == "Owsley County"),
-    label = "Owsley\nCounty", fontface = "italic",
-    nudge_x = -2000, nudge_y = 10, color = IMSCOL["red", "full"],
+    label = "Owsley\nCounty",
+    fontface = "italic",
+    nudge_x = -2000,
+    nudge_y = 10,
+    color = IMSCOL["red", "full"],
     hjust = 1
   ) +
   geom_segment(
     data = county |> filter(name == "Owsley County"),
     aes(
-      x = 0, y = pop_change,
-      xend = median_hh_income, yend = pop_change,
+      x = 0,
+      y = pop_change,
+      xend = median_hh_income,
+      yend = pop_change,
       color = IMSCOL["red", "full"]
-    ), linetype = "dashed"
+    ),
+    linetype = "dashed"
   ) +
   geom_segment(
     data = county |> filter(name == "Owsley County"),
     aes(
-      x = median_hh_income, y = -40,
-      xend = median_hh_income, yend = pop_change,
+      x = median_hh_income,
+      y = -40,
+      xend = median_hh_income,
+      yend = pop_change,
       color = IMSCOL["red", "full"]
-    ), linetype = "dashed"
+    ),
+    linetype = "dashed"
   ) +
   scale_x_continuous(labels = dollar_format(scale = 0.001, suffix = "K")) +
   scale_y_continuous(labels = percent_format(scale = 1), limits = c(-40, 40))
@@ -612,7 +661,12 @@ If this is our underlying belief, then *median household income* is the **explan
 
 ```{r}
 #| include: false
-terms_chp_1 <- c(terms_chp_1, "explanatory variable", "response variable", "dependent")
+terms_chp_1 <- c(
+  terms_chp_1,
+  "explanatory variable",
+  "response variable",
+  "dependent"
+)
 ```
 
 ::: {.important data-latex=""}
@@ -697,5 +751,7 @@ make_terms_table(terms_chp_1)
 Answers to odd-numbered exercises can be found in [Appendix -@sec-exercise-solutions-01].
 
 ::: {.exercises data-latex=""}
+
 {{< include exercises/_01-ex-data-hello.qmd >}}
+
 :::

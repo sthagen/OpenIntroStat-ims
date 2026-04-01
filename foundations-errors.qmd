@@ -28,15 +28,19 @@ There are four possible scenarios in a hypothesis test, which are summarized in 
 #| tbl-cap: Four different scenarios for hypothesis tests.
 #| tbl-pos: H
 ht_scenarios <- tribble(
-  ~Truth, ~`Reject null hypothesis`, ~`Fail to reject null hypothesis`,
-  "Null hypothesis is true", "Type I error", "Good decision",
-  "Alternative hypothesis is true", "Good decision", "Type II error"
+  ~Truth                           , ~`Reject null hypothesis` , ~`Fail to reject null hypothesis` ,
+  "Null hypothesis is true"        , "Type I error"            , "Good decision"                   ,
+  "Alternative hypothesis is true" , "Good decision"           , "Type II error"
 )
 
 ht_scenarios |>
   kbl(linesep = "", booktabs = TRUE) |>
   add_header_above(c("", "Test conclusion" = 2)) |>
-  kable_styling(bootstrap_options = c("striped", "condensed"), latex_options = c("striped"), full_width = FALSE) |>
+  kable_styling(
+    bootstrap_options = c("striped", "condensed"),
+    latex_options = c("striped"),
+    full_width = FALSE
+  ) |>
   column_spec(1, width = "14em") |>
   column_spec(2:3, width = "12em")
 ```
@@ -142,7 +146,12 @@ To do so, let's learn about **two-sided hypothesis tests**\index{two-sided hypot
 
 ```{r}
 #| include: false
-terms_chp_14 <- c(terms_chp_14, "confirmation bias", "one-sided hypothesis test", "two-sided hypothesis test")
+terms_chp_14 <- c(
+  terms_chp_14,
+  "confirmation bias",
+  "one-sided hypothesis test",
+  "two-sided hypothesis test"
+)
 ```
 
 Cardiopulmonary resuscitation (CPR) is a procedure used on individuals suffering a heart attack when other emergency resources are unavailable.
@@ -196,13 +205,14 @@ The study results are shown in @tbl-cpr-summary.
 cpr |>
   mutate(
     outcome = str_to_title(outcome),
-    group   = str_to_title(group)
+    group = str_to_title(group)
   ) |>
   count(group, outcome) |>
   pivot_wider(names_from = outcome, values_from = n) |>
   janitor::adorn_totals(where = c("row", "col")) |>
   kbl(
-    linesep = "", booktabs = TRUE,
+    linesep = "",
+    booktabs = TRUE,
     col.names = c("Group", "Died", "Survived", "Total"),
     align = "lccc"
   ) |>
