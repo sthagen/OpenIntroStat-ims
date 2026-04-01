@@ -482,7 +482,7 @@
         ) +
         scale_color_openintro("three") +
         scale_x_continuous(breaks = c(1960, 1990, 2020)) +
-        scale_y_continuous(breaks = c(0, 0.5, 1), labels = label_percent(scale = 1)) #+
+        scale_y_continuous(breaks = c(0, 0.5, 1), labels = label_percent(scale = 100)) #+
       #theme(
       #  legend.position = "top",
       #  legend.direction = "horizontal"
