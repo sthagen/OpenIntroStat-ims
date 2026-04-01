@@ -751,5 +751,7 @@ make_terms_table(terms_chp_1)
 Answers to odd-numbered exercises can be found in [Appendix -@sec-exercise-solutions-01].
 
 ::: {.exercises data-latex=""}
+
 {{< include exercises/_01-ex-data-hello.qmd >}}
+
 :::
